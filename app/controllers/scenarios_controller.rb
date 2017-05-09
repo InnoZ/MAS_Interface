@@ -1,5 +1,7 @@
 class ScenariosController < ApplicationController
   def select
+    @districts_germany = File.read('app/assets/geo/districts_germany.geojson')
+    @germany_simple = File.read('app/assets/geo/germany_simple.geojson')
   end
 
   def run

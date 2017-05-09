@@ -25,16 +25,19 @@
 //= require viewport-units-buggyfill
 //= require template_scripts
 //= require mapbox
+//= require_tree
 
 jQuery(function() {
-  L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
-  map = L.mapbox.map('contact-map', 'innoz-developer.mj43ge61', {
-    maxZoom: 16,
-    minZoom: 7,
-    scrollWheelZoom: false,
-    touchZoom: false,
+  jQuery('#contact-map').each(function() {
+    L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
+    map = L.mapbox.map('contact-map', 'innoz-developer.mj43ge61', {
+      maxZoom: 16,
+      minZoom: 7,
+      scrollWheelZoom: false,
+      touchZoom: false,
+    });
+    var innozCoordinates = [52.481991, 13.357194];
+    map.setView(innozCoordinates, 12);
+    var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>Innovationszentrum für Mobilität und gesellschaftlichen Wandel GmbH</a>");
   });
-  var innozCoordinates = [52.481991, 13.357194];
-  map.setView(innozCoordinates, 12);
-  var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>Innovationszentrum für Mobilität und gesellschaftlichen Wandel GmbH</a>");
 });
