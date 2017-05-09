@@ -7,21 +7,16 @@ class MatsimStarter
     @year = year
     @folder = folder
     raise "#{year} must be between 2009 and 2040" unless year_range.include?(year)
+    run
   end
 
-  # rubocop:disable LineLength
-  def start
+  def run
     Kernel.system "java -cp #{MATSIM}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
   end
 
-  def json
-    json = File.read("#{DEFAULT}/#{id}_#{year}/features.json")
-
-    if json
-      JSON.parse(json).fetch('crs').fetch('properties').fetch('name')
-    else
-      raise "#{json} does not exist yet"
-    end
+  # rubocop:disable LineLength
+  def result
+    File.read("#{DEFAULT}/#{id}_#{year}/features.json")
   end
 
   private

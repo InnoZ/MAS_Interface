@@ -6,6 +6,5 @@ Rails.application.routes.draw do
   get 'imprint', to: 'pages#imprint', as: :imprint
   get 'privacy', to: 'pages#privacy', as: :privacy
 
-  get 'select_scenario', to: 'scenarios#select', as: :select_scenario
-  post 'run_scenario', to: 'scenarios#run', as: :run_scenario
+  resources :scenarios
 end

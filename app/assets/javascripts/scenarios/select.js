@@ -21,7 +21,7 @@ jQuery(function() {
         jQuery('.district-name').html('');
       };
       function onclick(e) {
-        jQuery('#district_id').val(feature.properties.id);
+        jQuery('#scenario_district_id').val(feature.properties.id);
       };
       layer.on('mouseout', mouseout);
       layer.on('mouseover', mouseover);

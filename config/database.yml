@@ -1,14 +1,14 @@
 test:
   adapter: postgresql
   pool: 5
-  database: innoz_rails_test
+  database: mas_interface_test
 
 development:
   adapter: postgresql
   pool: 5
-  database: innoz_rails_development
+  database: mas_interface_development
 
 production:
   adapter: postgresql
   pool: 5
-  database: innoz_rails_production
+  database: mas_interface_production

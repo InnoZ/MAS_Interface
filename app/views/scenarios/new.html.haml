@@ -4,19 +4,29 @@
       .col-xs-12.text-center
         %h1 Neues Szenario erstellen
       .col-xs-12.text-center.scenario-selection-form
-        = form_tag 'run_scenario' do |form|
+        = form_for @scenario do |f|
           .row
             .col-sm-6
               #map-germany
               .district-name
             .col-sm-6
-              = text_field_tag 'district_id', nil, placeholder: 'Landkreis wählen'
-              = select_tag 'year', options_for_select(2009..2040)
-              = button_tag class: 'btn btn-default' do
+              = f.text_field 'district_id', placeholder: 'Landkreis wählen'
+              = f.select 'year', options_for_select(2009..2040)
+              = f.submit class: 'btn btn-default' do
                 %i.icon-cog-alt
               - flash.each do |type, msg|
                 .alert{class: "alert-#{type} flash-message", role: 'alert'}
                   = msg
+
+    .row.text-center
+      .col-xs-12
+        %br
+        %h1 Bestehende Szenarios
+    - @scenarios.each do |s|
+      .row.text-center
+        .col-xs-4= s.district_id
+        .col-xs-4= s.year
+        .col-xs-4= s.json.last(40) + '...'
 
 :javascript
   window.districts_germany = #{@districts_germany}
