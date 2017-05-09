@@ -3,8 +3,8 @@
     .row
       .col-md-8.col-sm-9.center-block.text-center
         %header
-          %h1 Contact us
-          %p You want to know more? We would love to hear from you!
+        %h1= t('views.contact.contact_us')
+        %p= t('views.contact.contact_us_text')
     .row
       .col-sm-12
         .row
@@ -12,12 +12,12 @@
             %figure
               = image_tag 'pages/contact/euref.jpg'
           .col-sm-6.outer-top-md.inner-left-sm
-            %h3 Data Driven Mobility Consulting
+            %h3= t('views.index.header_part1')
             %table.icon-list-table
               %tr
                 %th.table-icon-cell
                   .icon-location
-                %th Innovationszentrum für Mobilität und gesellschaftlichen Wandel (InnoZ) GmbH - EUREF-Campus 16, 10829 Berlin (Schöneberg)
+                %th= t('innoz_address')
               %tr
                 %th.table-icon-cell
                   .icon-mobile
@@ -25,6 +25,6 @@
               %tr
                 %th.table-icon-cell
                   .icon-mail-1
-                %th= mail_to 'info@innoz.de'
+                %th= mail_to 'consulting@innoz.de'
 
 %section#contact-map.height-sm
