@@ -14,6 +14,16 @@ class MatsimStarter
     Kernel.system "java -cp #{MATSIM}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
   end
 
+  def json
+    json = File.read("#{DEFAULT}/#{id}_#{year}/features.json")
+
+    if json
+      JSON.parse(json).fetch('crs').fetch('properties').fetch('name')
+    else
+      raise "#{json} does not exist yet"
+    end
+  end
+
   private
 
   def year_range

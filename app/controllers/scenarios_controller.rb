@@ -8,9 +8,14 @@ class ScenariosController < ApplicationController
     flash[:success] = "Folgendes Szenario wurde gewählt: Jahr #{params[:year]} - GKZ #{params[:district_id]}"
     redirect_back(fallback_location: root_path)
     start_matsim
+    flash[:notice] = "#{matsim_json}"
   end
 
   def start_matsim
     MatsimStarter.new(Integer(params[:district_id]), Integer(params[:year])).start
+  end
+
+  def matsim_json
+    MatsimStarter.new(Integer(params[:district_id]), Integer(params[:year])).json
   end
 end
