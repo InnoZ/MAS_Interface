@@ -14,7 +14,7 @@
             .navbar-brand
               = image_tag 'logo_innoz.png', class: 'logo'
           %ul.nav.navbar-nav
-            %li{class: ('active-navbar-li' if current_page?(controller: 'pages', action: p))}
+            %li{class: ('active-navbar-li' if current_page?(select_scenario_path))}
               = link_to 'scenario', select_scenario_path
             - pages.each do |p|
               %li{class: ('active-navbar-li' if current_page?(controller: 'pages', action: p))}
