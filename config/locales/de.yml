@@ -1,0 +1,104 @@
+de:
+  locale_name: 'deutsch'
+
+#  learn_more: 'Mehr erfahren'
+#  project: 'Projekt'
+#  challenge: 'Herausforderung'
+#  approach: 'Herangehensweise'
+#  results: 'Ergebnisse'
+  contact_our_team: 'Kontaktieren Sie unser Mobility Consulting Team!'
+#  clients: 'Kunden'
+#  clients_text: 'Zu unseren Kunden gehören sowohl Industrieunternehmen als auch öffentliche, politische und wissenschaftliche Institutionen.'
+#  all: 'Alle'
+#  all_references: 'Alle Referenzen'
+#  references: 'Referenzen'
+#  source: 'Quelle'
+#  examples: 'Beispiele'
+  language: 'Sprache'
+#  project_manager: 'Projektleiter'
+  innoz_address: 'Innovationszentrum für Mobilität und gesellschaftlichen Wandel (InnoZ) GmbH - EUREF-Campus 16, 10829 Berlin (Schöneberg)'
+
+  views:
+    nav:
+      about: 'Über uns'
+#      services: 'Services'
+#      references: 'Referenzen'
+      contact: 'Kontakt'
+      privacy: 'Datenschutz'
+      imprint: 'Impressum'
+      about_us: 'Über uns'
+      contact_us: 'Kontaktieren Sie uns'
+
+    references:
+#      header: 'Referenzen'
+#      header_text: 'Unsere Referenzen sind gelungene Beispiele für die Einbindung von Daten in Entscheidungsprozesse. Datengestütze Beratung wird hier gelebt. Ob Großstadt oder ländlicher Raum, ob Unternehmen, Kommune oder Ministerium - die Referenzen des Moblitiy Consultings der InnoZ spiegeln die gesamte Vielfalt der Einsatzgebiete wieder. Measuring, Monitoring und Analysing werden als Dienste dabei ganz unterschiedlich kombiniert.'
+#      duration: 'Laufzeit:'
+#      client: 'Kunde/Auftraggeber:'
+#      location: 'Ort:'
+
+    index:
+      header_part1: 'Mobility Simulations'
+      header_part2: 'Wir berechnen Ihre Mobilitätsszenarien'
+      header_text: 'Toolgestützte Beratung auf Grundlage großer, verschnittener Datenmengen aus der Mobilitätswelt - immer aktuell und auf alle Gebietsgrößen und Zeiträume skalierbar.'
+      intro_header: 'Das InnoZ berät Sie'
+      intro_text: 'Wir beraten Sie zu neuen Formen der digital vernetzten (e)Mobilität, angefangen bei Strategie- und Maßnahmenkonzepten über Machbarkeitsstudien bis hin zur Umsetzung über Demonstratoren und Testbetriebe. Wir verbinden dabei klassische Methoden mit echtzeitbasierten Datenanalysen und regionalspezifischen Modellierungen. Sie als Kunde oder Stakeholder können hiermit schneller und kostengünstiger entscheiden, ob sich investive Entscheidungen im Bereich der Mobilität volks- und betriebswirtschaftlich lohnen.'
+
+    about:
+      header: 'Das Besondere an unseren Simulationen'
+      header_title: 'Mobilitässimulationen on Demand - anpassbar für Szenarien der Verkehrswende'
+      feature_1_title: 'Dynamische agentenbasierte Verkehrssimulation'
+      feature_1_content: 'Simulieren Sie ganze Tage in nur wenigen Minuten'
+      feature_2_title: 'Individual und öffentlicher Verkehr'
+      feature_2_content: 'Motorisierter Individualverkehr und öffentlicher Personenverkehr können simuliert werden'
+      feature_3_title: 'Unterstützt groß angelegte Szenarien'
+      feature_3_content: 'MATsim kann Millionen Agenten und sehr große sowie detaillierte Netzwerke simulieren'
+      feature_4_title: 'Vielseitige Analysen und Simulationsoutput'
+      feature_4_content: 'Vergleichen Sie Simulationsdaten einfach mit Daten aus der realen Welt'
+      feature_5_title: 'Modularer Aufbau des Frameworks'
+      feature_5_content: 'Wir erweitern MATSim mit selbst programmierten Algorithmen z.B. für autonome Fahrzeuge oder Shared Mobility'
+      feature_6_title: 'Konstante und aktive Weiterentwicklung'
+      feature_6_content: 'Die internationale Community entwickelt das Basisprogramm stetig weiter'
+      innoz_competency_title: 'Was das InnoZ bietet'
+      innoz_feature_1_title: 'Basismodell auf Landkreisebene'
+      innoz_feature_1_content: 'Wir bieten unseren Kunden ein rudimentäres Basismodell für jeden deutschen Landkreis an, geeignet um eine erste Einschätzung von potentiellen Märkten und Strukturen zu liefern'
+      innoz_feature_2_title: 'Unterstützung bei der Entscheidungsfindung'
+      innoz_feature_2_content: 'Auf Grundlage des Basismodells beraten wir unsere Kunden bei investiven Vorhaben im Mobilitätssegment, um wichtige In or Out Entscheidungen treffen zu können'
+      innoz_feature_3_title: 'Präzisierung und Kalibrierung des Modells'
+      innoz_feature_3_content: 'Bei günstigen Ergebnissen der ersten Simulation, bieten wir eine Präzisierung des Modells an, um finale Handlungsempfehlungen zu beispielsweise Geschäftsmodellen und Flottendimensionierung abzuleiten'
+      bottom_header: 'Demonstration einer Verkehrssimulation anhand einer autonomen RideSharing-Flotte'
+      video_title: 'Visualisierung einer autonomen RideSharing-Flotte in Cottbus'
+      datahub_header: 'Die Datenbasis: Das Mobility DataHub'
+      datahub_text: 'Unsere Datenbank wird ständig um aktuelle Zustandsdaten aus der neuen Mobilitätswelt erweitert. So besitzen wir eine stetig wachsende Basis für Analysen des Istzustandes, Erfassung kurz- bis langfristiger Trends und Zukunftsprognosen.'
+      datahub_list: >
+        <li>> 100 Mio. Carsharingfahrten (free floating)</li>
+        <li>> 100 Mio. Bikesharingfahrten</li>
+        <li>> 25 Mio. Carsharingfahrten (station based)</li>
+        <li>> 35.000 Ladestationen</li>
+        <li>und vieles mehr...</li>
+#      modalyzer: 'modalyzer'
+#      modalyzer_text: 'Smartphone-basierte Erfassung von Wegedaten mit vollautomatischer Verkehrsmittelerkennung'
+#      modalyzer_link: 'http://modalyzer.com'
+#      mobitypen: 'Mobilitätstypen'
+#      mobitypen_text: 'Gemeinsam mit LSE Cities hat das InnoZ 2015 eine Studie zu „Neuen Mobilitätstypen im urbanen Verkehr“ durchgeführt. In vier Metropolregionen Deutschlands und London wurden je ca. 1000 Personen repräsentativ zu aktellen Mobilitätstrends, ihren Einstellungen und Verhalten befragt.'
+#      mobitypen_link: 'https://www.innoz.de/sites/default/files/new-urban-mobility-london-and-berlin.pdf'
+
+    contact:
+      contact_us: 'Kontaktieren Sie uns'
+      contact_us_text: 'Möchten Sie mehr wissen? Wir freuen uns von Ihnen zu hören!'
+
+#    services:
+#      header: 'Services'
+#      header_text: 'Unser Angebot setzt sich aus den drei Servicebereichen Measuring, Monitoring und Analysing zusammen.'
+#      services_intro: 'In unserer Datenbank laufen große Mengen Daten unterschiedlichster Herkunft zusammen. Dabei handelt es sich sowohl um Ergebnisse von uns durchgeführter Messungen als auch um digitale Datenspuren aus dem Internet. Die permanente Aktualisierung und Speicherung dieser Daten garantiert konsistente und skalierbare Datengrundlagen für weitere Verarbeitungsschritte.'
+#      services_list: >
+#        <li>Erfassung und Erstauswertung von Mobilitätsstudien, Daten Dritter</li>
+#        <li>Erfassung und Erstauswertung digitaler Datenspuren für Shared Mobility</li>
+#        <li>Infrastrukturplanungen, z.B. Standorte für Ladestationen</li>
+#        <li>Geschäftsmodelle für neue Mobilitätsangebote (inkl. Simulationen)</li>
+#        <li>Verkehrsdisposition, u.a. für Sharing-Dienstleistungen</li>
+#        <li>Verkehrsplanung und -visualisierung, u.a. für autonomes Fahren und Carsharing</li>
+#        <li>Analysen, Modellierung & Verschneidung verschiedener Mobilitätsdaten</li>
+
+    footer:
+      part_of_innoz: 'Wir sind Teil des InnoZ.'
+      this_is_a_service_of_innoz: 'Data Driven Mobility Consulting ist ein Service des InnoZ.'
