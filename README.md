@@ -1,24 +1,5 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Creation of the germany district map
+* Database: `districts` in schema `gadm`
+* Aggregate to 'Landkreise' level: `select name_2 as name, cca_2 as id, st_simplify(st_union(geom), 0.01) as geom from gadm.districts where name_0 = 'Germany' group by name_2, cca_2;`
