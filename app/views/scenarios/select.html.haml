@@ -1,0 +1,19 @@
+%section#introduction.light-bg
+  .container.inner
+    .row
+      .col-xs-12.text-center.scenario-selection-form
+        = form_tag 'run_scenario' do |form|
+          .row
+            .col-sm-6.col-sm-offset-3
+              %h1 Wählen Sie ein Jahr
+              = text_field_tag 'year'
+            .col-sm-6.col-sm-offset-3
+              %h1 ...und eine Gemeinde
+              = text_field_tag 'district_id'
+            .col-sm-6.col-sm-offset-3
+              = submit_tag 'Okay', class: 'btn btn-default'
+          .row
+            .col-sm-6.col-sm-offset-3
+              - flash.each do |type, msg|
+                .alert{class: "alert-#{type} flash-message", role: 'alert'}
+                  = msg
