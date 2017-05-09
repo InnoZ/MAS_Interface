@@ -37,6 +37,7 @@ gem 'haml'
 gem 'postgresql'
 gem 'rubocop'
 gem 'mapbox-rails'
+gem 'rspec-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
