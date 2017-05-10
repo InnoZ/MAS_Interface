@@ -1,6 +1,5 @@
 jQuery(function() {
   jQuery('#map-germany').each(function() {
-
     var resizeMap = function() {
       var mapHeight = jQuery(window).height() - jQuery('header').height();
       jQuery('#map-germany').height(mapHeight);
@@ -23,7 +22,33 @@ jQuery(function() {
     var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}', {opacity: 0.5});
     boundaryLayer.addTo(map);
 
+    // Variable to keep track of highlighted marker
+    var highlight = null;
+    // Function for removing highlight
+    function removeHighlight() {
+      if (highlight !== null) {
+        highlight.setStyle(defaultStyle);
+        highlight = null;
+      }
+    }
+
+    var defaultStyle = {
+      'color': 'black',
+      'weight': 0
+    };
+
+    var highlightedStyle = {
+      'color': 'black',
+      'weight': 3
+    };
+
+    var featureById = {};
     var onEachFeature = function (feature, layer) {
+      // Keep track of highlighted marker
+      if (feature.properties.id) {
+        featureById[feature.properties.id] = layer;
+      };
+
       var name = feature.properties.name;
       layer.setStyle({fillColor: 'orange'});
       function mouseover(e) {
@@ -33,6 +58,9 @@ jQuery(function() {
         layer.setStyle({fillOpacity: 0.1});
       };
       function onclick(e) {
+        removeHighlight();
+        highlight = layer;
+        layer.setStyle(highlightedStyle);
         jQuery('#scenario_district_id').val(feature.properties.id);
       };
       layer.on('mouseout', mouseout);
@@ -40,7 +68,7 @@ jQuery(function() {
       layer.on('click', onclick);
     };
 
-    var districts = L.geoJson(window.districts_germany, {onEachFeature: onEachFeature});
+    var districts = L.geoJson(window.districts_germany, { onEachFeature: onEachFeature });
     districts.addTo(map);
     districts.setStyle({fillOpacity: 0.1, weight: 0});
 
@@ -51,5 +79,22 @@ jQuery(function() {
     ];
     var randomPosition = startPositions[Math.floor(Math.random()*startPositions.length)];
     map.setView(randomPosition, 9);
+
+    jQuery('.scenario-selection-form')
+      .on('mouseover', function() {
+        map.scrollWheelZoom.disable();
+      })
+      .on('mouseout', function() {
+        map.scrollWheelZoom.enable();
+      });
+
+    jQuery('#scenario_district_id').change(function() {
+      var districtId = jQuery(this).val();
+      removeHighlight();
+      var layer = featureById[districtId];
+      layer.setStyle(highlightedStyle);
+      highlight = layer;
+      map.fitBounds(layer.getBounds());
+    });
   });
 });
