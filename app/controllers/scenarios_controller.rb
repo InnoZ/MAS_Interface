@@ -1,9 +1,11 @@
 class ScenariosController < ApplicationController
+  GEOJSON = Rails.root.join('app', 'assets', 'geo')
+
   def new
     @scenarios = Scenario.all
     @scenario = Scenario.new
-    @districts_germany = File.read('app/assets/geo/districts_germany.geojson')
-    @germany_simple = File.read('app/assets/geo/germany_simple.geojson')
+    @districts_germany = File.read("#{GEOJSON}/districts_germany.geojson")
+    @germany_simple = File.read("#{GEOJSON}/germany_simple.geojson")
   end
 
   def create

@@ -1,6 +1,6 @@
 class MatsimStarter
-  DEFAULT = Rails.root.join('public', 'matsim', 'xml').to_s
-  MATSIM = Rails.root.join('lib', 'matsim', 'jar').to_s
+  DEFAULT = Rails.root.join('public', 'matsim', 'xml')
+  MATSIM = Rails.root.join('lib', 'matsim', 'jar')
 
   def initialize(id, year, folder = DEFAULT)
     @id = id
