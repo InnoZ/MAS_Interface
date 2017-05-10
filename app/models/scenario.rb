@@ -11,6 +11,17 @@ class Scenario < ApplicationRecord
   end
 
   def number_of_agents
-    JSON.parse(json)['features'].length
+    if valid_json?
+      JSON.parse(json).fetch('features').length
+    else
+      'Keine Agenten vorhanden'
+    end
+  end
+
+  def valid_json?
+    JSON.parse(json)
+    return true
+  rescue JSON::ParserError => e
+    return false
   end
 end
