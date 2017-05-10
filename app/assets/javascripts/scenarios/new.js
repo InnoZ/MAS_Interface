@@ -17,7 +17,7 @@ jQuery(function() {
 
     map = L.map('map-germany', {
       maxZoom: 9,
-      minZoom: 8,
+      minZoom: 7,
     });
 
     var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}', {opacity: 0.5});
