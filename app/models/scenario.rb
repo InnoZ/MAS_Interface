@@ -1,5 +1,5 @@
 class Scenario < ApplicationRecord
-  validates :district_id, presence: true, numericality: { only_integer: true }
+  validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }
 
   def district_name
