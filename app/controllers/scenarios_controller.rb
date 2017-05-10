@@ -10,7 +10,7 @@ class ScenariosController < ApplicationController
 
   def create
     @scenario = Scenario.new(
-      district_id: scenario_params[:district_id],
+      district_id: String(scenario_params[:district_id]),
       year: scenario_params[:year],
       json: result
     )
@@ -21,7 +21,7 @@ class ScenariosController < ApplicationController
   end
 
   def result
-    MatsimStarter.new(Integer(scenario_params[:district_id]), Integer(scenario_params[:year])).result
+    MatsimStarter.new(String(scenario_params[:district_id]), Integer(scenario_params[:year])).result
   end
 
   def scenario_params
