@@ -6,13 +6,14 @@
       .col-xs-12.text-center.scenario-selection-form
         = form_for @scenario do |f|
           .row
-            .col-sm-6
+            .col-xs-12
               #map-germany
-              .district-name
-            .col-sm-6
+            .col-sm-4
               = f.text_field 'district_id', placeholder: 'Landkreis wählen'
+            .col-sm-4
               = f.select 'year', options_for_select(2009..2040)
-              = f.submit class: 'btn btn-default' do
+            .col-sm-4
+              = f.button class: 'btn btn-default' do
                 %i.icon-cog-alt
               - flash.each do |type, msg|
                 .alert{class: "alert-#{type} flash-message", role: 'alert'}
@@ -30,4 +31,3 @@
 
 :javascript
   window.districts_germany = #{@districts_germany}
-  window.germany_simple = #{@germany_simple}

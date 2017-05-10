@@ -5,7 +5,6 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.all
     @scenario = Scenario.new
     @districts_germany = File.read("#{GEOJSON}/districts_germany.geojson")
-    @germany_simple = File.read("#{GEOJSON}/germany_simple.geojson")
   end
 
   def create

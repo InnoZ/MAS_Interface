@@ -17,13 +17,13 @@
 #map-germany {
   height: 500px;
   border: 1px solid #E6E9ED;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .leaflet-container {
   background-color: #f5f5f5;;
-}
-
-.district-name {
-  height: 20px;
 }

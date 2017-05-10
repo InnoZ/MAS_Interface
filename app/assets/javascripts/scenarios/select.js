@@ -5,20 +5,17 @@ jQuery(function() {
       minZoom: 6,
     });
 
-    L.geoJson(window.germany_simple)
-      .addTo(map)
-      .setStyle({fillColor: '#337ab7', fillOpacity: 1, stroke: false})
+    var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}');
+    boundaryLayer.addTo(map);
 
     var onEachFeature = function (feature, layer) {
       var name = feature.properties.name;
-      layer.setStyle({fillColor: '#506A85'});
+      layer.setStyle({fillColor: 'orange'});
       function mouseover(e) {
         layer.setStyle({fillOpacity: 0.2});
-        jQuery('.district-name').html(feature.properties.name);
       };
       function mouseout(e) {
-        layer.setStyle({fillOpacity: 1});
-        jQuery('.district-name').html('');
+        layer.setStyle({fillOpacity: 0.1});
       };
       function onclick(e) {
         jQuery('#scenario_district_id').val(feature.properties.id);
@@ -30,17 +27,14 @@ jQuery(function() {
 
     var districts = L.geoJson(window.districts_germany, {onEachFeature: onEachFeature});
     districts.addTo(map);
-    districts.setStyle({fillOpacity: 1, weight: 0.5, color: 'black'});
+    districts.setStyle({fillOpacity: 0.1, weight: 0});
 
-    map.fitBounds(districts.getBounds());
-
-    jQuery(window).mousemove(function(e) {
-      mouseX = e.pageX;
-      mouseY = e.pageY;
-      jQuery('.district-name').css({
-        'top': mouseY,
-        'left': mouseX,
-      });
-    });
+    var startPositions = [
+      [51.467696956223364, 10.294189453125],
+      [52.80608223985886, 10.52490234375],
+      [50.48547354578499, 9.3548583984375],
+    ];
+    var randomPosition = startPositions[Math.floor(Math.random()*startPositions.length)];
+    map.setView(randomPosition, 8);
   });
 });
