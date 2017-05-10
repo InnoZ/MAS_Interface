@@ -8,9 +8,9 @@
           .row
             .col-xs-12
               #map-germany
-            .col-sm-4
-              = f.text_field 'district_id', placeholder: 'Landkreis wählen'
-            .col-sm-4
+            .col-sm-6
+              = f.select 'district_id', DistrictsGermany.list
+            .col-sm-2
               = f.select 'year', options_for_select(2009..2040)
             .col-sm-4
               = f.button class: 'btn btn-default' do
@@ -18,23 +18,6 @@
               - flash.each do |type, msg|
                 .alert{class: "alert-#{type} flash-message", role: 'alert'}
                   = msg
-
-    .row.text-center
-      .col-xs-12
-        %br
-        %h1 Bestehende Szenarios
-    - @scenarios.each do |s|
-      = link_to scenario_path(s) do
-        .row.text-center
-          .col-xs-4
-            %b Landkreis:
-            = s.district_id
-          .col-xs-4
-            %b Jahr:
-            = s.year
-          .col-xs-4
-            %b Agenten:
-            = JSON.parse(s.json)['features'].length
 
 :javascript
   window.districts_germany = #{@districts_germany}
