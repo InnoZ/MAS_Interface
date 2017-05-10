@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170509144720) do
   enable_extension "plpgsql"
 
   create_table "scenarios", force: :cascade do |t|
-    t.integer  "district_id", null: false
+    t.string   "district_id", null: false
     t.integer  "year",        null: false
     t.json     "json",        null: false
     t.datetime "created_at",  null: false
