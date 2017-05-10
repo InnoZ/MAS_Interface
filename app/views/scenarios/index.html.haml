@@ -5,17 +5,25 @@
         %br
         %h1 Bestehende Szenarios
         = render 'layouts/flash'
-    - @scenarios.each do |s|
-      = link_to scenario_path(s) do
-        .row.scenario-row
-          .col-sm-4
-            %h3= s.district_name
-          .col-xs-4.col-sm-2
-            %b Jahr:
-            = s.year
-          .col-xs-4.col-sm-2
-            %b Agenten:
-            = s.number_of_agents
-          .col-xs-4.col-sm-4
-            %b erstellt am
-            = s.created_at
+
+    .row
+      .col-sm-12.portfolio
+        %ul.filter.text-center
+          %li
+            - @scenarios.all.map(&:year).uniq.sort.each do |year|
+              %a.active{'data-filter' => ".year-#{year}", href: '#'}
+                = year
+            %a.active{'data-filter' => '*', href: '#'} Alle
+
+        %ul.isotope.items.col-3.gap
+          - @scenarios.each do |s|
+            %li.item.thumb{class: "year-#{s.year}"}
+              %figure
+                -# .icon-overlay.icn-link
+                -#   = link_to scenario_path(s) do
+                -#     = image_tag '', height: 200
+                %figcaption.bordered.no-top-border
+                  .info
+                    = link_to scenario_path(s) do
+                      %h4= s.district_name
+                      %p= s.year
