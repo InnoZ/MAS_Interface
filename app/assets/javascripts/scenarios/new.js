@@ -1,11 +1,11 @@
 jQuery(function() {
   jQuery('#map-germany').each(function() {
     map = L.map('map-germany', {
-      maxZoom: 8,
-      minZoom: 6,
+      maxZoom: 9,
+      minZoom: 8,
     });
 
-    var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}');
+    var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}', {opacity: 0.5});
     boundaryLayer.addTo(map);
 
     var onEachFeature = function (feature, layer) {
@@ -35,6 +35,6 @@ jQuery(function() {
       [50.48547354578499, 9.3548583984375],
     ];
     var randomPosition = startPositions[Math.floor(Math.random()*startPositions.length)];
-    map.setView(randomPosition, 8);
+    map.setView(randomPosition, 9);
   });
 });

@@ -1,21 +1,19 @@
 %section#new
-  .container.inner-xs
+  .container-full
     .row
-      .col-xs-12.text-center
-        %h1 Neues Szenario erstellen
-      .col-xs-12.text-center.scenario-selection-form
-        = form_for @scenario do |f|
-          .row
-            .col-xs-12
-              #map-germany
-            .col-sm-6
-              = f.select 'district_id', DistrictsGermany.list
-            .col-sm-2
-              = f.select 'year', options_for_select(2009..2040)
-            .col-sm-4
-              = f.button class: 'btn btn-default' do
-                %i.icon-cog-alt
-              = render 'layouts/flash'
+      .col-xs-12
+        #map-germany
+          = form_for @scenario do |f|
+            .scenario-selection-form
+              .row
+                .col-sm-6
+                  = f.select 'district_id', DistrictsGermany.list
+                .col-sm-2
+                  = f.select 'year', options_for_select(2009..2040)
+                .col-sm-4
+                  = f.button class: 'btn btn-default' do
+                    %i.icon-cog-alt
+                  = render 'layouts/flash'
 
 :javascript
   window.districts_germany = #{@districts_germany}
