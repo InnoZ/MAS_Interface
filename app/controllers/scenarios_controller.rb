@@ -21,10 +21,10 @@ class ScenariosController < ApplicationController
     if @scenario.save
       flash[:success] = 'Szenario erstellt'
       redirect_to scenarios_path
-    else
-      flash[:danger] = 'Ups, etwas ist schief gegangen'
-      redirect_to :back
     end
+  rescue => e
+    flash[:danger] = "Ups, etwas ist schief gegangen => #{e.message}"
+    redirect_to :back
   end
 
   def result
