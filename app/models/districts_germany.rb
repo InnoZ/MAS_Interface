@@ -4,7 +4,7 @@ class DistrictsGermany
       p = d.fetch('properties')
       [
         p.fetch('name'),
-        p.fetch('id')
+        p.fetch('id'),
       ]
     end.sort
   end

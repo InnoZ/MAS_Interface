@@ -1,4 +1,4 @@
-%section#introduction
+%section#new
   .container.inner-xs
     .row
       .col-xs-12.text-center
@@ -15,9 +15,7 @@
             .col-sm-4
               = f.button class: 'btn btn-default' do
                 %i.icon-cog-alt
-              - flash.each do |type, msg|
-                .alert{class: "alert-#{type} flash-message", role: 'alert'}
-                  = msg
+              = render 'layouts/flash'
 
 :javascript
   window.districts_germany = #{@districts_germany}

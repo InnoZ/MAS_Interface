@@ -1,18 +1,24 @@
-%section#introduction
+%section#show
   .container.inner-xs
     .row
-      .col-xs-12
+      .col-sm-4
         #district-geometry
-    .row
-      .col-xs-4
-        %b Landkreis:
-        = @scenario.district_name
-      .col-xs-4
-        %b Jahr:
-        = @scenario.year
-      .col-xs-4
-        %b Agenten:
-        = @scenario.number_of_agents
+      .col-sm-8
+        .row
+          .col-xs-6
+            Landkreis:
+            %h3= @scenario.district_name
+          .col-xs-4
+            Jahr:
+            %h3= @scenario.year
+          .col-xs-2
+            Agenten:
+            %h3= @scenario.number_of_agents
+        .row
+          .col-xs-12
+            .pull-right
+              %b erstellt am
+              = @scenario.created_at
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
