@@ -9,7 +9,7 @@ class ScenariosController < ApplicationController
 
   def new
     @scenario = Scenario.new
-    @districts_germany = DistrictsGermany.file
+    @districts_germany = DistrictsGermany.all.to_json
   end
 
   def create

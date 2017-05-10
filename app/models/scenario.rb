@@ -3,7 +3,11 @@ class Scenario < ApplicationRecord
   validates :year, presence: true, numericality: { only_integer: true }
 
   def district_name
-    DistrictsGermany.list.find { |d| d[1] == district_id }[0]
+    DistrictsGermany.name(district_id)
+  end
+
+  def district_geometry
+    DistrictsGermany.geometry(district_id)
   end
 
   def number_of_agents

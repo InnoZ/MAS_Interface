@@ -1,6 +1,9 @@
 %section#introduction
   .container.inner-xs
     .row
+      .col-xs-12
+        #district-geometry
+    .row
       .col-xs-4
         %b Landkreis:
         = @scenario.district_name
@@ -10,3 +13,6 @@
       .col-xs-4
         %b Agenten:
         = @scenario.number_of_agents
+
+:javascript
+  window.districtGeometry = #{@scenario.district_geometry.to_json}
