@@ -1,6 +1,6 @@
 class MatsimStarter
-  DEFAULT = Rails.root.join('public', 'matsim', 'xml').to_s
-  MATSIM = Rails.root.join('lib', 'matsim', 'jar').to_s
+  DEFAULT = Rails.root.join('public', 'matsim', 'xml')
+  MATSIM = Rails.root.join('lib', 'matsim', 'jar')
 
   def initialize(id, year, folder = DEFAULT)
     @id = id
@@ -10,11 +10,11 @@ class MatsimStarter
     run
   end
 
+  # rubocop:disable LineLength
   def run
     Kernel.system "java -cp #{MATSIM}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
   end
 
-  # rubocop:disable LineLength
   def result
     File.read("#{DEFAULT}/#{id}_#{year}/features.json")
   end
