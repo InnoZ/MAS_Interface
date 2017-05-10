@@ -1,5 +1,20 @@
 jQuery(function() {
   jQuery('#map-germany').each(function() {
+
+    var resizeMap = function() {
+      var mapHeight = jQuery(window).height() - jQuery('header').height();
+      jQuery('#map-germany').height(mapHeight);
+    };
+    resizeMap();
+    jQuery(window).resize(function() {
+      // delay for browser minimizing/maximizing
+      setTimeout(function() {
+        resizeMap()
+      }, 100);
+    });
+    jQuery('.navbar-collapse').on('shown.bs.collapse', function() { resizeMap(); });
+    jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
+
     map = L.map('map-germany', {
       maxZoom: 9,
       minZoom: 8,
