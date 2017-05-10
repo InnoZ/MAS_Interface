@@ -1,5 +1,6 @@
 class ScenariosController < ApplicationController
   def index
+    @districts_germany = DistrictsGermany.all.to_json
     @scenarios = Scenario.all
   end
 

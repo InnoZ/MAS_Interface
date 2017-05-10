@@ -25,6 +25,7 @@
 //= require viewport-units-buggyfill
 //= require template_scripts
 //= require mapbox
+//= require_self
 //= require_tree
 
 jQuery(function() {
@@ -40,4 +41,22 @@ jQuery(function() {
     map.setView(innozCoordinates, 12);
     var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>Innovationszentrum für Mobilität und gesellschaftlichen Wandel GmbH</a>");
   });
+
+  staticDistrictMap = function(divId, json)  {
+    map = L.map(divId, { zoomControl:false });
+    var district = L.geoJson(json);
+    district.addTo(map);
+    district.setStyle({fillOpacity: 1, fillColor:'#3F8DBF', weight: 0});
+    map.fitBounds(district.getBounds());
+
+    // let map appear like static graphic
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
+    if (map.tap) map.tap.disable();
+    jQuery(divId).css('cursor', 'default');
+  };
 });

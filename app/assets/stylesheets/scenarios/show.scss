@@ -1,6 +1,6 @@
 #district-geometry {
   height: 200px;
-  .leaflet-control-attribution {
-    display: none;
+  .leaflet-clickable {
+    cursor: default;  
   }
 }

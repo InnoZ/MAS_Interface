@@ -16,14 +16,16 @@
             %a.active{'data-filter' => '*', href: '#'} Alle
 
         %ul.isotope.items.col-3.gap
-          - @scenarios.each do |s|
+          - @scenarios.each_with_index do |s, i|
             %li.item.thumb{class: "year-#{s.year}"}
               %figure
-                -# .icon-overlay.icn-link
-                -#   = link_to scenario_path(s) do
-                -#     = image_tag '', height: 200
+                = link_to scenario_path(s) do
+                  .icon-overlay.icn-link
+                    .index-district-map{id: "map_#{i}",  district_id: s.district_id}
                 %figcaption.bordered.no-top-border
                   .info
-                    = link_to scenario_path(s) do
-                      %h4= s.district_name
-                      %p= s.year
+                    %h4= s.district_name
+                    %p= s.year
+
+:javascript
+  window.districts_germany = #{@districts_germany}
