@@ -19,7 +19,7 @@ jQuery(function() {
       minZoom: 7,
     });
 
-    var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}', {opacity: 0.5});
+    var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}', {opacity: 0.3});
     boundaryLayer.addTo(map);
 
     // Variable to keep track of highlighted marker
