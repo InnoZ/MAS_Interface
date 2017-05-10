@@ -3,10 +3,10 @@
     .row
       .col-xs-4
         %b Landkreis:
-        = @scenario.district_id
+        = @scenario.district_name
       .col-xs-4
         %b Jahr:
         = @scenario.year
       .col-xs-4
         %b Agenten:
-        = JSON.parse(@scenario.json)['features'].length
+        = @scenario.number_of_agents

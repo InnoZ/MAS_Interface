@@ -1,14 +1,15 @@
 class ScenariosController < ApplicationController
-  GEOJSON = Rails.root.join('app', 'assets', 'geo')
+  def index
+    @scenarios = Scenario.all
+  end
 
   def show
     @scenario = Scenario.find(params[:id])
   end
 
   def new
-    @scenarios = Scenario.all
     @scenario = Scenario.new
-    @districts_germany = File.read("#{GEOJSON}/districts_germany.geojson")
+    @districts_germany = DistrictsGermany.file
   end
 
   def create
@@ -19,8 +20,10 @@ class ScenariosController < ApplicationController
     )
     if @scenario.save
       flash[:success] = 'Szenario erstellt'
-      redirect_back(fallback_location: root_path)
+    else
+      flash[:danger] = 'Ups, etwas ist schief gegangen'
     end
+    redirect_to scenarios_path
   end
 
   def result

@@ -15,7 +15,9 @@
               = image_tag 'logo_innoz_simulations_grey.png', class: 'logo'
           %ul.nav.navbar-nav
             %li{class: ('active-navbar-li' if current_page?(new_scenario_path))}
-              = link_to 'scenario', new_scenario_path
+              = link_to 'Erstellen', new_scenario_path
+            %li{class: ('active-navbar-li' if current_page?(scenarios_path))}
+              = link_to 'Szenarios', scenarios_path
             - pages.each do |p|
               %li{class: ('active-navbar-li' if current_page?(controller: 'pages', action: p))}
                 = link_to p, send(p + '_path')

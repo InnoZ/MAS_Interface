@@ -1,0 +1,18 @@
+%section#introduction
+  .container.inner-xs
+    .row.text-center
+      .col-xs-12
+        %br
+        %h1 Bestehende Szenarios
+    - @scenarios.each do |s|
+      = link_to scenario_path(s) do
+        .row
+          .col-xs-4
+            %b Landkreis:
+            = s.district_name
+          .col-xs-4
+            %b Jahr:
+            = s.year
+          .col-xs-4
+            %b Agenten:
+            = s.number_of_agents
