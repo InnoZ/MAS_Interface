@@ -1,6 +1,10 @@
 class ScenariosController < ApplicationController
   GEOJSON = Rails.root.join('app', 'assets', 'geo')
 
+  def show
+    @scenario = Scenario.find(params[:id])
+  end
+
   def new
     @scenarios = Scenario.all
     @scenario = Scenario.new
@@ -14,7 +18,7 @@ class ScenariosController < ApplicationController
       json: result
     )
     if @scenario.save
-      flash[:success] = "Folgendes Szenario wurde gewählt: Jahr #{params[:year]} - GKZ #{params[:district_id]}"
+      flash[:success] = 'Szenario erstellt'
       redirect_back(fallback_location: root_path)
     end
   end

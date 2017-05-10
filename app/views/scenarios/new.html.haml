@@ -24,10 +24,17 @@
         %br
         %h1 Bestehende Szenarios
     - @scenarios.each do |s|
-      .row.text-center
-        .col-xs-4= s.district_id
-        .col-xs-4= s.year
-        .col-xs-4= s.json.last(40) + '...'
+      = link_to scenario_path(s) do
+        .row.text-center
+          .col-xs-4
+            %b Landkreis:
+            = s.district_id
+          .col-xs-4
+            %b Jahr:
+            = s.year
+          .col-xs-4
+            %b Agenten:
+            = JSON.parse(s.json)['features'].length
 
 :javascript
   window.districts_germany = #{@districts_germany}
