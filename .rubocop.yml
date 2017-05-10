@@ -11,6 +11,8 @@ AllCops:
     - 'config/puma.rb'
     - 'config/spring.rb'
     - 'config/environments/**'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
 Style/Documentation:
   Exclude:
     - 'spec/**/*'

@@ -10,11 +10,11 @@ class MatsimStarter
     run
   end
 
+  # rubocop:disable LineLength
   def run
     Kernel.system "java -cp #{MATSIM}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
   end
 
-  # rubocop:disable LineLength
   def result
     File.read("#{DEFAULT}/#{id}_#{year}/features.json")
   end
