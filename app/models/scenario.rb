@@ -10,15 +10,23 @@ class Scenario < ApplicationRecord
     DistrictsGermany.geometry(district_id)
   end
 
+  def modal_split
+    if valid_json?(statistics)
+      JSON.parse(statistics)
+    else
+      'Keine Statistik vorhanden'
+    end
+  end
+
   def number_of_agents
-    if valid_json?
-      JSON.parse(json).fetch('features').length
+    if valid_json?(agents)
+      JSON.parse(agents).fetch('features').length
     else
       'Keine Agenten vorhanden'
     end
   end
 
-  def valid_json?
+  def valid_json?(json)
     JSON.parse(json)
     return true
   rescue JSON::ParserError => e

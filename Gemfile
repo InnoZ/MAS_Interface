@@ -38,6 +38,7 @@ gem 'postgresql'
 gem 'rubocop'
 gem 'mapbox-rails'
 gem 'rspec-rails'
+gem 'novus-nvd3-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

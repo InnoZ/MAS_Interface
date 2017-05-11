@@ -25,7 +25,8 @@ class ScenariosController < ApplicationController
         @scenario = Scenario.new(
           district_id: String(scenario_params[:district_id]),
           year: scenario_params[:year],
-          json: result
+          agents: matsim.agents,
+          statistics: matsim.statistics,
         )
         if @scenario.save
           flash[:success] = 'Szenario erstellt'
@@ -38,8 +39,8 @@ class ScenariosController < ApplicationController
       redirect_to :back
   end
 
-  def result
-    MatsimStarter.new(String(scenario_params[:district_id]), Integer(scenario_params[:year])).result
+  def matsim
+    @matsim ||= MatsimStarter.new(String(scenario_params[:district_id]), Integer(scenario_params[:year]))
   end
 
   def record_exists?
