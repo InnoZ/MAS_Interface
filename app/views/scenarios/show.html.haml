@@ -13,10 +13,14 @@
     .row
       .col-xs-12
       = render 'layouts/flash'
-      .col-sm-5.text-center
-        %h1= @scenario.number_of_agents.to_s + ' Agenten'
-      .col-sm-7.text-center
-        %h1 Modal Split
+      .col-sm-5
+        %h1.text-center= @scenario.agent_features.length.to_s + ' Agenten'
+        .row
+          - @scenario.agent_features.each do |a|
+            .col-xs-9.col-xs-offset-3
+              %h3= a.capitalize
+      .col-sm-7
+        %h1.text-center Modal Split
         %svg#modal-split-chart
     .row
       .col-xs-12

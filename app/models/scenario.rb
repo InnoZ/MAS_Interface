@@ -11,25 +11,20 @@ class Scenario < ApplicationRecord
   end
 
   def modal_split
-    if valid_json?(statistics)
-      JSON.parse(statistics)
-    else
-      'Keine Statistik vorhanden'
+    parse_json(statistics)
+  end
+
+  def agent_features
+    parse_json(agents).fetch('features').map do |a|
+      name = a.fetch('properties').fetch('person_id')
+      mode = a.fetch('properties').fetch('mode')
+      "#{name} | #{mode}"
     end
   end
 
-  def number_of_agents
-    if valid_json?(agents)
-      JSON.parse(agents).fetch('features').length
-    else
-      'Keine Agenten vorhanden'
-    end
-  end
-
-  def valid_json?(json)
+  def parse_json(json)
     JSON.parse(json)
-    return true
   rescue JSON::ParserError => e
-    return false
+    return 'no valid json'
   end
 end
