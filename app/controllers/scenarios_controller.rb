@@ -14,18 +14,23 @@ class ScenariosController < ApplicationController
   end
 
   def create
-    if record_exists?
-      flash[:success] = 'Szenario ist bereits vorhanden'
-      redirect_to scenarios_path
+    unless scenario_params[:district_id].present?
+      flash[:danger] = 'Bitte Landkreis wählen'
+      redirect_to :back
     else
-      @scenario = Scenario.new(
-        district_id: String(scenario_params[:district_id]),
-        year: scenario_params[:year],
-        json: result
-      )
-      if @scenario.save
-        flash[:success] = 'Szenario erstellt'
+      if record_exists?
+        flash[:success] = 'Szenario ist bereits vorhanden'
         redirect_to scenarios_path
+      else
+        @scenario = Scenario.new(
+          district_id: String(scenario_params[:district_id]),
+          year: scenario_params[:year],
+          json: result
+        )
+        if @scenario.save
+          flash[:success] = 'Szenario erstellt'
+          redirect_to scenarios_path
+        end
       end
     end
     rescue => e

@@ -25,6 +25,7 @@
 //= require viewport-units-buggyfill
 //= require template_scripts
 //= require mapbox
+//= require awesomplete
 //= require_self
 //= require_tree
 

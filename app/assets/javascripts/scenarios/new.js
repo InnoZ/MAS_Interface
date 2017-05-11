@@ -61,14 +61,14 @@ jQuery(function() {
         removeHighlight();
         highlight = layer;
         layer.setStyle(highlightedStyle);
-        jQuery('#scenario_district_id').val(feature.properties.id);
+        jQuery('.hidden-district-input').val(feature.properties.id).change();
       };
       layer.on('mouseout', mouseout);
       layer.on('mouseover', mouseover);
       layer.on('click', onclick);
     };
 
-    var districts = L.geoJson(window.districts_germany, { onEachFeature: onEachFeature });
+    var districts = L.geoJson(window.districtsGermanyGeo, { onEachFeature: onEachFeature });
     districts.addTo(map);
     districts.setStyle({fillOpacity: 0.1, weight: 0});
 
@@ -83,18 +83,29 @@ jQuery(function() {
     jQuery('.scenario-selection-form')
       .on('mouseover', function() {
         map.scrollWheelZoom.disable();
+        map.dragging.disable();
       })
       .on('mouseout', function() {
         map.scrollWheelZoom.enable();
+        map.dragging.enable();
       });
 
-    jQuery('#scenario_district_id').change(function() {
+    jQuery('.hidden-district-input').change(function() {
       var districtId = jQuery(this).val();
       removeHighlight();
       var layer = featureById[districtId];
       layer.setStyle(highlightedStyle);
       highlight = layer;
       map.fitBounds(layer.getBounds());
+      jQuery('#district-input').val(layer.feature.properties.name);
+    });
+
+    new Awesomplete('#district-input', {
+    	list: districtsGermanyList,
+    	replace: function(input) {
+        this.input.value = input.label;
+        jQuery('.hidden-district-input').val(input.value).change();
+      }
     });
   });
 });

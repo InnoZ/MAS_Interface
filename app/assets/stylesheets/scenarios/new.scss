@@ -2,23 +2,34 @@
   height: 80vh;
 
   .scenario-selection-form {
-    width: calc(100% - 40px);
+    max-width: 500px;
     position: absolute;
-    bottom:  10px;
-    left: 20px;
+    top:  10px;
+    right: 0;
     z-index: 9999;
 
-    input, button {
+    .awesomplete {
       width: 100%;
-      height: 60px;
-      font-size: 30px;
-      text-align: center;
-      margin-top: 0;
+      ul {
+        font-size: 20px;
+      }
+    }
+    input, button {
+      color: #506A85;
+      width: 100%;
+      height: 50px;
+      font-size: 23px;
       border: 1px solid grey;
+      padding-left: 15px;
+    }
+    button {
+      margin-top: -7px;
     }
     select {
-      height: 60px;
-      font-size: 25px;
+      background-color: white;
+      color: #506A85;
+      height: 50px;
+      font-size: 23px;
       width: 100%;
       border: 1px solid grey;
     }
