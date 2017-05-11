@@ -62,4 +62,7 @@ jQuery(function() {
     if (map.tap) map.tap.disable();
     jQuery(divId).css('cursor', 'default');
   };
+
+  // fade out flash messages after a while
+  jQuery('.flash-message').delay(5000).fadeOut(800);
 });

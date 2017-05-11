@@ -23,12 +23,12 @@ jQuery(function() {
     boundaryLayer.addTo(map);
 
     // Variable to keep track of highlighted marker
-    var highlight = null;
+    var highlightedLayer = null;
     // Function for removing highlight
     function removeHighlight() {
-      if (highlight !== null) {
-        highlight.setStyle(defaultStyle);
-        highlight = null;
+      if (highlightedLayer !== null) {
+        highlightedLayer.setStyle(defaultStyle);
+        highlightedLayer = null;
       }
     }
 
@@ -63,9 +63,6 @@ jQuery(function() {
         layer.setStyle({fillOpacity: 0.1});
       };
       function onclick(e) {
-        removeHighlight();
-        highlight = layer;
-        layer.setStyle(highlightedStyle);
         jQuery('.hidden-district-input').val(feature.properties.id).change();
       };
       layer.on('mouseout', mouseout);
@@ -98,11 +95,10 @@ jQuery(function() {
     jQuery('.hidden-district-input').change(function() {
       var districtId = jQuery(this).val();
       removeHighlight();
-      var layer = featureById[districtId];
-      layer.setStyle(highlightedStyle);
-      highlight = layer;
-      map.fitBounds(layer.getBounds());
-      jQuery('#district-input').val(layer.feature.properties.name);
+      highlightedLayer = featureById[districtId];
+      highlightedLayer.setStyle(highlightedStyle);
+      map.fitBounds(highlightedLayer.getBounds());
+      jQuery('#district-input').val(highlightedLayer.feature.properties.name);
     });
 
     new Awesomplete('#district-input', {

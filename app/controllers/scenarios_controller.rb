@@ -18,9 +18,9 @@ class ScenariosController < ApplicationController
       flash[:danger] = 'Bitte Landkreis wählen'
       redirect_to :back
     else
-      if record_exists?
+      if existing_scenario
         flash[:success] = 'Szenario ist bereits vorhanden'
-        redirect_to scenarios_path
+        redirect_to scenario_path(existing_scenario)
       else
         @scenario = Scenario.new(
           district_id: String(scenario_params[:district_id]),
@@ -30,7 +30,7 @@ class ScenariosController < ApplicationController
         )
         if @scenario.save
           flash[:success] = 'Szenario erstellt'
-          redirect_to scenarios_path
+          redirect_to scenario_path(@scenario)
         end
       end
     end
@@ -43,11 +43,11 @@ class ScenariosController < ApplicationController
     @matsim ||= MatsimStarter.new(String(scenario_params[:district_id]), Integer(scenario_params[:year]))
   end
 
-  def record_exists?
-    !!Scenario.where(
+  def existing_scenario
+    @existing_scenario ||= Scenario.find_by(
       district_id: String(scenario_params[:district_id]),
       year: scenario_params[:year],
-    ).exists?
+    )
   end
 
   def scenario_params
