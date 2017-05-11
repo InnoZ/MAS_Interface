@@ -33,13 +33,19 @@ jQuery(function() {
     }
 
     var defaultStyle = {
-      'color': 'black',
-      'weight': 0
+      'color': '#283645',
+      'opacity': 0.8,
+      'weight': 0,
+      'fillColor': 'orange',
+      'fillOpacity': 0.1,
     };
 
     var highlightedStyle = {
-      'color': 'black',
-      'weight': 3
+      'color': '#283645',
+      'opacity': 0.8,
+      'weight': 3,
+      'fillColor': 'orange',
+      'fillOpacity': 0.1,
     };
 
     var featureById = {};
@@ -50,7 +56,6 @@ jQuery(function() {
       };
 
       var name = feature.properties.name;
-      layer.setStyle({fillColor: 'orange'});
       function mouseover(e) {
         layer.setStyle({fillOpacity: 0.2});
       };
@@ -69,8 +74,8 @@ jQuery(function() {
     };
 
     var districts = L.geoJson(window.districtsGermanyGeo, { onEachFeature: onEachFeature });
+    districts.setStyle(defaultStyle);
     districts.addTo(map);
-    districts.setStyle({fillOpacity: 0.1, weight: 0});
 
     var startPositions = [
       [51.467696956223364, 10.294189453125],
