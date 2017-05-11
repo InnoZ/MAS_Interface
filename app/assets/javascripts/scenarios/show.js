@@ -1,6 +1,6 @@
 jQuery(function() {
   jQuery('#district-geometry').each(function() {
-    staticDistrictMap('district-geometry', window.districtGeometry);
+    staticDistrictMap('district-geometry', window.districtGeometry, 'rgb(206, 210, 236)');
   });
 
   jQuery('#modal-split-chart').each(function() {

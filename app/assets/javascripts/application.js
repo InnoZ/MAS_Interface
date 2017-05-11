@@ -45,11 +45,11 @@ jQuery(function() {
     var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>Innovationszentrum für Mobilität und gesellschaftlichen Wandel GmbH</a>");
   });
 
-  staticDistrictMap = function(divId, json)  {
+  staticDistrictMap = function(divId, json, color)  {
     map = L.map(divId, { zoomControl:false });
     var district = L.geoJson(json);
     district.addTo(map);
-    district.setStyle({fillOpacity: 1, fillColor:'#3F8DBF', weight: 0});
+    district.setStyle({fillOpacity: 1, fillColor: color, weight: 0});
     map.fitBounds(district.getBounds());
 
     // let map appear like static graphic

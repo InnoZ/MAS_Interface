@@ -1,10 +1,20 @@
-#district-geometry {
-  height: 300px;
-  .leaflet-clickable {
-    cursor: default;
+#hero {
+  #district-geometry {
+    height: 200px;
+    .leaflet-clickable {
+      cursor: default;
+    }
+  }
+  header {
+    padding-top: 20px;
+    h1, h2 {
+      line-height: 60px;
+      vertical-align: middle;
+    }
   }
 }
 
 #modal-split-chart {
-  height: 300px;
+  height: 40vw;
+  min-height: 300px;
 }

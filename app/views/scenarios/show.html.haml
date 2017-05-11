@@ -1,20 +1,22 @@
+%section#hero.tint-bg
+  .container.inner-xs
+    .row
+      .col-sm-4
+        #district-geometry
+      .col-sm-8
+        %header
+          %h2= @scenario.district_name
+          %h1= @scenario.year
+
 %section#show
   .container.inner-xs
     .row
-      .col-sm-3
-        #district-geometry
-      .col-sm-6
-        .row
-          = render 'layouts/flash'
-          .col-xs-8
-            Landkreis:
-            %h3= @scenario.district_name
-          .col-xs-4
-            Jahr:
-            %h3= @scenario.year
-          .col-xs-12
-            %h1= @scenario.number_of_agents.to_s + ' Agenten'
-      .col-sm-3
+      .col-xs-12
+      = render 'layouts/flash'
+      .col-sm-5.text-center
+        %h1= @scenario.number_of_agents.to_s + ' Agenten'
+      .col-sm-7.text-center
+        %h1 Modal Split
         %svg#modal-split-chart
     .row
       .col-xs-12
