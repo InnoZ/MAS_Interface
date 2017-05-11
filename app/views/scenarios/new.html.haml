@@ -11,9 +11,9 @@
                 .col-sm-2
                   = f.select 'year', options_for_select(2009..2040)
                 .col-sm-4
+                  = render 'layouts/flash'
                   = f.button class: 'btn btn-default' do
                     %i.icon-cog-alt
-                  = render 'layouts/flash'
 
 :javascript
   window.districts_germany = #{@districts_germany}
