@@ -1,24 +1,25 @@
 %section#show
   .container.inner-xs
     .row
-      .col-sm-4
+      .col-sm-3
         #district-geometry
-      .col-sm-8
+      .col-sm-6
         .row
-          .col-xs-6
+          .col-xs-8
             Landkreis:
             %h3= @scenario.district_name
           .col-xs-4
             Jahr:
             %h3= @scenario.year
-          .col-xs-2
-            Agenten:
-            %h3= @scenario.number_of_agents
-        .row
           .col-xs-12
-            .pull-right
-              %b erstellt am
-              = @scenario.created_at
+            %h1= @scenario.number_of_agents.to_s + ' Agenten'
+      .col-sm-3
+        %svg#modal-split-chart
+    .row
+      .col-xs-12
+        %b erstellt am
+        = @scenario.created_at
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
+  window.modalSplit = #{@scenario.modal_split.to_json}

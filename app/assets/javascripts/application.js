@@ -26,6 +26,8 @@
 //= require template_scripts
 //= require mapbox
 //= require awesomplete
+//= require d3.v3
+//= require nv.d3
 //= require_self
 //= require_tree
 

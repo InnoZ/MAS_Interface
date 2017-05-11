@@ -1,6 +1,10 @@
 #district-geometry {
-  height: 200px;
+  height: 300px;
   .leaflet-clickable {
-    cursor: default;  
+    cursor: default;
   }
+}
+
+#modal-split-chart {
+  height: 300px;
 }
