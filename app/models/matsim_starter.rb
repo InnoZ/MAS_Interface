@@ -6,7 +6,7 @@ class MatsimStarter
     @id = id
     @year = year
     @folder = folder
-    raise "#{year} must be between 2009 and 2040" unless year_range.include?(year)
+    raise "#{year} must be between 2017 and 2040" unless year_range.include?(year)
     run
   end
 
@@ -26,7 +26,7 @@ class MatsimStarter
   private
 
   def year_range
-    2009..2040
+    2017..2040
   end
 
   attr_reader :id, :year, :folder

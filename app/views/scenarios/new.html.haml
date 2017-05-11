@@ -9,7 +9,7 @@
                 %input#district-input{placeholder: 'Landkreis suchen'}
                 = f.hidden_field 'district_id', class: 'hidden-district-input'
               .col-xs-12
-                = f.select 'year', options_for_select(2009..2040)
+                = f.select 'year', options_for_select(2017..2040)
               .col-xs-12
                 = f.button class: 'btn btn-default' do
                   %i.icon-cog-alt
