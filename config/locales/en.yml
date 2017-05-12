@@ -1,7 +1,8 @@
 en:
   locale_name: 'english'
 
-#  learn_more: 'Learn more'
+  service: 'Mobility Simulations'
+  learn_more: 'Learn more'
 #  project: 'Project'
 #  challenge: 'Challenge'
 #  approach: 'Approach'
@@ -9,20 +10,23 @@ en:
   contact_our_team: 'Contact our Mobility Simulations Team!'
 #  clients: 'Customers'
 #  clients_text: 'Our customers include both industrial companies and public, political and scientific institutions.'
-#  all: 'All'
+  all: 'All'
 #  all_references: 'All references'
 #  references: 'References'
 #  source: 'Source'
 #  examples: 'Examples'
   language: 'Language'
 #  project_manager: 'Project manager'
-  innoz_address: 'Innovation Centre for Mobility and Societal Change (InnoZ) GmbH - EUREF-Campus 16, 10829 Berlin'
+  innoz: 'Innovation Centre for Mobility and Societal Change (InnoZ) GmbH'
+  innoz_address: 'EUREF-Campus 16, 10829 Berlin'
 
   views:
     nav:
 #      about: 'About'
 #      services: 'Services'
 #      references: 'References'
+      scenarios: 'Scenarios'
+      create: 'Simulate'
       contact: 'Contact'
       privacy: 'Privacy'
       imprint: 'Imprint'
@@ -35,6 +39,12 @@ en:
       header_text: 'Mobility data and simulations for innovative services – easily accessable, adaptable and understandable.'
       intro_header: 'We support your decision making'
       intro_text: 'TEXT'
+
+    scenarios:
+      my_scenarios: 'My scenarios'
+
+    simulate:
+      select_area: 'select area'
 
     about:
       header: 'What is special about our simulations?'

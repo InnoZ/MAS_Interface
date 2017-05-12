@@ -1,7 +1,8 @@
 de:
   locale_name: 'deutsch'
 
-#  learn_more: 'Mehr erfahren'
+  service: 'Mobility Simulations'
+  learn_more: 'Mehr erfahren'
 #  project: 'Projekt'
 #  challenge: 'Herausforderung'
 #  approach: 'Herangehensweise'
@@ -9,20 +10,23 @@ de:
   contact_our_team: 'Kontaktieren Sie unser Mobility Consulting Team!'
 #  clients: 'Kunden'
 #  clients_text: 'Zu unseren Kunden gehören sowohl Industrieunternehmen als auch öffentliche, politische und wissenschaftliche Institutionen.'
-#  all: 'Alle'
+  all: 'Alle'
 #  all_references: 'Alle Referenzen'
 #  references: 'Referenzen'
 #  source: 'Quelle'
 #  examples: 'Beispiele'
   language: 'Sprache'
 #  project_manager: 'Projektleiter'
-  innoz_address: 'Innovationszentrum für Mobilität und gesellschaftlichen Wandel (InnoZ) GmbH - EUREF-Campus 16, 10829 Berlin (Schöneberg)'
+  innoz: 'Innovationszentrum für Mobilität und gesellschaftlichen Wandel (InnoZ) GmbH'
+  innoz_address: 'EUREF-Campus 16, 10829 Berlin'
 
   views:
     nav:
       about: 'Über uns'
 #      services: 'Services'
 #      references: 'Referenzen'
+      scenarios: 'Szenarien'
+      create: 'Simuliere'
       contact: 'Kontakt'
       privacy: 'Datenschutz'
       imprint: 'Impressum'
@@ -42,6 +46,12 @@ de:
       header_text: 'Toolgestützte Beratung auf Grundlage großer, verschnittener Datenmengen aus der Mobilitätswelt - immer aktuell und auf alle Gebietsgrößen und Zeiträume skalierbar.'
       intro_header: 'Das InnoZ berät Sie'
       intro_text: 'Wir beraten Sie zu neuen Formen der digital vernetzten (e)Mobilität, angefangen bei Strategie- und Maßnahmenkonzepten über Machbarkeitsstudien bis hin zur Umsetzung über Demonstratoren und Testbetriebe. Wir verbinden dabei klassische Methoden mit echtzeitbasierten Datenanalysen und regionalspezifischen Modellierungen. Sie als Kunde oder Stakeholder können hiermit schneller und kostengünstiger entscheiden, ob sich investive Entscheidungen im Bereich der Mobilität volks- und betriebswirtschaftlich lohnen.'
+
+    scenarios:
+      my_scenarios: 'Meine Szenarien'
+
+    simulate:
+      select_area: 'Gebiet auswählen'
 
     about:
       header: 'Das Besondere an unseren Simulationen'

@@ -3,8 +3,10 @@
     .row.text-center
       .col-xs-12
         %br
-        %h1 Bestehende Szenarien
+        %h2= t('views.scenarios.my_scenarios')
         = render 'layouts/flash'
+    .pull-right
+      %%a.edit-scene.icon-th-list{:href => "/scenarios"}
 
     .row
       .col-sm-12.portfolio
@@ -13,7 +15,7 @@
             - @scenarios.all.map(&:year).uniq.sort.each do |year|
               %a.active{'data-filter' => ".year-#{year}", href: '#'}
                 = year
-            %a.active{'data-filter' => '*', href: '#'} Alle
+            %a.active{'data-filter' => '*', href: '#'}= t('all')
 
         %ul.isotope.items.col-3.gap
           - @scenarios.each_with_index do |s, i|

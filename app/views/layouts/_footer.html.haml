@@ -2,19 +2,19 @@
   .container.inner
     .row
       .col-sm-3.inner
-        %h4 About us
+        %h4= t('views.nav.about_us')
         %figure
           = image_tag 'logo_innoz_rails.png', class: 'logo'
-        %p This is a service of InnoZ
-        = link_to 'learn more', 'http://www.innoz.de', class: 'txt-btn'
+        %p= t('views.footer.part_of_innoz')
+        = link_to t('learn more'), 'http://www.innoz.de', class: 'txt-btn'
 
       .col-sm-3.inner
-        %h4 Contact us
-        %p Innovationszentrum für Mobilität und gesellschaftlichen Wandel (InnoZ) GmbH
+        %h4= t('views.nav.contact_us')
+        %p= t('innoz')
         %ul.contacts
           %li
             %i.icon-location.contact
-            EUREF-Campus 16, 10829 Berlin
+            = t('innoz_address')
           %li
             %i.icon-mobile.contact
             +49 (0)30 23 88 84 - 108
@@ -32,9 +32,9 @@
           %br
 
       .col-sm-3.inner
-        %h4 InnoZ Simulations
+        %h4= t('service')
         - pages.each do |p|
-          = link_to p, send(p + '_path')
+          = link_to t('views.nav.' + p), send(p + '_path')
           %br
 
   .footer-bottom
