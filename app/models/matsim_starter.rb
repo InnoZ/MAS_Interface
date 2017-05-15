@@ -1,8 +1,8 @@
 class MatsimStarter
-  DEFAULT = Rails.root.join('public', 'matsim', 'xml')
-  MATSIM = Rails.root.join('lib', 'matsim', 'jar')
+  OUTPUT_PATH = Rails.root.join('public', 'matsim', 'output')
+  JAVA_PATH = Rails.root.join('lib', 'matsim', 'java')
 
-  def initialize(id, year, folder = DEFAULT)
+  def initialize(id, year, folder = OUTPUT_PATH)
     @id = id
     @year = year
     @folder = folder
@@ -12,15 +12,15 @@ class MatsimStarter
 
   # rubocop:disable LineLength
   def run
-    Kernel.system "java -cp #{MATSIM}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
+    Kernel.system "java -cp #{JAVA_PATH}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
   end
 
   def statistics
-    File.read("#{DEFAULT}/#{id}_#{year}/aggregatedAnalysis.json")
+    File.read("#{OUTPUT_PATH}/#{id}_#{year}/aggregatedAnalysis.json")
   end
 
   def agents
-    File.read("#{DEFAULT}/#{id}_#{year}/features.json")
+    File.read("#{OUTPUT_PATH}/#{id}_#{year}/features.json")
   end
 
   private
