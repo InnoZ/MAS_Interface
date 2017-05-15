@@ -13,30 +13,29 @@ class ScenariosController < ApplicationController
     @districts_germany = DistrictsGermany.all.to_json
   end
 
+  # rubocop:disable MethodLength, AbcSize
   def create
-    unless scenario_params[:district_id].present?
+    if !scenario_params[:district_id].present?
       flash[:danger] = 'Bitte Landkreis wählen'
       redirect_to :back
+    elsif existing_scenario
+      flash[:success] = 'Szenario ist bereits vorhanden'
+      redirect_to scenario_path(existing_scenario)
     else
-      if existing_scenario
-        flash[:success] = 'Szenario ist bereits vorhanden'
-        redirect_to scenario_path(existing_scenario)
-      else
-        @scenario = Scenario.new(
-          district_id: String(scenario_params[:district_id]),
-          year: scenario_params[:year],
-          agents: matsim.agents,
-          statistics: matsim.statistics,
-        )
-        if @scenario.save
-          flash[:success] = 'Szenario erstellt'
-          redirect_to scenario_path(@scenario)
-        end
+      @scenario = Scenario.new(
+        district_id: String(scenario_params[:district_id]),
+        year: scenario_params[:year],
+        agents: matsim.agents,
+        statistics: matsim.statistics
+      )
+      if @scenario.save
+        flash[:success] = 'Szenario erstellt'
+        redirect_to scenario_path(@scenario)
       end
     end
-    rescue => e
-      flash[:danger] = "Ups, etwas ist schief gegangen => #{e.message}"
-      redirect_to :back
+  rescue => e
+    flash[:danger] = "Ups, etwas ist schief gegangen => #{e.message}"
+    redirect_to :back
   end
 
   def matsim
@@ -46,7 +45,7 @@ class ScenariosController < ApplicationController
   def existing_scenario
     @existing_scenario ||= Scenario.find_by(
       district_id: String(scenario_params[:district_id]),
-      year: scenario_params[:year],
+      year: scenario_params[:year]
     )
   end
 

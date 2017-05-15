@@ -24,7 +24,7 @@ class Scenario < ApplicationRecord
 
   def parse_json(json)
     JSON.parse(json)
-  rescue JSON::ParserError => e
+  rescue JSON::ParserError
     return 'no valid json'
   end
 end
