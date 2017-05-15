@@ -10,7 +10,8 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
-/public/matsim/xml/**
+/public/matsim/output/**
+/public/matsim/seeds/**
 
 # Ignore all logfiles and tempfiles.
 /log/*

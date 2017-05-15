@@ -4,3 +4,12 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+# Run rubocop after specs passed successfully
+unless Rails.env.production?
+  require 'rubocop/rake_task'
+
+  RuboCop::RakeTask.new
+
+  task default: :rubocop
+end
