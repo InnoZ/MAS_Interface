@@ -55,7 +55,7 @@ de:
 
     about:
       header: 'Das Besondere an unseren Simulationen'
-      header_title: 'Mobilitässimulationen on Demand - anpassbar für Szenarien der Verkehrswende'
+      header_text: 'Mobilitässimulationen on Demand - anpassbar für Szenarien der Verkehrswende'
       feature_1_title: 'Dynamische agentenbasierte Verkehrssimulation'
       feature_1_content: 'Simulieren Sie ganze Tage in nur wenigen Minuten'
       feature_2_title: 'Individual und öffentlicher Verkehr'
