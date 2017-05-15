@@ -6,7 +6,7 @@
           = form_for @scenario do |f|
             .scenario-selection-form
               .col-xs-12
-                %input#district-input{placeholder: 'Landkreis suchen'}
+                %input#district-input{placeholder: t('views.simulate.select_area')}
                 = f.hidden_field 'district_id', class: 'hidden-district-input'
               .col-xs-12
                 = f.select 'year', options_for_select(2017..2040)
