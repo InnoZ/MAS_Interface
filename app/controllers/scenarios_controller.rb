@@ -43,18 +43,14 @@ class ScenariosController < ApplicationController
           year_a: scenario_params[:year]
         )
       else
-        if @scenario = Scenario.make(args)
-          flash[:success] = 'Szenario erstellt'
-          redirect_to show_district_path(
-            district: @scenario.district_id,
-            year_a: scenario_params[:year]
-          )
-        end
+        ScenarioJob.perform_later(args[:district_id], args[:year])
+        flash[:success] = 'Szenario wird erstellt. Bitte haben Sie etwas Geduld.'
+        redirect_to scenarios_path
       end
     end
   rescue => e
     flash[:danger] = "Ups, etwas ist schief gegangen => #{e.message}"
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def scenario_params

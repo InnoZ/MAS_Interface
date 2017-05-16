@@ -3,13 +3,6 @@ class Scenario < ApplicationRecord
   validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }
 
-  def self.make(district_id:, year:)
-    MatsimStarter.new(district_id, year)
-    record = find_by(year: year, district_id: district_id)
-    record.calculate_od_relations
-    record
-  end
-
   def calculate_od_relations
     unless Grid.find_by(district_id: district_id, side_length: Grid.default_side_length)
       GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run

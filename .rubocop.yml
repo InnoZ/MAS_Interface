@@ -1,5 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.3
+  DisplayCopNames: true
   Include:
     - '**/Rakefile'
     - '**/config.ru'
@@ -40,6 +41,9 @@ Style/FrozenStringLiteralComment:
 Metrics/MethodLength:
   Max: 15
 
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
 Metrics/BlockLength:
   Exclude:
-    - 'spec/models/scenario_spec.rb'
+    - 'spec/**/*'

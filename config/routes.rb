@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
   scope '(:locale)', locale: /de|en/ do
     get '' => 'pages#index', as: :root
 
@@ -9,6 +12,5 @@ Rails.application.routes.draw do
 
     resources :scenarios, excpect: [:show]
     get 'show/:district(/:year_a)(/:year_b)', to: 'scenarios#show', as: :show_district
-
   end
 end

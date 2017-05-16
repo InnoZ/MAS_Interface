@@ -75,7 +75,7 @@ jQuery(function() {
   };
 
   // fade out flash messages after a while
-  jQuery('.flash-message').delay(3000).fadeOut(400);
+  jQuery('.flash-message').delay(3000).fadeOut(2000);
 
   //color-buttons
   jQuery('.color-button').click(function() {
