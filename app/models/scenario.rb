@@ -27,4 +27,10 @@ class Scenario < ApplicationRecord
   rescue JSON::ParserError
     return 'no valid json'
   end
+
+  def seed_text
+    return 'Ein vorberechnetes Szenario aus den Seeds' if seed
+
+    'Ein neu generiertes Szenario'
+  end
 end

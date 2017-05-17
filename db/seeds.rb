@@ -7,29 +7,63 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 SEED_PATH = Rails.root.join('public', 'matsim', 'seeds')
-DISTRICT_ID = '09180'
-YEAR = 2015
+ATTRIBUTES = {
+  'Garmisch-Partenkirchen' => { 'district_id' => '09180', 'year' => 2015 },
+  'Osnabrueck' => { 'district_id' => '03404', 'year' => 2017 },
+}
 POSTFIXES = %w[with_carsharing without_carsharing]
 
 # If you want to run the app with seeds, get the mentioned json files from
 # GISDATA. The files are not provided through the github repository, because
 # of their huge size. Regard the path names and place the json files correctly.
 
-def runable?
-  !Scenario.where(district_id: DISTRICT_ID, year: YEAR).exists? &&
-    File.exist?("#{SEED_PATH}/#{DISTRICT_ID}_#{YEAR}_#{POSTFIXES.first}/features.json") &&
-    File.exist?("#{SEED_PATH}/#{DISTRICT_ID}_#{YEAR}_#{POSTFIXES.first}/aggregatedAnalysis.json") &&
-    File.exist?("#{SEED_PATH}/#{DISTRICT_ID}_#{YEAR}_#{POSTFIXES.last}/features.json") &&
-    File.exist?("#{SEED_PATH}/#{DISTRICT_ID}_#{YEAR}_#{POSTFIXES.last}/aggregatedAnalysis.json")
+def seeds_available?(district_id, year, features, aggregated_analysis)
+  !Scenario.where(district_id: district_id, year: year, seed: true).exists?&&
+    File.exist?(features) &&
+    File.exist?(aggregated_analysis)
 end
 
-if runable?
-  POSTFIXES.each do |postfix|
-    Scenario.create(
-      district_id: DISTRICT_ID,
-      year: YEAR,
-      agents: File.read("#{SEED_PATH}/#{DISTRICT_ID}_#{YEAR}_#{postfix}/features.json"),
-      statistics: File.read("#{SEED_PATH}/#{DISTRICT_ID}_#{YEAR}_#{postfix}/aggregatedAnalysis.json")
-    )
-  end
+if seeds_available?(
+  ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id'),
+  ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year'),
+  ("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.first}/features.json"),
+  ("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.first}/aggregatedAnalysis.json"),
+)
+  Scenario.create(
+    district_id: ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id'),
+    year: ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year'),
+    agents: File.read("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.first}/features.json"),
+    statistics: File.read("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.first}/aggregatedAnalysis.json"),
+    seed: true
+  )
+end
+
+if seeds_available?(
+  ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id'),
+  ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year'),
+  ("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.last}/features.json"),
+  ("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.last}/aggregatedAnalysis.json"),
+)
+  Scenario.create(
+    district_id: ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id'),
+    year: ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year'),
+    agents: File.read("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.last}/features.json"),
+    statistics: File.read("#{SEED_PATH}/#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('district_id')}_#{ATTRIBUTES.fetch('Garmisch-Partenkirchen').fetch('year')}_#{POSTFIXES.last}/aggregatedAnalysis.json"),
+    seed: true
+  )
+end
+
+if seeds_available?(
+  ATTRIBUTES.fetch('Osnabrueck').fetch('district_id'),
+  ATTRIBUTES.fetch('Osnabrueck').fetch('year'),
+  ("#{SEED_PATH}/#{ATTRIBUTES.fetch('Osnabrueck').fetch('district_id')}_#{ATTRIBUTES.fetch('Osnabrueck').fetch('year')}_#{POSTFIXES.first}/features.json"),
+  ("#{SEED_PATH}/#{ATTRIBUTES.fetch('Osnabrueck').fetch('district_id')}_#{ATTRIBUTES.fetch('Osnabrueck').fetch('year')}_#{POSTFIXES.first}/aggregatedAnalysis.json"),
+)
+  Scenario.create(
+    district_id: ATTRIBUTES.fetch('Osnabrueck').fetch('district_id'),
+    year: ATTRIBUTES.fetch('Osnabrueck').fetch('year'),
+    agents: File.read("#{SEED_PATH}/#{ATTRIBUTES.fetch('Osnabrueck').fetch('district_id')}_#{ATTRIBUTES.fetch('Osnabrueck').fetch('year')}_#{POSTFIXES.first}/features.json"),
+    statistics: File.read("#{SEED_PATH}/#{ATTRIBUTES.fetch('Osnabrueck').fetch('district_id')}_#{ATTRIBUTES.fetch('Osnabrueck').fetch('year')}_#{POSTFIXES.first}/aggregatedAnalysis.json"),
+    seed: true
+  )
 end

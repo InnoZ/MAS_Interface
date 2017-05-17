@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170509144720) do
     t.integer  "year",        null: false
     t.json     "agents",      null: false
     t.json     "statistics",  null: false
+    t.boolean  "seed",        null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
