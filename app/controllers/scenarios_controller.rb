@@ -26,7 +26,8 @@ class ScenariosController < ApplicationController
         district_id: String(scenario_params[:district_id]),
         year: scenario_params[:year],
         agents: matsim.agents,
-        statistics: matsim.statistics
+        statistics: matsim.statistics,
+        seed: false
       )
       if @scenario.save
         flash[:success] = 'Szenario erstellt'
@@ -45,7 +46,8 @@ class ScenariosController < ApplicationController
   def existing_scenario
     @existing_scenario ||= Scenario.find_by(
       district_id: String(scenario_params[:district_id]),
-      year: scenario_params[:year]
+      year: scenario_params[:year],
+      seed: false
     )
   end
 
