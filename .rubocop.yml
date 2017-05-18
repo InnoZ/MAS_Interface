@@ -14,6 +14,7 @@ AllCops:
     - 'config/environments/**'
     - 'spec/spec_helper.rb'
     - 'spec/rails_helper.rb'
+
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
@@ -22,6 +23,8 @@ Style/Documentation:
 
 Metrics/LineLength:
   Max: 120
+  Exclude:
+    - 'spec/models/scenario_spec.rb'
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
@@ -36,3 +39,7 @@ Style/FrozenStringLiteralComment:
 
 Metrics/MethodLength:
   Max: 15
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/models/scenario_spec.rb'
