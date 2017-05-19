@@ -43,4 +43,9 @@ class Scenario < ApplicationRecord
   def diurnal_curve
     File.read(Rails.root.join('tmp/pretotyp/diurnal_curve.json'))
   end
+
+  # pretotyp
+  def boxplot
+    File.read(Rails.root.join('tmp/pretotyp/boxplot.json'))
+  end
 end

@@ -29,6 +29,10 @@
         .col-sm-7.col-sm-offset-5
           %h1.text-center Diurnal Curve
           %svg#diurnal-curve-chart
+      .row
+        .col-sm-7.col-sm-offset-5
+          %h1.text-center Boxplot
+          %svg#boxplot-chart
     .row
       .col-xs-12
         %b erstellt am
@@ -39,3 +43,4 @@
   window.modalSplit = #{@scenario.modal_split.to_json}
   window.trafficPerformance = #{@scenario.traffic_performance}
   window.diurnalCurve = #{@scenario.diurnal_curve}
+  window.boxplot = #{@scenario.boxplot}

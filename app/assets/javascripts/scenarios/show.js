@@ -62,4 +62,20 @@ jQuery(function() {
       return chart;
     });
   });
+
+  jQuery('#boxplot-chart').each(function() {
+    nv.addGraph(function() {
+      var chart = nv.models.boxPlotChart()
+        .x(function(d) { return d.label })
+        .staggerLabels(true)
+        .maxBoxWidth(75)
+        .yDomain([0, 500])
+
+      d3.select('#boxplot-chart')
+        .datum(boxplot)
+        .call(chart);
+      nv.utils.windowResize(chart.update);
+      return chart;
+    });
+  });
 });
