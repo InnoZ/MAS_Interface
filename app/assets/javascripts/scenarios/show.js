@@ -71,6 +71,8 @@ jQuery(function() {
         .maxBoxWidth(75)
         .yDomain([0, 500])
 
+      chart.yAxis.axisLabel('Reisezeit')
+
       d3.select('#boxplot-chart')
         .datum(boxplot)
         .call(chart);

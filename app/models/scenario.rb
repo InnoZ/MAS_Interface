@@ -36,16 +36,16 @@ class Scenario < ApplicationRecord
 
   # pretotyp
   def traffic_performance
-    File.read(Rails.root.join('tmp/pretotyp/traffic_performance.json'))
+    File.read(Rails.root.join('public/pretotyp/traffic_performance.json'))
   end
 
   # pretotyp
   def diurnal_curve
-    File.read(Rails.root.join('tmp/pretotyp/diurnal_curve.json'))
+    File.read(Rails.root.join('public/pretotyp/diurnal_curve.json'))
   end
 
   # pretotyp
   def boxplot
-    File.read(Rails.root.join('tmp/pretotyp/boxplot.json'))
+    File.read(Rails.root.join('public/pretotyp/boxplot.json'))
   end
 end
