@@ -64,5 +64,5 @@ jQuery(function() {
   };
 
   // fade out flash messages after a while
-  jQuery('.flash-message').delay(5000).fadeOut(800);
+  jQuery('.flash-message').delay(3000).fadeOut(400);
 });

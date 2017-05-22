@@ -1,46 +1,18 @@
-%section#hero.tint-bg
-  .container.inner-xs
-    .row
-      .col-sm-4
-        #district-geometry
-      .col-sm-8
-        %header
-          %h2= @scenario.district_name
-          %h1= @scenario.year
-          %h3= @scenario.seed_text
-
 %section#show
-  .container.inner-xs
-    .row
-      .col-xs-12
-      = render 'layouts/flash'
-      .col-sm-5
-        %h1.text-center= @scenario.agent_features.length.to_s + ' Wege'
-      .col-sm-7
-        %h1.text-center Modal Split
-        %svg#modal-split-chart
-    // Fake it before you make it
-    - unless @scenario.seed
-      .row
-        .col-sm-7.col-sm-offset-5
-          %h1.text-center Traffic Performance
-          %svg#traffic-performance-chart
-      .row
-        .col-sm-7.col-sm-offset-5
-          %h1.text-center Diurnal Curve
-          %svg#diurnal-curve-chart
-      .row
-        .col-sm-7.col-sm-offset-5
-          %h1.text-center Boxplot
-          %svg#boxplot-chart
-    .row
-      .col-xs-12
-        %b erstellt am
-        = @scenario.created_at
+  .container-full
+    = render 'layouts/flash'
+    #test-map
+
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
+  window.districtFeature = #{@scenario.district_feature.to_json}
+  window.districtName = "#{@scenario.district_name}"
+  window.modelYear = #{@scenario.year}
+  window.seedText = "#{@scenario.seed_text}"
   window.modalSplit = #{@scenario.modal_split.to_json}
   window.trafficPerformance = #{@scenario.traffic_performance}
   window.diurnalCurve = #{@scenario.diurnal_curve}
   window.boxplot = #{@scenario.boxplot}
+  window.scenarioSeed = #{@scenario.seed}
+  window.createdAt = "#{@scenario.created_at}"

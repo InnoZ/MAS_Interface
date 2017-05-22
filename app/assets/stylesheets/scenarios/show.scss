@@ -14,19 +14,30 @@
   }
 }
 
+#test-map {
+  height: 100vh;
+}
+
 #modal-split-chart {
-  height: 30vw;
-  min-height: 200px;
+  display: block;
+  height: 18vh;
+  width: 32.5vw;
 }
 
 #traffic-performance-chart {
-  height: 15vw;
+  display: block;
+  height: 12.5vh;
+  width: 32.5vw;
 }
 
 #diurnal-curve-chart {
-  height: 15vw;
+  display: block;
+  height: 12.5vh;
+  width: 32.5vw;
 }
 
 #boxplot-chart {
-  height: 15vw;
+  display: block;
+  height: 12.5vh;
+  width: 32.5vw;
 }

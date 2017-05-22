@@ -10,6 +10,10 @@ class Scenario < ApplicationRecord
     DistrictsGermany.geometry(district_id)
   end
 
+  def district_feature
+    DistrictsGermany.feature(district_id)
+  end
+
   def modal_split
     parse_json(statistics)
   end

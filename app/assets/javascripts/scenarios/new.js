@@ -19,8 +19,9 @@ jQuery(function() {
       minZoom: 7,
     });
 
-    var boundaryLayer = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}', {opacity: 0.3});
-    boundaryLayer.addTo(map);
+    L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
     // Variable to keep track of highlighted marker
     var highlightedLayer = null;
@@ -35,8 +36,8 @@ jQuery(function() {
     var defaultStyle = {
       'color': '#283645',
       'opacity': 0.8,
-      'weight': 0,
-      'fillColor': 'orange',
+      'weight': 0.2,
+      'fillColor': 'steelblue',
       'fillOpacity': 0.1,
     };
 
@@ -44,7 +45,7 @@ jQuery(function() {
       'color': '#283645',
       'opacity': 0.8,
       'weight': 3,
-      'fillColor': 'orange',
+      'fillColor': 'steelblue',
       'fillOpacity': 0.1,
     };
 
@@ -57,7 +58,7 @@ jQuery(function() {
 
       var name = feature.properties.name;
       function mouseover(e) {
-        layer.setStyle({fillOpacity: 0.2});
+        layer.setStyle({fillOpacity: 0.4});
       };
       function mouseout(e) {
         layer.setStyle({fillOpacity: 0.1});
@@ -80,7 +81,7 @@ jQuery(function() {
       [50.48547354578499, 9.3548583984375],
     ];
     var randomPosition = startPositions[Math.floor(Math.random()*startPositions.length)];
-    map.setView(randomPosition, 9);
+    map.setView(randomPosition, 8);
 
     jQuery('.scenario-selection-form')
       .on('mouseover', function() {
@@ -102,8 +103,8 @@ jQuery(function() {
     });
 
     new Awesomplete('#district-input', {
-    	list: districtsGermanyList,
-    	replace: function(input) {
+      list: districtsGermanyList,
+      replace: function(input) {
         this.input.value = input.label;
         jQuery('.hidden-district-input').val(input.value).change();
       }
