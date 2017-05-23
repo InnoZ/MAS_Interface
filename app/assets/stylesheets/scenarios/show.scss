@@ -14,30 +14,18 @@
   }
 }
 
-#test-map {
-  height: 100vh;
+#grid-map {
+  height: 100%;
 }
 
-#modal-split-chart {
-  display: block;
-  height: 18vh;
-  width: 32.5vw;
+.box {
+  box-shadow: 10px 10px 5px #888888;
+  border-radius: 5px;
+  padding: 5px 5px;
 }
 
-#traffic-performance-chart {
-  display: block;
-  height: 12.5vh;
-  width: 32.5vw;
-}
-
-#diurnal-curve-chart {
-  display: block;
-  height: 12.5vh;
-  width: 32.5vw;
-}
-
-#boxplot-chart {
-  display: block;
-  height: 12.5vh;
-  width: 32.5vw;
+.box-chart {
+  height: 20vh;
+  width: 30vw;
+  margin: 0 auto;
 }

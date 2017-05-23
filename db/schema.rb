@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509144720) do
+ActiveRecord::Schema.define(version: 20170523081726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+
+  create_table "grids", force: :cascade do |t|
+    t.string    "district_id",                                                               null: false
+    t.integer   "side_length",                                                               null: false
+    t.integer   "x",                                                                         null: false
+    t.integer   "y",                                                                         null: false
+    t.geography "cell",        limit: {:srid=>4326, :type=>"st_polygon", :geographic=>true}, null: false
+    t.index ["cell"], name: "grids_cell_idx", using: :gist
+  end
 
   create_table "scenarios", force: :cascade do |t|
     t.string   "district_id", null: false

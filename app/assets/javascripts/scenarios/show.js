@@ -3,10 +3,10 @@ jQuery(function() {
     staticDistrictMap('district-geometry', window.districtGeometry, 'rgb(206, 210, 236)');
   });
 
-  jQuery('#test-map').each(function() {
+  jQuery('#grid-map').each(function() {
     var resizeMap = function() {
       var mapHeight = jQuery(window).height() - jQuery('header').height();
-      jQuery('#test-map').height(mapHeight);
+      jQuery('#grid-map').height(mapHeight);
     };
     resizeMap();
     jQuery(window).resize(function() {
@@ -19,11 +19,11 @@ jQuery(function() {
     jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
 
     // disable zoomControl and scaleControl
-    var map = L.map('test-map', {
+    var map = L.map('grid-map', {
       zoomControl: false,
       scaleControl: false,
-      maxZoom: 9,
-      minZoom: 7
+      maxZoom: 8,
+      minZoom: 8
     });
 
     // place zoom control to topright
@@ -51,58 +51,10 @@ jQuery(function() {
       'fillOpacity': 0.4,
     };
 
-    // add the chosen district polygon
-    var districtPolygon = L.geoJson(window.districtFeature, { style: polygonStyle });
+    // add the grid geojson for the district
+    var districtPolygon = L.geoJson(window.featureCollection, { style: polygonStyle });
     districtPolygon.addTo(map);
     map.fitBounds(districtPolygon.getBounds());
-
-    // add leaflet statistics container and fill it with charts
-    var statistics = L.control({position: 'topleft'});
-
-    statistics.onAdd = function (map) {
-      var div = L.DomUtil.create('div', 'statistics-container')
-
-      if(window.scenarioSeed === false) {
-        div.innerHTML += '<h5>' + 'Landkreis: ' + window.districtName + '</h5>' +
-        '<p>' + '<b>' +  'Bezugsjahr: ' + '</b>' + window.modelYear + '</p>' +
-        '<p>' + '<b>' + 'Info: ' + '</b>' + window.seedText + '</p>' +
-        '<p>' + '<b>' + 'Erstellt am: ' + '</b>' + window.createdAt + '</p>' +
-        '<h5>' + 'Modal Split' + '</h5>' + "<svg id='modal-split-chart'></svg>" +
-        '<h5>' + 'Verkehrsleistung' + '</h5>' + "<svg id='traffic-performance-chart'></svg>" +
-        '<h5>' + 'Tagesganglinie' + '</h5>' + "<svg id='diurnal-curve-chart'></svg>" +
-        '<h5>' + 'Boxplot' + '</h5>' + "<svg id='boxplot-chart'></svg>";
-        return div;
-      } else {
-        div.innerHTML += '<h5>' + 'Landkreis: ' + window.districtName + '</h5>' +
-        '<p>' + '<b>' +  'Bezugsjahr: ' + '</b>' + window.modelYear + '</p>' +
-        '<p>' + '<b>' + 'Info: ' + '</b>' + window.seedText + '</p>' +
-        '<p>' + '<b>' + 'Erstellt am: ' + '</b>' + window.createdAt + '</p>' +
-        '<h5>' + 'Modal Split' + '</h5>' + "<svg id='modal-split-chart'></svg>";
-        return div;
-      };
-    };
-
-    statistics.addTo(map);
-
-    // Disable dragging when user's cursor enters the element
-    statistics.getContainer().addEventListener('mouseover', function () {
-      map.dragging.disable();
-      map.touchZoom.disable();
-      map.doubleClickZoom.disable();
-      map.scrollWheelZoom.disable();
-      map.boxZoom.disable();
-      map.keyboard.disable();
-    });
-
-    // Re-enable dragging when user's cursor leaves the element
-    statistics.getContainer().addEventListener('mouseout', function () {
-      map.dragging.enable();
-      map.touchZoom.enable();
-      map.doubleClickZoom.enable();
-      map.scrollWheelZoom.enable();
-      map.boxZoom.enable();
-      map.keyboard.enable();
-    });
   });
 
   jQuery('#modal-split-chart').each(function() {
@@ -139,6 +91,24 @@ jQuery(function() {
 
       d3.select('#traffic-performance-chart')
         .datum(trafficPerformance)
+        .call(chart);
+      nv.utils.windowResize(chart.update);
+      return chart;
+    });
+  });
+
+  jQuery('#carbon-emission-chart').each(function() {
+    nv.addGraph(function() {
+      var chart = nv.models.discreteBarChart()
+        .x(function(d) { return d.mode })
+        .y(function(d) { return parseFloat(d.carbon_emission) })
+        .showValues(true)
+        .staggerLabels(true)
+
+      chart.yAxis.axisLabel('CO2');
+
+      d3.select('#carbon-emission-chart')
+        .datum(carbonEmission)
         .call(chart);
       nv.utils.windowResize(chart.update);
       return chart;

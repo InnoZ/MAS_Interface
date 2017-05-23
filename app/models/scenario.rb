@@ -14,6 +14,54 @@ class Scenario < ApplicationRecord
     DistrictsGermany.feature(district_id)
   end
 
+  def feature_collection
+    {
+      type: 'FeatureCollection',
+      features: features,
+    }
+  end
+
+  def features
+    feature_values.map do |feature|
+      {
+        type: 'Feature',
+        geometry: JSON.parse(feature[:geometry]),
+        properties: {
+          x: feature[:x],
+          y: feature[:y],
+        },
+      }
+    end
+  end
+
+  def feature_values
+    DB[:grids]
+      .where(district_id: district_id, side_length: Grid.default_side_length)
+      .select(:x, :y)
+      .select_append { ST_AsGeoJSON(cell).as(:geometry) }
+      .group(:x, :y, :cell)
+  end
+
+  # rubocop:disable LineLength
+  def centroid_latitude
+    DB["SELECT ST_Y(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_y]
+  end
+
+  def centroid_longitude
+    DB["SELECT ST_X(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_x]
+  end
+
+  def centroid
+    [Float(centroid_latitude), Float(centroid_longitude)]
+  end
+
+  def district_area
+    Float(
+      DB["SELECT ST_Area(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')::geography);"].first[:st_area] /
+      1_000_000
+    ).round(2)
+  end
+
   def modal_split
     parse_json(statistics)
   end
@@ -51,5 +99,10 @@ class Scenario < ApplicationRecord
   # pretotype
   def boxplot
     File.read(Rails.root.join('public/pretotype/boxplot.json'))
+  end
+
+  # pretotype
+  def carbon_emission
+    File.read(Rails.root.join('public/pretotype/carbon_emission.json'))
   end
 end

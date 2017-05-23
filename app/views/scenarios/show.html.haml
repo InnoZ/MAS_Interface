@@ -1,8 +1,59 @@
-%section#show
-  .container-full
+%section#hero.tint-bg
+  .container.inner-xs
     = render 'layouts/flash'
-    #test-map
+    .row
+      .col-sm-4
+        #district-geometry
+      .col-sm-8
+        %header
+          %ul= "Landkreis: #{@scenario.district_name}"
+          %ul= "Bezugsjahr: #{@scenario.year}"
+          %ul= "Wege: #{@scenario.agent_features.length.to_s}"
+          %ul= "Fläche: #{@scenario.district_area}"
+          %ul= "Info: #{@scenario.seed_text}"
+%section#show
+  .container-fluid
+    .row
+      .col-sm-6.box
+        %h1.text-center Verkehrsleistung
+        %svg#traffic-performance-chart.box-chart
+      .col-sm-6.box
+        %h1.text-center Modal Split
+        %svg#modal-split-chart.box-chart
+    .row
+      .col-sm-6.box
+        %h1.text-center CO2 Emissionen
+        %svg#carbon-emission-chart.box-chart
+      .col-sm-6.box
+        %h1.text-center Tagesganglinie
+        %svg#diurnal-curve-chart.box-chart
+    .row
+      .col-sm-6.box
+        %h1.text-center Boxplot
+        %svg#boxplot-chart.box-chart
+    .row.inner-top-md
+      .col-xs-12.center-block.text-center
+        %h4.sidelines.text-center.box-chart
 
+  .container-fluid
+    .row
+      .col-sm-12
+        %h1.text-center Kartenansicht
+      .col-sm-5
+        .row
+          .col-sm-12
+            %h4.text-center Chart 1
+        .row
+          .col-sm-12
+            %h4.text-center Chart 2
+        .row
+          .col-sm-12
+            %h4.text-center Chart 3
+        .row
+          .col-sm-12
+            %h4.text-center Chart 4
+      .col-sm-7
+        #grid-map
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
@@ -14,5 +65,8 @@
   window.trafficPerformance = #{@scenario.traffic_performance}
   window.diurnalCurve = #{@scenario.diurnal_curve}
   window.boxplot = #{@scenario.boxplot}
+  window.carbonEmission = #{@scenario.carbon_emission}
   window.scenarioSeed = #{@scenario.seed}
   window.createdAt = "#{@scenario.created_at}"
+  window.districtArea = #{@scenario.district_area}
+  window.featureCollection = #{@scenario.feature_collection.to_json}

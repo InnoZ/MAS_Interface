@@ -30,6 +30,9 @@ class ScenariosController < ApplicationController
         seed: false
       )
       if @scenario.save
+        unless Grid.find_by(district_id: @scenario.district_id, side_length: Grid.default_side_length)
+          GridFill.new(scenario: @scenario, side_length: Grid.default_side_length).run
+        end
         flash[:success] = 'Szenario erstellt'
         redirect_to scenario_path(@scenario)
       end
