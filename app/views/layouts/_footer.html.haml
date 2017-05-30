@@ -39,7 +39,7 @@
 
   .footer-bottom
     .container.inner
-      %p.pull-left © 2016 InnoZ GmbH. All rights reserved.
+      %p.pull-left= "© #{Date.today.year} InnoZ GmbH. All rights reserved."
       %ul.footer-menu.pull-right
         = link_to t('views.nav.imprint'), imprint_path
         = ' | '
