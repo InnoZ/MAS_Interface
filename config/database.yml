@@ -1,14 +1,16 @@
 test:
-  adapter: postgresql
+  adapter: postgis
   pool: 5
   database: mas_interface_test
 
 development:
-  adapter: postgresql
+  adapter: postgis
+  user: postgres
+  password: postgres
   pool: 5
   database: mas_interface_development
 
 production:
-  adapter: postgresql
+  adapter: postgis
   pool: 5
   database: mas_interface_production

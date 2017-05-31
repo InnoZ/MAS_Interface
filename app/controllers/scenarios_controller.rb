@@ -25,11 +25,13 @@ class ScenariosController < ApplicationController
       @scenario = Scenario.new(
         district_id: String(scenario_params[:district_id]),
         year: scenario_params[:year],
-        agents: matsim.agents,
-        statistics: matsim.statistics,
         seed: false
       )
       if @scenario.save
+        matsim
+        unless Grid.find_by(district_id: @scenario.district_id, side_length: Grid.default_side_length)
+          GridFill.new(scenario: @scenario, side_length: Grid.default_side_length).run
+        end
         flash[:success] = 'Szenario erstellt'
         redirect_to scenario_path(@scenario)
       end

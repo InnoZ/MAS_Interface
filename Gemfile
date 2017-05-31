@@ -42,6 +42,9 @@ gem 'novus-nvd3-rails'
 gem 'capybara'
 gem 'poltergeist'
 gem 'capybara-screenshot'
+gem 'sequel'
+gem 'pg'
+gem 'activerecord-postgis-adapter'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

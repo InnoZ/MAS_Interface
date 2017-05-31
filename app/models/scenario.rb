@@ -1,3 +1,4 @@
+# rubocop:disable ClassLength, MethodLength
 class Scenario < ApplicationRecord
   validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }
@@ -10,22 +11,114 @@ class Scenario < ApplicationRecord
     DistrictsGermany.geometry(district_id)
   end
 
-  def modal_split
-    parse_json(statistics)
+  def district_feature
+    DistrictsGermany.feature(district_id)
   end
 
-  def agent_features
-    parse_json(agents).fetch('features').map do |a|
-      name = a.fetch('properties').fetch('person_id')
-      mode = a.fetch('properties').fetch('mode')
-      "#{name} | #{mode}"
+  def feature_collection
+    {
+      type: 'FeatureCollection',
+      features: features,
+    }
+  end
+
+  def features
+    feature_values.map do |feature|
+      {
+        type: 'Feature',
+        geometry: JSON.parse(feature[:geometry]),
+        properties: {
+          x: feature[:x],
+          y: feature[:y],
+        },
+      }
     end
   end
 
-  def parse_json(json)
-    JSON.parse(json)
-  rescue JSON::ParserError
-    return 'no valid json'
+  def feature_values
+    DB[:grids]
+      .where(district_id: district_id, side_length: Grid.default_side_length)
+      .select(:x, :y)
+      .select_append { ST_AsGeoJSON(cell).as(:geometry) }
+      .group(:x, :y, :cell)
+  end
+
+  # rubocop:disable LineLength
+  def centroid_latitude
+    DB["SELECT ST_Y(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_y]
+  end
+
+  def centroid_longitude
+    DB["SELECT ST_X(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_x]
+  end
+
+  def centroid
+    [Float(centroid_latitude), Float(centroid_longitude)]
+  end
+
+  def district_area
+    Float(
+      DB["SELECT ST_Area(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')::geography);"].first[:st_area] /
+      1_000_000
+    ).round(2)
+  end
+
+  def modal_split
+    {
+      'modal_split' =>
+        modes.map do |mode|
+          {
+            'mode' => mode_names(mode),
+            'share' => percent_calculator(plan.where(mode: mode).count, plan.size),
+          }
+        end,
+    }
+  end
+
+  def agent_size
+    plan.select(:agent_id).size
+  end
+
+  def percent_calculator(part, all, multiplicator = 100.0)
+    # TODO: if there are no plans it doesn't make sense to return 0
+    # just for now to protect against ZeroDivision Error
+
+    return 0 if all.zero?
+
+    part.fdiv(all) * multiplicator
+  end
+
+  def plan
+    Plan.where(scenario_id: "#{district_id}_#{year}")
+  end
+
+  def modes
+    plan.pluck(:mode).uniq.sort
+  end
+
+  def mode_names(mode)
+    case I18n.locale
+    when :en
+      {
+        'bike' => 'Bike',
+        'car' => 'Car',
+        'carsharing' => 'Carsharing',
+        'ride' => 'Ride',
+        'other' => 'Other',
+        'pt' => 'Public Transport',
+        'walk' => 'Walk',
+      }.fetch(mode)
+    when :de
+      {
+        'bike' => 'Fahrrad',
+        'car' => 'Auto',
+        'carsharing' => 'Carsharing',
+        'ride' => 'Mitfahrer',
+        'other' => 'Sonstiges',
+        'pt' => 'Öffentlicher Verkehr',
+        'walk' => 'Fußweg',
+      }.fetch(mode)
+    end
   end
 
   def seed_text
@@ -47,5 +140,10 @@ class Scenario < ApplicationRecord
   # pretotype
   def boxplot
     File.read(Rails.root.join('public/pretotype/boxplot.json'))
+  end
+
+  # pretotype
+  def carbon_emission
+    File.read(Rails.root.join('public/pretotype/carbon_emission.json'))
   end
 end

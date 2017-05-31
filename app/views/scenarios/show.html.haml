@@ -1,46 +1,73 @@
 %section#hero.tint-bg
   .container.inner-xs
+    = render 'layouts/flash'
     .row
       .col-sm-4
         #district-geometry
       .col-sm-8
         %header
-          %h2= @scenario.district_name
-          %h1= @scenario.year
-          %h3= @scenario.seed_text
-
+          %ul= "Landkreis: #{@scenario.district_name}"
+          %ul= "Bezugsjahr: #{@scenario.year}"
+          %ul= "Wege: #{@scenario.agent_size}"
+          %ul= "Fläche: #{@scenario.district_area}"
+          %ul= "Info: #{@scenario.seed_text}"
 %section#show
-  .container.inner-xs
+  .container-fluid
+    .row.inner-top-md
+      .col-xs-12.center-block.text-center
+        %h1.sidelines.text-center Dashboard
     .row
-      .col-xs-12
-      = render 'layouts/flash'
+      .col-sm-6.box
+        %h2.text-center Verkehrsleistung
+        %svg#traffic-performance-chart.box-chart
+      .col-sm-6.box
+        %h2.text-center Modal Split
+        %svg#modal-split-chart.box-chart
+    .row
+      .col-sm-6.box
+        %h2.text-center CO2 Emissionen
+        %svg#carbon-emission-chart.box-chart
+      .col-sm-6.box
+        %h2.text-center Tagesganglinie
+        %svg#diurnal-curve-chart.box-chart
+    .row
+      .col-sm-6.box
+        %h2.text-center Boxplot
+        %svg#boxplot-chart.box-chart
+    .row.inner-top-md
+      .col-xs-12.center-block.text-center
+        %h1.sidelines.text-center Kartenansicht
+
+  .container-fluid
+    .row
       .col-sm-5
-        %h1.text-center= @scenario.agent_features.length.to_s + ' Wege'
+        .row
+          .col-sm-12
+            %h4.text-center Chart 1
+        .row
+          .col-sm-12
+            %h4.text-center Chart 2
+        .row
+          .col-sm-12
+            %h4.text-center Chart 3
+        .row
+          .col-sm-12
+            %h4.text-center Chart 4
       .col-sm-7
-        %h1.text-center Modal Split
-        %svg#modal-split-chart
-    // Fake it before you make it
-    - unless @scenario.seed
-      .row
-        .col-sm-7.col-sm-offset-5
-          %h1.text-center Traffic Performance
-          %svg#traffic-performance-chart
-      .row
-        .col-sm-7.col-sm-offset-5
-          %h1.text-center Diurnal Curve
-          %svg#diurnal-curve-chart
-      .row
-        .col-sm-7.col-sm-offset-5
-          %h1.text-center Boxplot
-          %svg#boxplot-chart
-    .row
-      .col-xs-12
-        %b erstellt am
-        = @scenario.created_at
+        #grid-map
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
+  window.districtFeature = #{@scenario.district_feature.to_json}
+  window.districtName = "#{@scenario.district_name}"
+  window.modelYear = #{@scenario.year}
+  window.seedText = "#{@scenario.seed_text}"
   window.modalSplit = #{@scenario.modal_split.to_json}
   window.trafficPerformance = #{@scenario.traffic_performance}
   window.diurnalCurve = #{@scenario.diurnal_curve}
   window.boxplot = #{@scenario.boxplot}
+  window.carbonEmission = #{@scenario.carbon_emission}
+  window.scenarioSeed = #{@scenario.seed}
+  window.createdAt = "#{@scenario.created_at}"
+  window.districtArea = #{@scenario.district_area}
+  window.featureCollection = #{@scenario.feature_collection.to_json}
