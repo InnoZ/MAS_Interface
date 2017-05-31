@@ -5,6 +5,8 @@ test:
 
 development:
   adapter: postgis
+  user: postgres
+  password: postgres
   pool: 5
   database: mas_interface_development
 
