@@ -63,21 +63,36 @@ class Scenario < ApplicationRecord
   end
 
   def modal_split
-    parse_json(statistics)
+    {
+      'modal_split' =>
+        modes.map do |mode|
+          {
+            'mode' => mode,
+            'share' => percent_calculator(plan.where(mode: mode).count, plan.size),
+          }
+        end,
+    }
   end
 
-  def agent_features
-    parse_json(agents).fetch('features').map do |a|
-      name = a.fetch('properties').fetch('person_id')
-      mode = a.fetch('properties').fetch('mode')
-      "#{name} | #{mode}"
-    end
+  def agent_size
+    plan.select(:agent_id).size
   end
 
-  def parse_json(json)
-    JSON.parse(json)
-  rescue JSON::ParserError
-    return 'no valid json'
+  def percent_calculator(part, all, multiplicator = 100.0)
+    # TODO: if there are no plans it doesn't make sense to return 0
+    # just for now to protect against ZeroDivision Error
+
+    return 0 if all.zero?
+
+    part.fdiv(all) * multiplicator
+  end
+
+  def plan
+    Plan.where(scenario_id: "#{district_id}_#{year}")
+  end
+
+  def modes
+    plan.pluck(:mode).uniq.sort
   end
 
   def seed_text

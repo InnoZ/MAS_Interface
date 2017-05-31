@@ -42,8 +42,6 @@ ActiveRecord::Schema.define(version: 20170530115506) do
   create_table "scenarios", force: :cascade do |t|
     t.string   "district_id", null: false
     t.integer  "year",        null: false
-    t.json     "agents",      null: false
-    t.json     "statistics",  null: false
     t.boolean  "seed",        null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

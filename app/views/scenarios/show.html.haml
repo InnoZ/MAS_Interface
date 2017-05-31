@@ -8,37 +8,38 @@
         %header
           %ul= "Landkreis: #{@scenario.district_name}"
           %ul= "Bezugsjahr: #{@scenario.year}"
-          %ul= "Wege: #{@scenario.agent_features.length.to_s}"
+          %ul= "Wege: #{@scenario.agent_size}"
           %ul= "Fläche: #{@scenario.district_area}"
           %ul= "Info: #{@scenario.seed_text}"
 %section#show
   .container-fluid
+    .row.inner-top-md
+      .col-xs-12.center-block.text-center
+        %h1.sidelines.text-center Dashboard
     .row
       .col-sm-6.box
-        %h1.text-center Verkehrsleistung
+        %h2.text-center Verkehrsleistung
         %svg#traffic-performance-chart.box-chart
       .col-sm-6.box
-        %h1.text-center Modal Split
+        %h2.text-center Modal Split
         %svg#modal-split-chart.box-chart
     .row
       .col-sm-6.box
-        %h1.text-center CO2 Emissionen
+        %h2.text-center CO2 Emissionen
         %svg#carbon-emission-chart.box-chart
       .col-sm-6.box
-        %h1.text-center Tagesganglinie
+        %h2.text-center Tagesganglinie
         %svg#diurnal-curve-chart.box-chart
     .row
       .col-sm-6.box
-        %h1.text-center Boxplot
+        %h2.text-center Boxplot
         %svg#boxplot-chart.box-chart
     .row.inner-top-md
       .col-xs-12.center-block.text-center
-        %h4.sidelines.text-center.box-chart
+        %h1.sidelines.text-center Kartenansicht
 
   .container-fluid
     .row
-      .col-sm-12
-        %h1.text-center Kartenansicht
       .col-sm-5
         .row
           .col-sm-12

@@ -15,14 +15,6 @@ class MatsimStarter
     Kernel.system "java -cp #{JAVA_PATH}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
   end
 
-  def statistics
-    File.read("#{OUTPUT_PATH}/#{id}_#{year}/aggregatedAnalysis.json")
-  end
-
-  def agents
-    File.read("#{OUTPUT_PATH}/#{id}_#{year}/features.json")
-  end
-
   private
 
   def year_range
