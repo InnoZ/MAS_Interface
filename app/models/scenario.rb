@@ -1,3 +1,4 @@
+# rubocop:disable ClassLength, MethodLength
 class Scenario < ApplicationRecord
   validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }
@@ -67,7 +68,7 @@ class Scenario < ApplicationRecord
       'modal_split' =>
         modes.map do |mode|
           {
-            'mode' => mode,
+            'mode' => mode_names(mode),
             'share' => percent_calculator(plan.where(mode: mode).count, plan.size),
           }
         end,
@@ -93,6 +94,31 @@ class Scenario < ApplicationRecord
 
   def modes
     plan.pluck(:mode).uniq.sort
+  end
+
+  def mode_names(mode)
+    case I18n.locale
+    when :en
+      {
+        'bike' => 'Bike',
+        'car' => 'Car',
+        'carsharing' => 'Carsharing',
+        'ride' => 'Ride',
+        'other' => 'Other',
+        'pt' => 'Public Transport',
+        'walk' => 'Walk',
+      }.fetch(mode)
+    when :de
+      {
+        'bike' => 'Fahrrad',
+        'car' => 'Auto',
+        'carsharing' => 'Carsharing',
+        'ride' => 'Mitfahrer',
+        'other' => 'Sonstiges',
+        'pt' => 'Öffentlicher Verkehr',
+        'walk' => 'Fußweg',
+      }.fetch(mode)
+    end
   end
 
   def seed_text
