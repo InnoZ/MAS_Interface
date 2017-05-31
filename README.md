@@ -1,6 +1,6 @@
 # README
 
-# MatSIM Interface
+# MATSim Interface
 
 This repository is for the development and maintenance of an interactive website for an Interface of the MATSim Multi Agent Traffic Simulation.
 
