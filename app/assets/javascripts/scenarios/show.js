@@ -127,13 +127,14 @@ jQuery(function() {
       chart.xAxis.axisLabel('Uhrzeit').tickValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
 
       if(window.location.href.indexOf('de') > -1) {
-        chart.yAxis.axisLabel('Wege')
-        chart.xAxis.axisLabel('Uhrzeit').tickValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
+        chart.yAxis.axisLabel('Wege');
+        chart.xAxis.axisLabel('Uhrzeit');
       } else {
-        chart.yAxis.axisLabel('Trips')
-        chart.xAxis.axisLabel('Time').tickValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
+        chart.yAxis.axisLabel('Trips');
+        chart.xAxis.axisLabel('Time');
       };
 
+      chart.xAxis.tickValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
       chart.useVoronoi(false);
       chart.isArea(false);
       chart.useInteractiveGuideline(true);
@@ -155,9 +156,9 @@ jQuery(function() {
         .yDomain([0, 500])
 
       if(window.location.href.indexOf('de') > -1) {
-        chart.yAxis.axisLabel('Reisezeit')
+        chart.yAxis.axisLabel('Reisezeit');
       } else {
-        chart.yAxis.axisLabel('Travel Time')
+        chart.yAxis.axisLabel('Travel Time');
       };
 
       d3.select('#boxplot-chart')
