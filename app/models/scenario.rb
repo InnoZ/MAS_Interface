@@ -68,15 +68,15 @@ class Scenario < ApplicationRecord
       'modal_split' =>
         modes.map do |mode|
           {
-            'mode' => mode_names(mode),
-            'share' => percent_calculator(plan.where(mode: mode).count, plan.size),
+            'mode' => mode_name(mode),
+            'share' => percent_calculator(plans.where(mode: mode).count, plans.size),
           }
         end,
     }
   end
 
   def agent_size
-    plan.select(:agent_id).size
+    plans.select(:agent_id).size
   end
 
   def percent_calculator(part, all, multiplicator = 100.0)
@@ -88,15 +88,15 @@ class Scenario < ApplicationRecord
     part.fdiv(all) * multiplicator
   end
 
-  def plan
+  def plans
     Plan.where(scenario_id: "#{district_id}_#{year}")
   end
 
   def modes
-    plan.pluck(:mode).uniq.sort
+    plans.pluck(:mode).uniq.sort
   end
 
-  def mode_names(mode)
+  def mode_name(mode)
     case I18n.locale
     when :en
       {

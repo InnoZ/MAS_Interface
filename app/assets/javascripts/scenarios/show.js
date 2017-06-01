@@ -52,9 +52,9 @@ jQuery(function() {
     };
 
     // add the grid geojson for the district
-    var districtPolygon = L.geoJson(window.featureCollection, { style: polygonStyle });
-    districtPolygon.addTo(map);
-    map.fitBounds(districtPolygon.getBounds());
+    var districtGrid = L.geoJson(window.featureCollection, { style: polygonStyle });
+    districtGrid.addTo(map);
+    map.fitBounds(districtGrid.getBounds());
   });
 
   jQuery('#modal-split-chart').each(function() {
