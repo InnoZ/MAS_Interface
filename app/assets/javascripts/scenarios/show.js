@@ -22,8 +22,8 @@ jQuery(function() {
     var map = L.map('grid-map', {
       zoomControl: false,
       scaleControl: false,
-      maxZoom: 8,
-      minZoom: 8
+      maxZoom: 12,
+      minZoom: 7
     });
 
     // place zoom control to topright
@@ -51,8 +51,81 @@ jQuery(function() {
       'fillOpacity': 0.4,
     };
 
+    function highlightFeature(e) {
+      var layer = e.target;
+
+      layer.setStyle({
+        'color': '#283645',
+        'opacity': 0.8,
+        'weight': 7,
+        'dashArray': '',
+        'fillColor': 'steelblue',
+        'fillOpacity': 0.1,
+      });
+      gridStatistics.update(layer.feature.properties);
+    }
+
+    function resetHighlight(e) {
+      districtGrid.resetStyle(e.target);
+      gridStatistics.update();
+    }
+
+    function zoomToFeature(e) {
+      map.fitBounds(e.target.getBounds());
+    }
+
+    function onEachFeature(feature, layer) {
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+      });
+    }
+
+    // add leaflet statistics container and fill it with charts
+    var gridStatistics = L.control({position: 'topleft'});
+
+    gridStatistics.onAdd = function (map) {
+      this._div = L.DomUtil.create('div', 'grid-statistics-container')
+      this.update();
+      return this._div;
+    };
+
+    gridStatistics.update = function (props) {
+      this._div.innerHTML =
+        (props ? '<p>' + '<b>' +  'Y: ' + '</b>' + props.y + '</b>' + '</p>' +
+        '<p>' + '<b>' + 'X: ' + props.x + '</b>' + '</p>' : 'Hover over a hexagon') +
+        '<h5>' + 'Modal Split' + '</h5>' + "<svg id='modal-split-chart'></svg>" +
+        '<h5>' + 'Verkehrsleistung' + '</h5>' + "<svg id='traffic-performance-chart'></svg>" +
+        '<h5>' + 'Tagesganglinie' + '</h5>' + "<svg id='diurnal-curve-chart'></svg>" +
+        '<h5>' + 'Boxplot' + '</h5>' + "<svg id='boxplot-chart'></svg>";
+    };
+
+    gridStatistics.addTo(map);
+
+    // Disable dragging when user's cursor enters the element
+    gridStatistics.getContainer().addEventListener('mouseover', function () {
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.scrollWheelZoom.disable();
+      map.boxZoom.disable();
+      map.keyboard.disable();
+    });
+
+    // Re-enable dragging when user's cursor leaves the element
+    gridStatistics.getContainer().addEventListener('mouseout', function () {
+      map.dragging.enable();
+      map.touchZoom.enable();
+      map.doubleClickZoom.enable();
+      map.scrollWheelZoom.enable();
+      map.boxZoom.enable();
+      map.keyboard.enable();
+    });
+
     // add the grid geojson for the district
-    var districtGrid = L.geoJson(window.featureCollection, { style: polygonStyle });
+    var districtGrid;
+    districtGrid = L.geoJson(window.featureCollection, { style: polygonStyle, onEachFeature: onEachFeature });
     districtGrid.addTo(map);
     map.fitBounds(districtGrid.getBounds());
   });
