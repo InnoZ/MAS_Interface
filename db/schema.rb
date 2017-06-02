@@ -44,13 +44,25 @@ ActiveRecord::Schema.define(version: 20170530115506) do
   end
 
   create_table "scenarios", force: :cascade do |t|
-    t.string   "district_id", null: false
-    t.integer  "year",        null: false
-    t.boolean  "seed",        null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "district_id",          null: false
+    t.integer  "year",                 null: false
+    t.integer  "population",           null: false
+    t.integer  "population_diff_2017", null: false
+    t.string   "person_km",            null: false, array: true
+    t.string   "trips",                null: false, array: true
+    t.string   "diurnal_curve",        null: false, array: true
+    t.string   "carbon_emmissions",    null: false, array: true
+    t.boolean  "seed",                 null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["carbon_emmissions"], name: "index_scenarios_on_carbon_emmissions", using: :btree
     t.index ["district_id", "year", "seed"], name: "index_scenarios_on_district_id_and_year_and_seed", unique: true, using: :btree
     t.index ["district_id"], name: "index_scenarios_on_district_id", using: :btree
+    t.index ["diurnal_curve"], name: "index_scenarios_on_diurnal_curve", using: :btree
+    t.index ["person_km"], name: "index_scenarios_on_person_km", using: :btree
+    t.index ["population"], name: "index_scenarios_on_population", using: :btree
+    t.index ["population_diff_2017"], name: "index_scenarios_on_population_diff_2017", using: :btree
+    t.index ["trips"], name: "index_scenarios_on_trips", using: :btree
     t.index ["year"], name: "index_scenarios_on_year", using: :btree
   end
 
