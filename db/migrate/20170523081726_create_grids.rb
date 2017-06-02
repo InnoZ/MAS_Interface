@@ -1,5 +1,5 @@
 class CreateGrids < ActiveRecord::Migration[5.0]
-  def up
+  def change
     create_table :grids do |t|
       t.string :district_id, null: false
       t.integer :side_length, null: false
@@ -7,16 +7,7 @@ class CreateGrids < ActiveRecord::Migration[5.0]
       t.integer :y, null: false
       t.st_polygon :cell, geographic: true, srid: 4326, null: false
     end
-    execute <<-SQL
-      CREATE INDEX ON grids USING GIST (cell);
-    SQL
-  end
-
-  def down
-    drop_table :grids
-
-    execute <<-SQL
-      DROP INDEX grids_cell_idx;
-    SQL
+    add_index(:grids, :district_id)
+    add_index(:grids, :cell, using: 'gist')
   end
 end

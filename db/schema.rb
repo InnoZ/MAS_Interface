@@ -22,7 +22,8 @@ ActiveRecord::Schema.define(version: 20170530115506) do
     t.integer   "x",                                                                         null: false
     t.integer   "y",                                                                         null: false
     t.geography "cell",        limit: {:srid=>4326, :type=>"st_polygon", :geographic=>true}, null: false
-    t.index ["cell"], name: "grids_cell_idx", using: :gist
+    t.index ["cell"], name: "index_grids_on_cell", using: :gist
+    t.index ["district_id"], name: "index_grids_on_district_id", using: :btree
   end
 
   create_table "plans", force: :cascade do |t|
@@ -35,8 +36,11 @@ ActiveRecord::Schema.define(version: 20170530115506) do
     t.geography "location_end",       limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.string    "mode",                                                                           null: false
     t.string    "scenario_id",                                                                    null: false
-    t.index ["location_end"], name: "plans_location_end_idx", using: :gist
-    t.index ["location_start"], name: "plans_location_start_idx", using: :gist
+    t.index ["agent_id"], name: "index_plans_on_agent_id", using: :btree
+    t.index ["location_end"], name: "index_plans_on_location_end", using: :gist
+    t.index ["location_start"], name: "index_plans_on_location_start", using: :gist
+    t.index ["mode"], name: "index_plans_on_mode", using: :btree
+    t.index ["scenario_id"], name: "index_plans_on_scenario_id", using: :btree
   end
 
   create_table "scenarios", force: :cascade do |t|
@@ -45,5 +49,9 @@ ActiveRecord::Schema.define(version: 20170530115506) do
     t.boolean  "seed",        null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["district_id", "year", "seed"], name: "index_scenarios_on_district_id_and_year_and_seed", unique: true, using: :btree
+    t.index ["district_id"], name: "index_scenarios_on_district_id", using: :btree
+    t.index ["year"], name: "index_scenarios_on_year", using: :btree
   end
+
 end

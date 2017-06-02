@@ -1,5 +1,5 @@
 class CreatePlans < ActiveRecord::Migration[5.0]
-  def up
+  def change
     create_table :plans do |t|
       t.string :agent_id, null: false
       t.time :started_at, null: false
@@ -11,18 +11,10 @@ class CreatePlans < ActiveRecord::Migration[5.0]
       t.string :mode, null: false
       t.string :scenario_id, null: false
     end
-    execute <<-SQL
-      CREATE INDEX ON plans USING GIST (location_start);
-      CREATE INDEX ON plans USING GIST (location_end);
-    SQL
-  end
-
-  def down
-    drop_table :plans
-
-    execute <<-SQL
-      DROP INDEX plans_location_start_idx;
-      DROP INDEX plans_location_end_idx;
-    SQL
+    add_index(:plans, :scenario_id)
+    add_index(:plans, :mode)
+    add_index(:plans, :agent_id)
+    add_index(:plans, :location_start, using: 'gist')
+    add_index(:plans, :location_end, using: 'gist')
   end
 end
