@@ -89,6 +89,20 @@ class Scenario < ApplicationRecord
     ]
   end
 
+  def carbon_emission
+    [
+      {
+        'key' => 'carbon_emission',
+        'values' => carbon_emissions.flat_map do |mode, carbon_emission|
+          {
+            'mode' => mode_name(mode),
+            'carbon_emission' => String(carbon_emission.to_f)
+          }
+        end,
+      }
+    ]
+  end
+
   def agent_size
     plans.select(:agent_id).size
   end
@@ -149,10 +163,5 @@ class Scenario < ApplicationRecord
   # pretotype
   def boxplot
     File.read(Rails.root.join('public/pretotype/boxplot.json'))
-  end
-
-  # pretotype
-  def carbon_emission
-    File.read(Rails.root.join('public/pretotype/carbon_emission.json'))
   end
 end
