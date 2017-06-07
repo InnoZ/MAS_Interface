@@ -53,7 +53,7 @@
   window.trafficPerformance = #{@scenario.traffic_performance.to_json}
   window.diurnalCurve = #{@scenario.diurnal_curve}
   window.boxplot = #{@scenario.boxplot}
-  window.carbonEmission = #{@scenario.carbon_emission}
+  window.carbonEmission = #{@scenario.carbon_emission.to_json}
   window.scenarioSeed = #{@scenario.seed}
   window.createdAt = "#{@scenario.created_at}"
   window.districtArea = #{@scenario.district_area}
