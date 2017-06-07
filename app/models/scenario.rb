@@ -75,6 +75,20 @@ class Scenario < ApplicationRecord
     }
   end
 
+  def traffic_performance
+    [
+      {
+        'key' => 'traffic_performance',
+        'values' => person_km.flat_map do |mode, distance|
+          {
+            'mode' => mode_name(mode),
+            'traffic_performance' => String(distance.to_f)
+          }
+        end,
+      }
+    ]
+  end
+
   def agent_size
     plans.select(:agent_id).size
   end
@@ -125,11 +139,6 @@ class Scenario < ApplicationRecord
     return 'Ein vorberechnetes Szenario aus den Seeds' if seed
 
     'Ein neu generiertes Szenario'
-  end
-
-  # pretotype
-  def traffic_performance
-    File.read(Rails.root.join('public/pretotype/traffic_performance.json'))
   end
 
   # pretotype
