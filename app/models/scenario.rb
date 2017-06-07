@@ -82,10 +82,10 @@ class Scenario < ApplicationRecord
         'values' => person_km.flat_map do |mode, distance|
           {
             'mode' => mode_name(mode),
-            'traffic_performance' => String(distance.to_f)
+            'traffic_performance' => String(distance.to_f),
           }
         end,
-      }
+      },
     ]
   end
 
@@ -96,10 +96,10 @@ class Scenario < ApplicationRecord
         'values' => carbon_emissions.flat_map do |mode, carbon_emission|
           {
             'mode' => mode_name(mode),
-            'carbon_emission' => String(carbon_emission.to_f)
+            'carbon_emission' => String(carbon_emission.to_f),
           }
         end,
-      }
+      },
     ]
   end
 

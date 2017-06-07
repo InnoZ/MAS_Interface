@@ -18,27 +18,18 @@ class ScenariosController < ApplicationController
     if !scenario_params[:district_id].present?
       flash[:danger] = 'Bitte Landkreis wählen'
       redirect_to :back
-    elsif existing_scenario
-      flash[:success] = 'Szenario ist bereits vorhanden'
-      redirect_to scenario_path(existing_scenario)
     else
-      @scenario = Scenario.new(
+      matsim
+      @scenario = Scenario.find_by(
         district_id: String(scenario_params[:district_id]),
         year: scenario_params[:year],
-        population: 20_000,
-        population_diff_2017: 5_000,
-        person_km: [ ['carsharing', '15'], ['car', '50'] ],
-        trips: [ ['car', '10'], ['carsharing', '15'] ],
-        diurnal_curve: [ ['bike', '10', '5'], ['ride', '14', '7'] ],
-        carbon_emissions: [ ['ride', '20'], ['car', '100'] ],
         seed: false
       )
-      if @scenario.save
-        matsim
+      if !@scenario.nil? && matsim
         unless Grid.find_by(district_id: @scenario.district_id, side_length: Grid.default_side_length)
           GridFill.new(scenario: @scenario, side_length: Grid.default_side_length).run
         end
-        flash[:success] = 'Szenario erstellt'
+        flash[:success] = 'Szenario erstellt oder bereits vorhanden'
         redirect_to scenario_path(@scenario)
       end
     end
@@ -49,14 +40,6 @@ class ScenariosController < ApplicationController
 
   def matsim
     @matsim ||= MatsimStarter.new(String(scenario_params[:district_id]), Integer(scenario_params[:year]))
-  end
-
-  def existing_scenario
-    @existing_scenario ||= Scenario.find_by(
-      district_id: String(scenario_params[:district_id]),
-      year: scenario_params[:year],
-      seed: false
-    )
   end
 
   def scenario_params
