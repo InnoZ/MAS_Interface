@@ -27,10 +27,10 @@ class ScenariosController < ApplicationController
         year: scenario_params[:year],
         population: 20_000,
         population_diff_2017: 5_000,
-        person_km: ['carsharing', '15'],
-        trips: ['car', '10'],
-        diurnal_curve: ['bike', '10', '5'],
-        carbon_emissions: ['ride', '20'],
+        person_km: [ ['carsharing', '15'], ['car', '50'] ],
+        trips: [ ['car', '10'], ['carsharing', '15'] ],
+        diurnal_curve: [ ['bike', '10', '5'], ['ride', '14', '7'] ],
+        carbon_emissions: [ ['ride', '20'], ['car', '100'] ],
         seed: false
       )
       if @scenario.save

@@ -50,7 +50,7 @@
   window.modelYear = #{@scenario.year}
   window.seedText = "#{@scenario.seed_text}"
   window.modalSplit = #{@scenario.modal_split.to_json}
-  window.trafficPerformance = #{@scenario.traffic_performance}
+  window.trafficPerformance = #{@scenario.traffic_performance.to_json}
   window.diurnalCurve = #{@scenario.diurnal_curve}
   window.boxplot = #{@scenario.boxplot}
   window.carbonEmission = #{@scenario.carbon_emission}
