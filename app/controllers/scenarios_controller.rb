@@ -25,6 +25,7 @@ class ScenariosController < ApplicationController
         year: scenario_params[:year],
         seed: false
       )
+      # check if scenario exists and the system process exited correctly
       if !@scenario.nil? && matsim
         unless Grid.find_by(district_id: @scenario.district_id, side_length: Grid.default_side_length)
           GridFill.new(scenario: @scenario, side_length: Grid.default_side_length).run
