@@ -8,7 +8,7 @@ class CreateScenarios < ActiveRecord::Migration[5.0]
       t.string 'person_km', array: true, null: false
       t.string 'trips', array: true, null: false
       t.string 'diurnal_curve', array: true, null: false
-      t.string 'carbon_emmissions', array: true, null: false
+      t.string 'carbon_emissions', array: true, null: false
       t.boolean :seed, null: false
       t.timestamps
     end
@@ -19,7 +19,7 @@ class CreateScenarios < ActiveRecord::Migration[5.0]
     add_index(:scenarios, :person_km)
     add_index(:scenarios, :trips)
     add_index(:scenarios, :diurnal_curve)
-    add_index(:scenarios, :carbon_emmissions)
+    add_index(:scenarios, :carbon_emissions)
     add_index(:scenarios, [:district_id, :year, :seed], unique: true)
   end
 end

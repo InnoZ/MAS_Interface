@@ -25,6 +25,12 @@ class ScenariosController < ApplicationController
       @scenario = Scenario.new(
         district_id: String(scenario_params[:district_id]),
         year: scenario_params[:year],
+        population: 20_000,
+        population_diff_2017: 5_000,
+        person_km: ['carsharing', '15'],
+        trips: ['car', '10'],
+        diurnal_curve: ['bike', '10', '5'],
+        carbon_emissions: ['ride', '20'],
         seed: false
       )
       if @scenario.save
