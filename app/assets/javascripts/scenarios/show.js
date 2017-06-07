@@ -156,11 +156,14 @@ jQuery(function() {
     nv.addGraph(function() {
       var chart = nv.models.discreteBarChart()
         .x(function(d) { return d.mode })
-        .y(function(d) { return parseFloat(d.traffic_performance) })
+        .y(function(d) { return parseFloat(d.traffic_performance) / 1000 })
         .showValues(true)
         .staggerLabels(true)
+        .valueFormat(d3.format(".0f"));
 
-      chart.yAxis.axisLabel('km');
+      chart.yAxis
+        .axisLabel('x 1000 km')
+        .tickFormat(d3.format(".0f"));
 
       d3.select('#traffic-performance-chart')
         .datum(trafficPerformance)
@@ -177,8 +180,11 @@ jQuery(function() {
         .y(function(d) { return parseFloat(d.carbon_emission) })
         .showValues(true)
         .staggerLabels(true)
+        .valueFormat(d3.format(".0f"));
 
-      chart.yAxis.axisLabel('CO2');
+      chart.yAxis
+        .axisLabel('kg CO2')
+        .tickFormat(d3.format(".0f"));
 
       d3.select('#carbon-emission-chart')
         .datum(carbonEmission)
@@ -198,12 +204,12 @@ jQuery(function() {
 
       chart.legend.vers('furious');
 
-      if(window.location.href.indexOf('de') > -1) {
-        chart.yAxis.axisLabel('Wege');
-        chart.xAxis.axisLabel('Uhrzeit');
+      if(window.location.href.indexOf('/de') > -1) {
+        chart.yAxis.axisLabel('Anzahl Wege');
+        chart.xAxis.axisLabel('Stunde');
       } else {
-        chart.yAxis.axisLabel('Trips');
-        chart.xAxis.axisLabel('Time');
+        chart.yAxis.axisLabel('Trips count');
+        chart.xAxis.axisLabel('Hour');
       };
 
       chart.xAxis.tickValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
@@ -227,11 +233,12 @@ jQuery(function() {
         .maxBoxWidth(75)
         .yDomain([0, 500])
 
-      if(window.location.href.indexOf('de') > -1) {
+      if(window.location.href.indexOf('/de') > -1) {
         chart.yAxis.axisLabel('Reisezeit');
       } else {
         chart.yAxis.axisLabel('Travel Time');
       };
+      chart.yAxis.tickFormat(d3.format(".0f"));
 
       d3.select('#boxplot-chart')
         .datum(boxplot)

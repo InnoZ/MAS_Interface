@@ -6,38 +6,38 @@
         #district-geometry
       .col-sm-8
         %header
-          %ul= "Landkreis: #{@scenario.district_name}"
-          %ul= "Bezugsjahr: #{@scenario.year}"
+          %ul
+            %h2
+              = "#{@scenario.district_name} #{@scenario.year}"
           %ul= "Wege: #{@scenario.agent_size}"
           %ul= "Bevölkerung: #{@scenario.population}"
           %ul= "Fläche: #{@scenario.district_area}"
           %ul= "Info: #{@scenario.seed_text}"
 %section#show
-  .container-fluid
-    .row.inner-top-md
-      .col-xs-12.center-block.text-center
-        %h1.sidelines.text-center Dashboard
+  .container-fluid.inner-bottom-sm
+    .row
+      .col-sm-6.box#modal-split-box
+        %h2.text-center Modal Split
+        %svg#modal-split-chart.box-chart
+      .col-sm-6
+        .row
+          .col-xs-12.box
+            %h2.text-center Tagesganglinie
+            .box-chart
+              %svg#diurnal-curve-chart
+          .col-xs-12.box
+            %h2.text-center Wegedauer
+            .box-chart
+              %svg#boxplot-chart
     .row
       .col-sm-6.box
         %h2.text-center Verkehrsleistung
-        %svg#traffic-performance-chart.box-chart
-      .col-sm-6.box
-        %h2.text-center Modal Split
-        %svg#modal-split-chart.box-chart
-    .row
+        .box-chart
+          %svg#traffic-performance-chart
       .col-sm-6.box
         %h2.text-center CO2 Emissionen
-        %svg#carbon-emission-chart.box-chart
-      .col-sm-6.box
-        %h2.text-center Tagesganglinie
-        %svg#diurnal-curve-chart.box-chart
-    .row
-      .col-sm-6.box
-        %h2.text-center Boxplot
-        %svg#boxplot-chart.box-chart
-    .row.inner-top-md
-      .col-xs-12.center-block.text-center
-        %h1.sidelines.text-center Kartenansicht
+        .box-chart
+          %svg#carbon-emission-chart
 
   .container-full
     .row
