@@ -197,7 +197,6 @@ jQuery(function() {
         .duration(350);
 
       chart.legend.vers('furious');
-      chart.xAxis.axisLabel('Uhrzeit').tickValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
 
       if(window.location.href.indexOf('de') > -1) {
         chart.yAxis.axisLabel('Wege');

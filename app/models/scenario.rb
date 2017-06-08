@@ -82,7 +82,7 @@ class Scenario < ApplicationRecord
         'values' => person_km.flat_map do |mode, distance|
           {
             'mode' => mode_name(mode),
-            'traffic_performance' => String(distance.to_f),
+            'traffic_performance' => String(distance),
           }
         end,
       },
@@ -101,6 +101,21 @@ class Scenario < ApplicationRecord
         end,
       },
     ]
+  end
+
+  def diurnal_json
+    modes.map do |mode|
+      {
+        'key' => mode_name(mode),
+        'values' => values_per_hour(mode),
+      }
+    end
+  end
+
+  def values_per_hour(mode)
+    diurnal_curve.group_by { |element| element[0] }.fetch(mode).map do |_mode, hour, value|
+      [hour.to_i, value.to_f]
+    end
   end
 
   def agent_size
@@ -153,11 +168,6 @@ class Scenario < ApplicationRecord
     return 'Ein vorberechnetes Szenario aus den Seeds' if seed
 
     'Ein neu generiertes Szenario'
-  end
-
-  # pretotype
-  def diurnal_curve
-    File.read(Rails.root.join('public/pretotype/diurnal_curve.json'))
   end
 
   # pretotype
