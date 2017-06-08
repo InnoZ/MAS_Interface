@@ -79,7 +79,7 @@ class Scenario < ApplicationRecord
     [
       {
         'key' => 'traffic_performance',
-        'values' => person_km.sort_by { |element| element[0] }.flat_map do |mode, distance|
+        'values' => mode_order(person_km).flat_map do |mode, distance|
           {
             'mode' => mode_name(mode),
             'traffic_performance' => String(distance),
@@ -93,7 +93,7 @@ class Scenario < ApplicationRecord
     [
       {
         'key' => 'carbon_emission',
-        'values' => carbon_emissions.sort_by { |element| element[0] }.flat_map do |mode, carbon_emission|
+        'values' => mode_order(carbon_emissions).flat_map do |mode, carbon_emission|
           {
             'mode' => mode_name(mode),
             'carbon_emission' => String(carbon_emission.to_f),
@@ -110,6 +110,10 @@ class Scenario < ApplicationRecord
         'values' => values_per_hour(mode),
       }
     end
+  end
+
+  def mode_order(array)
+    array.sort_by { |element| element[0] }
   end
 
   def values_per_hour(mode)
