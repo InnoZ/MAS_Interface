@@ -42,45 +42,40 @@ jQuery(function() {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    var polygonStyle = {
-      'color': '#283645',
-      'opacity': 0.8,
-      'weight': 3,
-      'dashArray': '3',
-      'fillColor': 'steelblue',
-      'fillOpacity': 0.4,
+    map.setView(window.scenarioCentroid, 11);
+
+    var onEachFeature = function (feature, layer) {
+      layer._leaflet_id = feature.id; // for 'getLayer' function
+      layer.setStyle({ fillColor: 'steelblue', fillOpacity: 0.2, stroke: false });
+      var destinations = feature.properties.destinations;
+      function mouseover(e) {
+        layer.setStyle({weight: 2, color: 'red', stroke: true});
+        withAllFeatures(destinations, 'highlight');
+      };
+      function mouseout(e) {
+        layer.setStyle({stroke: false});
+        withAllFeatures(destinations, 'unHighlight');
+      };
+      layer.on('mouseover', mouseover);
+      layer.on('mouseout', mouseout);
     };
 
-    function highlightFeature(e) {
-      var layer = e.target;
-
-      layer.setStyle({
-        'color': '#283645',
-        'opacity': 0.8,
-        'weight': 7,
-        'dashArray': '',
-        'fillColor': 'steelblue',
-        'fillOpacity': 0.1,
+    var withAllFeatures = function(features, action) {
+      jQuery.each(features, function(index, value) {
+        destination = value;
+        for (var id in destination){
+          count = value[id];
+          if (action == 'highlight') {
+            layer.getLayer(id).setStyle({fillColor: 'darkblue', fillOpacity: count/10});
+          } else {
+            layer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.2});
+          };
+        };
       });
-      gridStatistics.update(layer.feature.properties);
-    }
+    };
 
-    function resetHighlight(e) {
-      districtGrid.resetStyle(e.target);
-      gridStatistics.update();
-    }
-
-    function zoomToFeature(e) {
-      map.fitBounds(e.target.getBounds());
-    }
-
-    function onEachFeature(feature, layer) {
-      layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: zoomToFeature
-      });
-    }
+    layer = L.geoJson(window.featureCollection, {onEachFeature: onEachFeature});
+    layer.addTo(map);
 
     // add leaflet statistics container and fill it with charts
     var gridStatistics = L.control({position: 'topleft'});
@@ -93,12 +88,7 @@ jQuery(function() {
 
     gridStatistics.update = function (props) {
       this._div.innerHTML =
-        (props ? '<p>' + '<b>' +  'Y: ' + '</b>' + props.y + '</b>' + '</p>' +
-        '<p>' + '<b>' + 'X: ' + props.x + '</b>' + '</p>' : 'Hover over a hexagon') +
-        '<h5>' + 'Modal Split' + '</h5>' + "<svg id='modal-split-chart'></svg>" +
-        '<h5>' + 'Verkehrsleistung' + '</h5>' + "<svg id='traffic-performance-chart'></svg>" +
-        '<h5>' + 'Tagesganglinie' + '</h5>' + "<svg id='diurnal-curve-chart'></svg>" +
-        '<h5>' + 'Boxplot' + '</h5>' + "<svg id='boxplot-chart'></svg>";
+        (props ? '<p>' + '<b>' +  'Y: ' + '</b>' + props + '</b>' + '</p>' : 'Hover over a hexagon');
     };
 
     gridStatistics.addTo(map);
@@ -122,12 +112,6 @@ jQuery(function() {
       map.boxZoom.enable();
       map.keyboard.enable();
     });
-
-    // add the grid geojson for the district
-    var districtGrid;
-    districtGrid = L.geoJson(window.featureCollection, { style: polygonStyle, onEachFeature: onEachFeature });
-    districtGrid.addTo(map);
-    map.fitBounds(districtGrid.getBounds());
   });
 
   jQuery('#modal-split-chart').each(function() {
