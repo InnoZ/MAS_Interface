@@ -15,32 +15,9 @@ class Scenario < ApplicationRecord
     DistrictsGermany.feature(district_id)
   end
 
+  # TODO: hardcoded mode needs param from radio button
   def feature_collection
-    {
-      type: 'FeatureCollection',
-      features: features,
-    }
-  end
-
-  def features
-    feature_values.map do |feature|
-      {
-        type: 'Feature',
-        geometry: JSON.parse(feature[:geometry]),
-        properties: {
-          x: feature[:x],
-          y: feature[:y],
-        },
-      }
-    end
-  end
-
-  def feature_values
-    DB[:grids]
-      .where(district_id: district_id, side_length: Grid.default_side_length)
-      .select(:x, :y)
-      .select_append { ST_AsGeoJSON(cell).as(:geometry) }
-      .group(:x, :y, :cell)
+    Destinations.new(district_id, year, 'carsharing').feature_collection
   end
 
   # rubocop:disable LineLength
