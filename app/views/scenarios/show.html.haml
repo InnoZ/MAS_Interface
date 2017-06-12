@@ -48,17 +48,10 @@
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
-  window.districtFeature = #{@scenario.district_feature.to_json}
-  window.districtName = "#{@scenario.district_name}"
-  window.modelYear = #{@scenario.year}
-  window.seedText = "#{@scenario.seed_text}"
   window.modalSplit = #{@scenario.modal_split.to_json}
   window.trafficPerformance = #{@scenario.traffic_performance.to_json}
   window.diurnalCurve = #{@scenario.diurnal_json.to_json}
   window.boxplot = #{@scenario.boxplot}
   window.carbonEmission = #{@scenario.carbon_emission.to_json}
-  window.scenarioSeed = #{@scenario.seed}
-  window.createdAt = "#{@scenario.created_at}"
-  window.districtArea = #{@scenario.district_area}
   window.scenarioCentroid = #{@scenario.centroid}
   window.odRelations = #{@scenario.od_relations.to_json}
