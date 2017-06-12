@@ -66,16 +66,23 @@ jQuery(function() {
         for (var id in destination){
           count = value[id];
           if (action == 'highlight') {
-            layer.getLayer(id).setStyle({fillColor: 'darkblue', fillOpacity: count/10});
+            odLayer.getLayer(id).setStyle({fillColor: 'green', fillOpacity: count/10});
           } else {
-            layer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.2});
+            odLayer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.2});
           };
         };
       });
     };
 
-    layer = L.geoJson(window.featureCollection, {onEachFeature: onEachFeature});
-    layer.addTo(map);
+    odLayer = L.geoJson(window.odRelations['pt'], {onEachFeature: onEachFeature});
+    odLayer.addTo(map);
+
+    jQuery('.od-mode-selector').click(function() {
+      jQuery(this).addClass('active').siblings().removeClass('active');
+      var mode = jQuery(this).attr('od_mode');
+      odLayer.clearLayers();
+      odLayer.addData(window.odRelations[mode]);
+    });
 
     // add leaflet statistics container and fill it with charts
     var gridStatistics = L.control({position: 'topleft'});

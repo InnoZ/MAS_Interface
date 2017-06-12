@@ -15,9 +15,16 @@ class Scenario < ApplicationRecord
     DistrictsGermany.feature(district_id)
   end
 
-  # TODO: hardcoded mode needs param from radio button
-  def feature_collection
-    Destinations.new(district_id, year, 'carsharing').feature_collection
+  def od_relations
+    hash = Hash.new
+    od_modes.each do |mode|
+      hash[mode] = Destinations.new(district_id, year, mode).feature_collection
+    end
+    hash
+  end
+
+  def od_modes
+    %w[car bike walk pt carsharing]
   end
 
   # rubocop:disable LineLength

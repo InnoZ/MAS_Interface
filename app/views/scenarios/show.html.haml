@@ -39,9 +39,11 @@
         .box-chart
           %svg#carbon-emission-chart
 
-  .container-full
+  .container-full.inner-top-xs
     .row
-      .col-sm-12
+      .col-sm-12.text-center
+        - @scenario.od_modes.each do |mode|
+          %button.btn.btn-small.od-mode-selector{od_mode: mode}= mode.upcase
         #grid-map
 
 :javascript
@@ -59,4 +61,4 @@
   window.createdAt = "#{@scenario.created_at}"
   window.districtArea = #{@scenario.district_area}
   window.scenarioCentroid = #{@scenario.centroid}
-  window.featureCollection = #{@scenario.feature_collection.to_json}
+  window.odRelations = #{@scenario.od_relations.to_json}
