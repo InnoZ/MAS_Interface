@@ -42,8 +42,8 @@
   .container-full.inner-top-xs
     .row
       .col-sm-12.text-center
-        - @scenario.od_modes.each do |mode|
-          %button.btn.btn-small.od-mode-selector{od_mode: mode}= mode.upcase
+        - @scenario.modes.each do |mode|
+          %button.btn.btn-small.od-mode-selector{od_mode: mode}= t("mode_names.#{mode}").upcase
         #grid-map
 
 :javascript

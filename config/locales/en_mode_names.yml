@@ -1,0 +1,9 @@
+en:
+  mode_names:
+    bike: Bike
+    car: Car
+    carsharing: Carsharing
+    ride: Ride
+    other: Other
+    pt: Public transport
+    walk: Walk
