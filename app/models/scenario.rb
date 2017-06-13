@@ -1,4 +1,3 @@
-# rubocop:disable ClassLength, MethodLength
 class Scenario < ApplicationRecord
   validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }
@@ -11,31 +10,18 @@ class Scenario < ApplicationRecord
     DistrictsGermany.geometry(district_id)
   end
 
-  def district_feature
-    DistrictsGermany.feature(district_id)
-  end
-
-  # TODO: hardcoded mode needs param from radio button
-  def feature_collection
-    Destinations.new(district_id, year, 'carsharing').feature_collection
-  end
-
-  # rubocop:disable LineLength
-  def centroid_latitude
-    DB["SELECT ST_Y(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_y]
-  end
-
-  def centroid_longitude
-    DB["SELECT ST_X(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_x]
-  end
-
-  def centroid
-    [Float(centroid_latitude), Float(centroid_longitude)]
+  def od_relations
+    hash = {}
+    modes.each do |mode|
+      hash[mode] = Destinations.new(district_id, year, mode).feature_collection
+    end
+    hash
   end
 
   def district_area
+    district = DistrictsGermany.geometry(district_id).to_json
     Float(
-      DB["SELECT ST_Area(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')::geography);"].first[:st_area] /
+      DB["SELECT ST_Area(ST_GeomFromGeoJSON('#{district}')::geography);"].first[:st_area] /
       1_000_000
     ).round(2)
   end
@@ -45,7 +31,7 @@ class Scenario < ApplicationRecord
       'modal_split' =>
         modes.map do |mode|
           {
-            'mode' => mode_name(mode),
+            'mode' => I18n.t("mode_names.#{mode}"),
             'share' => percent_calculator(plans.where(mode: mode).count, plans.size),
           }
         end,
@@ -58,7 +44,7 @@ class Scenario < ApplicationRecord
         'key' => 'traffic_performance',
         'values' => mode_order(person_km).flat_map do |mode, distance|
           {
-            'mode' => mode_name(mode),
+            'mode' => I18n.t("mode_names.#{mode}"),
             'traffic_performance' => String(distance),
           }
         end,
@@ -72,7 +58,7 @@ class Scenario < ApplicationRecord
         'key' => 'carbon_emission',
         'values' => mode_order(carbon_emissions).flat_map do |mode, carbon_emission|
           {
-            'mode' => mode_name(mode),
+            'mode' => I18n.t("mode_names.#{mode}"),
             'carbon_emission' => String(carbon_emission.to_f),
           }
         end,
@@ -83,7 +69,7 @@ class Scenario < ApplicationRecord
   def diurnal_json
     modes.map do |mode|
       {
-        'key' => mode_name(mode),
+        'key' => I18n.t("mode_names.#{mode}"),
         'values' => values_per_hour(mode),
       }
     end
@@ -120,35 +106,8 @@ class Scenario < ApplicationRecord
     plans.pluck(:mode).uniq.sort
   end
 
-  def mode_name(mode)
-    case I18n.locale
-    when :en
-      {
-        'bike' => 'Bike',
-        'car' => 'Car',
-        'carsharing' => 'Carsharing',
-        'ride' => 'Ride',
-        'other' => 'Other',
-        'pt' => 'Public Transport',
-        'walk' => 'Walk',
-      }.fetch(mode)
-    when :de
-      {
-        'bike' => 'Fahrrad',
-        'car' => 'Auto',
-        'carsharing' => 'Carsharing',
-        'ride' => 'Mitfahrer',
-        'other' => 'Sonstiges',
-        'pt' => 'Öffentlicher Verkehr',
-        'walk' => 'Fußweg',
-      }.fetch(mode)
-    end
-  end
-
   def seed_text
-    return 'Ein vorberechnetes Szenario aus den Seeds' if seed
-
-    'Ein neu generiertes Szenario'
+    seed ? 'Ein vorberechnetes Szenario aus den Seeds' : 'Ein neu generiertes Szenario'
   end
 
   # pretotype

@@ -1,0 +1,9 @@
+de:
+  mode_names:
+    bike: Fahrrad
+    car: Auto
+    carsharing: Carsharing
+    ride: Mitfahre
+    other: Sonstiges
+    pt: Öffentlicher Verkehr
+    walk: Fußweg

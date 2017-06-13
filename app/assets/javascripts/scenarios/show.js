@@ -23,8 +23,14 @@ jQuery(function() {
       zoomControl: false,
       scaleControl: false,
       maxZoom: 12,
-      minZoom: 7
+      minZoom: 7,
+      scrollWheelZoom: false
     });
+
+    var district = L.geoJson(window.districtGeometry);
+    district.setStyle({ fillColor: 'white', fillOpacity: 0.4, stroke: false });
+    district.addTo(map);
+    map.fitBounds(district.getBounds());
 
     // place zoom control to topright
     L.control.zoom({
@@ -42,8 +48,6 @@ jQuery(function() {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    map.setView(window.scenarioCentroid, 11);
-
     var onEachFeature = function (feature, layer) {
       layer._leaflet_id = feature.id; // for 'getLayer' function
       layer.setStyle({ fillColor: 'steelblue', fillOpacity: 0.2, stroke: false });
@@ -51,6 +55,7 @@ jQuery(function() {
       function mouseover(e) {
         layer.setStyle({weight: 2, color: 'red', stroke: true});
         withAllFeatures(destinations, 'highlight');
+
       };
       function mouseout(e) {
         layer.setStyle({stroke: false});
@@ -66,51 +71,23 @@ jQuery(function() {
         for (var id in destination){
           count = value[id];
           if (action == 'highlight') {
-            layer.getLayer(id).setStyle({fillColor: 'darkblue', fillOpacity: count/10});
+            odLayer.getLayer(id).setStyle({fillColor: 'green', fillOpacity: count/10});
           } else {
-            layer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.2});
+            odLayer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.2});
           };
         };
       });
     };
 
-    layer = L.geoJson(window.featureCollection, {onEachFeature: onEachFeature});
-    layer.addTo(map);
+    odLayer = L.geoJson(window.odRelations['pt'], {onEachFeature: onEachFeature});
+    odLayer.addTo(map);
+    jQuery('.od-mode-selector[od_mode=pt]').addClass('active');
 
-    // add leaflet statistics container and fill it with charts
-    var gridStatistics = L.control({position: 'topleft'});
-
-    gridStatistics.onAdd = function (map) {
-      this._div = L.DomUtil.create('div', 'grid-statistics-container')
-      this.update();
-      return this._div;
-    };
-
-    gridStatistics.update = function (props) {
-      this._div.innerHTML =
-        (props ? '<p>' + '<b>' +  'Y: ' + '</b>' + props + '</b>' + '</p>' : 'Hover over a hexagon');
-    };
-
-    gridStatistics.addTo(map);
-
-    // Disable dragging when user's cursor enters the element
-    gridStatistics.getContainer().addEventListener('mouseover', function () {
-      map.dragging.disable();
-      map.touchZoom.disable();
-      map.doubleClickZoom.disable();
-      map.scrollWheelZoom.disable();
-      map.boxZoom.disable();
-      map.keyboard.disable();
-    });
-
-    // Re-enable dragging when user's cursor leaves the element
-    gridStatistics.getContainer().addEventListener('mouseout', function () {
-      map.dragging.enable();
-      map.touchZoom.enable();
-      map.doubleClickZoom.enable();
-      map.scrollWheelZoom.enable();
-      map.boxZoom.enable();
-      map.keyboard.enable();
+    jQuery('.od-mode-selector').click(function() {
+      jQuery(this).addClass('active').siblings().removeClass('active');
+      var mode = jQuery(this).attr('od_mode');
+      odLayer.clearLayers();
+      odLayer.addData(window.odRelations[mode]);
     });
   });
 
