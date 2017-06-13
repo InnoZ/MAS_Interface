@@ -27,6 +27,11 @@ jQuery(function() {
       scrollWheelZoom: false
     });
 
+    var district = L.geoJson(window.districtGeometry);
+    district.setStyle({ fillColor: 'white', fillOpacity: 0.4, stroke: false });
+    district.addTo(map);
+    map.fitBounds(district.getBounds());
+
     // place zoom control to topright
     L.control.zoom({
       position: 'topright'
@@ -42,8 +47,6 @@ jQuery(function() {
     L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
-    map.setView(window.scenarioCentroid, 11);
 
     var onEachFeature = function (feature, layer) {
       layer._leaflet_id = feature.id; // for 'getLayer' function
