@@ -1,14 +1,10 @@
 class GridFill
-  attr_reader :scenario, :side_length, :radius
+  attr_reader :scenario, :side_length, :radius, :district_json
 
-  def initialize(scenario:, side_length:, radius: default_radius)
+  def initialize(scenario:, side_length:)
     @scenario = scenario
     @side_length = side_length
-    @radius = radius
-  end
-
-  def default_radius
-    60_000 / 2
+    @district_json = DistrictsGermany.geometry(scenario.district_id).to_json
   end
 
   def run
@@ -26,20 +22,21 @@ class GridFill
 
   def bounds
     Sequel.virtual_row do |o|
-      o.ST_Expand(
-        o.ST_Transform(
-          o.ST_SetSRID(
-            o.ST_MakePoint(scenario.centroid_longitude, scenario.centroid_latitude),
-            4326
-          ),
-          utm_zone.id
+      o.ST_Transform(
+        o.ST_SetSRID(
+          o.ST_GeomFromGeoJSON(district_json),
+          4326
         ),
-        radius
+        utm_zone.id
       )
     end
   end
 
+  def longitude
+    DB["SELECT ST_X(ST_Centroid(ST_GeomFromGeoJSON('#{district_json}')));"].first[:st_x]
+  end
+
   def utm_zone
-    UTMZone.new(scenario.centroid_longitude)
+    UTMZone.new(longitude)
   end
 end

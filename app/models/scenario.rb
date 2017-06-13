@@ -11,10 +11,6 @@ class Scenario < ApplicationRecord
     DistrictsGermany.geometry(district_id)
   end
 
-  def district_feature
-    DistrictsGermany.feature(district_id)
-  end
-
   def od_relations
     hash = Hash.new
     od_modes.each do |mode|
@@ -25,19 +21,6 @@ class Scenario < ApplicationRecord
 
   def od_modes
     %w[car bike walk pt carsharing]
-  end
-
-  # rubocop:disable LineLength
-  def centroid_latitude
-    DB["SELECT ST_Y(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_y]
-  end
-
-  def centroid_longitude
-    DB["SELECT ST_X(ST_Centroid(ST_GeomFromGeoJSON('#{DistrictsGermany.geometry(district_id).to_json}')));"].first[:st_x]
-  end
-
-  def centroid
-    [Float(centroid_latitude), Float(centroid_longitude)]
   end
 
   def district_area
