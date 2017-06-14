@@ -2,17 +2,18 @@ class MatsimStarter
   OUTPUT_PATH = Rails.root.join('public', 'matsim', 'output')
   JAVA_PATH = Rails.root.join('lib', 'matsim', 'java')
 
-  def initialize(id, year, folder = OUTPUT_PATH)
+  def initialize(id, year, folder = OUTPUT_PATH, rails_env = Rails.env)
     @id = id
     @year = year
     @folder = folder
+    @rails_env = rails_env
     raise "#{year} must be between 2017 and 2040" unless year_range.include?(year)
     run
   end
 
   # rubocop:disable LineLength
   def run
-    Kernel.system "java -cp #{JAVA_PATH}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} >/dev/null 2>&1"
+    Kernel.system "java -cp #{JAVA_PATH}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} #{rails_env} >/dev/null 2>&1"
   end
 
   private
@@ -21,5 +22,5 @@ class MatsimStarter
     2017..2040
   end
 
-  attr_reader :id, :year, :folder
+  attr_reader :id, :year, :folder, :rails_env
 end
