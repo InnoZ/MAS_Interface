@@ -14,4 +14,15 @@ RSpec.describe Scenario, type: :model do
       expect(scenario.seed_text).to eq('Ein neu generiertes Szenario')
     end
   end
+
+  describe 'creation' do
+    let(:district_id) { '03404' }
+    let(:year) { 2017 }
+
+    it 'is conducted by matsim' do
+      MatsimStarter.new(district_id, year)
+      new_scenario = Scenario.find_by(district_id: district_id, year: year)
+      expect(new_scenario).to_not eq(nil)
+    end
+  end
 end
