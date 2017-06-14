@@ -1,10 +1,10 @@
 class GridFill
-  attr_reader :scenario, :side_length, :radius, :district_json
+  attr_reader :district_id, :side_length, :district_json
 
-  def initialize(scenario:, side_length:)
-    @scenario = scenario
+  def initialize(district_id:, side_length:)
+    @district_id = district_id
     @side_length = side_length
-    @district_json = DistrictsGermany.geometry(scenario.district_id).to_json
+    @district_json = DistrictsGermany.geometry(district_id).to_json
   end
 
   def run
@@ -14,7 +14,7 @@ class GridFill
   # rubocop:disable AbcSize, UnusedBlockArgument
   def dataset
     DB[GridFactory.new(bounds: bounds, side_length: side_length).dataset]
-      .select        { |o| scenario.district_id }
+      .select        { |o| district_id }
       .select_append { |o| side_length }
       .select_append(:x, :y)
       .select_append { |o| o.ST_Transform(o.ST_SetSRID(o.cell, utm_zone.id), 4326) }

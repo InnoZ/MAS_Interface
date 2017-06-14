@@ -9,12 +9,13 @@ SEED_PATH = Rails.root.join('db', 'seeds')
 DISTRICT_IDS = %w[09180 03404]
 
 if File.file?("#{SEED_PATH}/seeds.dump")
+  puts 'loading dump with scenarios and agent plans...'
   Kernel.system "psql mas_interface_#{Rails.env} < #{SEED_PATH}/seeds.dump"
 
   # create grids
   DISTRICT_IDS.each do |district_id|
-    if Scenario.find_by(district_id: district_id, seed: true)
-      GridFill.new(scenario: Scenario.find_by(district_id: district_id, seed: true), side_length: Grid.default_side_length).run
-    end
+    scenario = Scenario.find_by(district_id: district_id, seed: true)
+    puts 'calculating OD relations ...'
+    scenario.calculate_od_relations
   end
 end

@@ -2,20 +2,27 @@ class Scenario < ApplicationRecord
   validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }
 
+  def calculate_od_relations
+    unless Grid.find_by(district_id: district_id, side_length: Grid.default_side_length)
+      GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run
+    end
+    update_attribute(:od_relations, od_relations_json)
+  end
+
+  def od_relations_json
+    hash = {}
+    modes.each do |mode|
+      hash[mode] = Destinations.new(district_id, year, mode).feature_collection
+    end
+    hash.to_json
+  end
+
   def district_name
     DistrictsGermany.name(district_id)
   end
 
   def district_geometry
     DistrictsGermany.geometry(district_id)
-  end
-
-  def od_relations
-    hash = {}
-    modes.each do |mode|
-      hash[mode] = Destinations.new(district_id, year, mode).feature_collection
-    end
-    hash
   end
 
   def district_area
