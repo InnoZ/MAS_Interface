@@ -28,7 +28,7 @@ jQuery(function() {
     });
 
     var district = L.geoJson(window.districtGeometry);
-    district.setStyle({ fillColor: 'white', fillOpacity: 0.4, stroke: false });
+    district.setStyle({ fillOpacity: 0, stroke: true, color: 'grey' });
     district.addTo(map);
     map.fitBounds(district.getBounds());
 
