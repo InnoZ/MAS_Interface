@@ -14,7 +14,7 @@ if File.file?("#{SEED_PATH}/seeds.dump")
   # create grids
   DISTRICT_IDS.each do |district_id|
     if Scenario.find_by(district_id: district_id, seed: true)
-      GridFill.new(scenario: Scenario.find_by(district_id: district_id, seed: true), side_length: Grid.default_side_length).run
+      GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run
     end
   end
 end

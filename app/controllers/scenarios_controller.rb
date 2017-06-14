@@ -26,10 +26,7 @@ class ScenariosController < ApplicationController
         seed: false
       )
       # check if scenario exists and the system process exited correctly
-      if !@scenario.nil? && matsim
-        unless Grid.find_by(district_id: @scenario.district_id, side_length: Grid.default_side_length)
-          GridFill.new(scenario: @scenario, side_length: Grid.default_side_length).run
-        end
+      if !@scenario.nil? && @scenario.calculate_od_relations && matsim
         flash[:success] = 'Szenario erstellt oder bereits vorhanden'
         redirect_to scenario_path(@scenario)
       end
