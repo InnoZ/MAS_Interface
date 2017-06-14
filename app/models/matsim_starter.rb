@@ -1,6 +1,6 @@
 class MatsimStarter
   OUTPUT_PATH = Rails.root.join('public', 'matsim', 'output')
-  JAVA_PATH = Rails.root.join('lib', 'matsim', 'java')
+  JAVA_PATH = Rails.root.join('lib', 'matsim', 'java').children.last
 
   def initialize(id, year, folder = OUTPUT_PATH, rails_env = Rails.env)
     @id = id
@@ -13,7 +13,7 @@ class MatsimStarter
 
   # rubocop:disable LineLength
   def run
-    Kernel.system "java -cp #{JAVA_PATH}/innoz-toolbox-0.1-SNAPSHOT.jar com.innoz.toolbox.run.Preto #{id} #{year} #{folder} #{rails_env} >/dev/null 2>&1"
+    Kernel.system "java -cp #{JAVA_PATH} com.innoz.toolbox.run.Preto #{id} #{year} #{folder} #{rails_env} >/dev/null 2>&1"
   end
 
   private
