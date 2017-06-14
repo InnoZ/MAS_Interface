@@ -50,7 +50,7 @@ jQuery(function() {
 
     var onEachFeature = function (feature, layer) {
       layer._leaflet_id = feature.id; // for 'getLayer' function
-      layer.setStyle({ fillColor: 'steelblue', fillOpacity: 0.2, stroke: false });
+      layer.setStyle({ fillColor: 'steelblue', fillOpacity: 0.1, stroke: false });
       var destinations = feature.properties.destinations;
       function mouseover(e) {
         layer.setStyle({weight: 2, color: 'red', stroke: true});
@@ -71,24 +71,29 @@ jQuery(function() {
         for (var id in destination){
           count = value[id];
           if (action == 'highlight') {
-            odLayer.getLayer(id).setStyle({fillColor: 'green', fillOpacity: count/10});
+            odLayer.getLayer(id).setStyle({fillColor: rangeColor(count), fillOpacity: 0.7});
           } else {
-            odLayer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.2});
+            odLayer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.1});
           };
         };
       });
     };
 
-    odLayer = L.geoJson(window.odRelations['pt'], {onEachFeature: onEachFeature});
+    odLayer = L.geoJson(null, {onEachFeature: onEachFeature});
     odLayer.addTo(map);
-    jQuery('.od-mode-selector[od_mode=pt]').addClass('active');
 
     jQuery('.od-mode-selector').click(function() {
       jQuery(this).addClass('active').siblings().removeClass('active');
       var mode = jQuery(this).attr('od_mode');
       odLayer.clearLayers();
       odLayer.addData(window.odRelations[mode]);
+      rangeColorMax = window.odRelations[mode]['properties']['maxCount'];
+      rangeColor = d3.scale.linear().domain([1, rangeColorMax * 0.5])
+        .interpolate(d3.interpolateHcl)
+        .range([d3.rgb('#a6d9a7'), d3.rgb('#013307')]);
     });
+
+    jQuery('.od-mode-selector').first().click();
   });
 
   jQuery('#modal-split-chart').each(function() {

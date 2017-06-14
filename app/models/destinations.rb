@@ -34,7 +34,7 @@ class Destinations
   end
 
   def mode_destinations
-    DB.fetch(mode_destinations_query).all
+    @mode_destinations ||= DB.fetch(mode_destinations_query).all
   end
 
   def mode_destinations_query
@@ -78,11 +78,16 @@ class Destinations
     SQL
   end
 
+  def max_count
+    mode_destinations.max_by{ |m| m[:count] }[:count]
+  end
+
   def feature_collection
     {
       type: 'FeatureCollection',
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
+      properties: { maxCount: max_count }
     }
   end
 
