@@ -1,6 +1,7 @@
 [
   {
     label: "car",
+    color: "#D57F0E",
     values: {
       Q1: 300,
       Q2: 350,
@@ -12,6 +13,7 @@
   },
   {
     label: "public transport",
+    color: "#5175AE",
     values: {
       Q1: 120,
       Q2: 150,
@@ -23,6 +25,7 @@
   },
   {
     label: "walk",
+    color: "#CEC11D",
     values: {
       Q1: 50,
       Q2: 100,
@@ -34,6 +37,7 @@
   },
   {
     label: "bike",
+    color: "#90A72F",
     values: {
       Q1: 70,
       Q2: 120,
