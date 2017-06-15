@@ -5,6 +5,7 @@ class CreateScenarios < ActiveRecord::Migration[5.0]
       t.integer :year, null: false
       t.integer :population, null: false
       t.integer :population_diff_2017, null: false
+      t.integer :bbsr
       t.string 'person_km', array: true, null: false
       t.string 'trips', array: true, null: false
       t.string 'diurnal_curve', array: true, null: false

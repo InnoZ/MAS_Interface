@@ -60,7 +60,7 @@ RSpec.describe Scenario, type: :model do
   end
 
   describe 'creation' do
-    let(:district_id) { '03404' }
+    let(:district_id) { '03241' }
     let(:year) { 2017 }
     let(:new_scenario) { Scenario.find_by(district_id: district_id, year: year) }
 

@@ -13,7 +13,6 @@ class MatsimStarter
 
   # rubocop:disable LineLength
   def run
-    p JAVA_PATH
     Kernel.system "java -cp #{JAVA_PATH} com.innoz.toolbox.run.Preto #{id} #{year} #{folder} #{rails_env} >/dev/null 2>&1"
   end
 

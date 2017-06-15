@@ -11,7 +11,12 @@
               = "#{@scenario.district_name} #{@scenario.year}"
           %ul= "Wege: #{@scenario.agent_size}"
           %ul= "Bevölkerung: #{@scenario.population}"
+          %ul= "Bevölkerungsänderung gegenüber 2017: #{@scenario.population_diff_2017}"
           %ul= "Fläche: #{@scenario.district_area}"
+          // placeholder for bbsr type
+          // can be removed when matsim delivers bbrs
+          - unless @scenario.bbsr.nil?
+            %ul= "BBSR Raumtyp: " + t("bbsr_names.#{String(@scenario.bbsr)}")
           %ul= "Info: #{@scenario.seed_text}"
 %section#show
   .container-fluid.inner-bottom-sm

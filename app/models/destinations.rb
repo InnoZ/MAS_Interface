@@ -79,7 +79,12 @@ class Destinations
   end
 
   def max_count
-    mode_destinations.max_by{ |m| m[:count] }[:count]
+    # guard clause needed because only points are
+    # generated in the region hannover when
+    # calculating a new scenario
+    return 0 if mode_destinations.blank?
+
+    mode_destinations.max_by { |m| m[:count] }[:count]
   end
 
   def feature_collection
@@ -87,7 +92,7 @@ class Destinations
       type: 'FeatureCollection',
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
-      properties: { maxCount: max_count }
+      properties: { maxCount: max_count },
     }
   end
 
