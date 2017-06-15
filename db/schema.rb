@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170614113316) do
     t.geography "location_end",       limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.string    "mode",                                                                           null: false
     t.string    "scenario_id",                                                                    null: false
+    t.index ["agent_id", "started_at", "ended_at", "from_activity_type", "to_activity_type", "location_start", "location_end", "mode", "scenario_id"], name: "index_plans_validation_unique", unique: true, using: :btree
     t.index ["agent_id"], name: "index_plans_on_agent_id", using: :btree
     t.index ["location_end"], name: "index_plans_on_location_end", using: :gist
     t.index ["location_start"], name: "index_plans_on_location_start", using: :gist
