@@ -26,10 +26,10 @@ RSpec.describe Scenario, type: :model do
             'values' =>
               [
                 {
-                  'mode' => 'Carsharing', 'traffic_performance' => '3.50'
+                  'mode' => 'Carsharing', 'color' => '#E9B100', 'traffic_performance' => '3.50'
                 },
                 {
-                  'mode' => 'Walk', 'traffic_performance' => '4.50'
+                  'mode' => 'Walk', 'color' => '#CEC11D', 'traffic_performance' => '4.50'
                 },
               ],
           },
@@ -47,10 +47,10 @@ RSpec.describe Scenario, type: :model do
             'values' =>
               [
                 {
-                  'mode' => 'Carsharing', 'carbon_emission' => '5.0'
+                  'mode' => 'Carsharing', 'color' => '#E9B100', 'carbon_emission' => '5.0'
                 },
                 {
-                  'mode' => 'Walk', 'carbon_emission' => '0.0'
+                  'mode' => 'Walk', 'color' => '#CEC11D', 'carbon_emission' => '0.0'
                 },
               ],
           },
