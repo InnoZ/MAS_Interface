@@ -41,6 +41,7 @@ class Scenario < ApplicationRecord
         available_modes.map do |mode|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
+            'color' => mode_color(mode),
             'share' => percent_calculator(plans.where(mode: mode).count, total_count),
           }
         end,
@@ -54,6 +55,7 @@ class Scenario < ApplicationRecord
         'values' => mode_order(person_km).flat_map do |mode, distance|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
+            'color' => mode_color(mode),
             'traffic_performance' => String(distance),
           }
         end,
@@ -68,6 +70,7 @@ class Scenario < ApplicationRecord
         'values' => mode_order(carbon_emissions).flat_map do |mode, carbon_emission|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
+            'color' => mode_color(mode),
             'carbon_emission' => String(carbon_emission.to_f),
           }
         end,
@@ -79,6 +82,7 @@ class Scenario < ApplicationRecord
     available_modes.map do |mode|
       {
         'key' => I18n.t("mode_names.#{mode}"),
+        'color' => mode_color(mode),
         'values' => values_per_hour(mode),
       }
     end
