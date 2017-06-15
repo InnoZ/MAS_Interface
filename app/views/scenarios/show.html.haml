@@ -47,8 +47,8 @@
   .container-full.inner-top-xs
     .row
       .col-sm-12.text-center
-        - @scenario.modes.each do |mode|
-          %button.btn.btn-small.od-mode-selector{od_mode: mode}= t("mode_names.#{mode}").upcase
+        - @scenario.available_modes.each do |mode|
+          %button.btn.btn-small.od-mode-selector{od_mode: mode, style: "background: #{@scenario.mode_color(mode)}"}= t("mode_names.#{mode}").upcase
         #grid-map
           .total-count-container
             .total-count
@@ -62,3 +62,4 @@
   window.boxplot = #{@scenario.boxplot}
   window.carbonEmission = #{@scenario.carbon_emission.to_json}
   window.odRelations = #{@scenario.od_relations}
+  window.modeColors = #{@scenario.mode_colors.to_json}

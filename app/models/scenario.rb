@@ -12,7 +12,7 @@ class Scenario < ApplicationRecord
 
   def od_relations_json
     hash = {}
-    modes.each do |mode|
+    available_modes.each do |mode|
       hash[mode] = Destinations.new(district_id, year, mode).feature_collection
     end
     hash.to_json
@@ -38,7 +38,7 @@ class Scenario < ApplicationRecord
     total_count = plans.size
     {
       'modal_split' =>
-        modes.map do |mode|
+        available_modes.map do |mode|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
             'share' => percent_calculator(plans.where(mode: mode).count, total_count),
@@ -76,7 +76,7 @@ class Scenario < ApplicationRecord
   end
 
   def diurnal_json
-    modes.map do |mode|
+    available_modes.map do |mode|
       {
         'key' => I18n.t("mode_names.#{mode}"),
         'values' => values_per_hour(mode),
@@ -111,7 +111,7 @@ class Scenario < ApplicationRecord
     Plan.where(scenario_id: "#{district_id}_#{year}")
   end
 
-  def modes
+  def available_modes
     plans.pluck(:mode).uniq.sort
   end
 
@@ -122,5 +122,21 @@ class Scenario < ApplicationRecord
   # pretotype
   def boxplot
     File.read(Rails.root.join('public/pretotype/boxplot.json'))
+  end
+
+  def mode_color(mode)
+    mode_colors.fetch(mode)
+  end
+
+  def mode_colors
+    {
+      'bike' => '#90A72F',
+      'car' => '#D57F0E',
+      'carsharing' => '#E9B100',
+      'ride' => '#D6393A',
+      'other' => '#35AD9C',
+      'walk' => '#CEC11D',
+      'pt' => '#5175AE',
+    }
   end
 end

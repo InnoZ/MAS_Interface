@@ -28,7 +28,7 @@ jQuery(function() {
     });
 
     var district = L.geoJson(window.districtGeometry);
-    district.setStyle({ fillOpacity: 0, stroke: true, color: 'grey' });
+    district.setStyle({ fillOpacity: 0, stroke: true, color: '#575757' });
     district.addTo(map);
     map.fitBounds(district.getBounds());
 
@@ -50,12 +50,13 @@ jQuery(function() {
 
     var onEachFeature = function (feature, layer) {
       layer._leaflet_id = feature.id; // for 'getLayer' function
-      layer.setStyle({ fillColor: 'steelblue', fillOpacity: 0.1, stroke: false });
+      layer.setStyle({ fillColor: '#575757', fillOpacity: 0.1, stroke: false });
       var destinations = feature.properties.destinations;
+      var mode = jQuery('.od-mode-selector.active').attr('od_mode');
       var colorRangeMax = feature.properties.featureMaxCount;
-      var colorRange = d3.scale.linear().domain([1, colorRangeMax * 0.7])
+      var colorRange = d3.scale.linear().domain([1, colorRangeMax])
         .interpolate(d3.interpolateHcl)
-        .range([d3.rgb('#7bd469'), d3.rgb('#0e5206')]);
+        .range([brightColor, darkColor]);
       function mouseover(e) {
         layer.setStyle({weight: 2, color: 'red', stroke: true});
         withAllFeatures(destinations, 'highlight', colorRange);
@@ -76,7 +77,7 @@ jQuery(function() {
           if (action == 'highlight') {
             odLayer.getLayer(id).setStyle({fillColor: colorRange(count), fillOpacity: 0.7});
           } else {
-            odLayer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.1});
+            odLayer.getLayer(id).setStyle({fillColor: 'grey', fillOpacity: 0.1});
           };
         };
       });
@@ -88,9 +89,16 @@ jQuery(function() {
     jQuery('.od-mode-selector').click(function() {
       jQuery(this).addClass('active').siblings().removeClass('active');
       var mode = jQuery(this).attr('od_mode');
+      var color = d3.rgb(window.modeColors[mode]);
+      var colorToWhite = d3.scale.linear().domain([0, 1])
+        .interpolate(d3.interpolateHcl)
+        .range([color, 'white']);
+      brightColor = colorToWhite(0.5);
+      darkColor = color.darker(2);
       odLayer.clearLayers();
       odLayer.addData(window.odRelations[mode]);
       jQuery('.total-count').html(window.odRelations[mode].properties.totalCount);
+      jQuery('.total-count-container').css('background', color);
     });
 
     jQuery('.od-mode-selector').first().click();
