@@ -15,7 +15,7 @@ if File.file?("#{SEED_PATH}/seeds.dump")
   # create grids
   DISTRICT_IDS.each do |district_id|
     scenario = Scenario.find_by(district_id: district_id, seed: true)
-    puts 'calculating OD relations ...'
+    puts "calculating OD relations for District ID: #{district_id}"
     scenario.calculate_od_relations
   end
 end

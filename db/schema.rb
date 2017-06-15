@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170614113316) do
     t.integer  "year",                 null: false
     t.integer  "population",           null: false
     t.integer  "population_diff_2017", null: false
+    t.integer  "bbsr"
     t.string   "person_km",            null: false, array: true
     t.string   "trips",                null: false, array: true
     t.string   "diurnal_curve",        null: false, array: true
