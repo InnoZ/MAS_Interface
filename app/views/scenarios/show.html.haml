@@ -50,6 +50,9 @@
         - @scenario.modes.each do |mode|
           %button.btn.btn-small.od-mode-selector{od_mode: mode}= t("mode_names.#{mode}").upcase
         #grid-map
+          .total-count-container
+            .total-count
+            = t('ways')
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
