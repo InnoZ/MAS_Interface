@@ -79,6 +79,11 @@ class Destinations
   end
 
   def max_count
+    # guard clause needed because only points are
+    # generated in the region hannover when
+    # calculating a new scenario
+    return 0 if mode_destinations.blank?
+
     mode_destinations.max_by { |m| m[:count] }[:count]
   end
 
