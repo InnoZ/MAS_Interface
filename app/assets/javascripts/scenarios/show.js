@@ -52,26 +52,29 @@ jQuery(function() {
       layer._leaflet_id = feature.id; // for 'getLayer' function
       layer.setStyle({ fillColor: 'steelblue', fillOpacity: 0.1, stroke: false });
       var destinations = feature.properties.destinations;
+      var colorRangeMax = feature.properties.featureMaxCount;
+      var colorRange = d3.scale.linear().domain([1, colorRangeMax * 0.7])
+        .interpolate(d3.interpolateHcl)
+        .range([d3.rgb('#7bd469'), d3.rgb('#0e5206')]);
       function mouseover(e) {
         layer.setStyle({weight: 2, color: 'red', stroke: true});
-        withAllFeatures(destinations, 'highlight');
-
+        withAllFeatures(destinations, 'highlight', colorRange);
       };
       function mouseout(e) {
         layer.setStyle({stroke: false});
-        withAllFeatures(destinations, 'unHighlight');
+        withAllFeatures(destinations, 'unHighlight', colorRange);
       };
       layer.on('mouseover', mouseover);
       layer.on('mouseout', mouseout);
     };
 
-    var withAllFeatures = function(features, action) {
+    var withAllFeatures = function(features, action, colorRange) {
       jQuery.each(features, function(index, value) {
         destination = value;
         for (var id in destination){
           count = value[id];
           if (action == 'highlight') {
-            odLayer.getLayer(id).setStyle({fillColor: rangeColor(count), fillOpacity: 0.7});
+            odLayer.getLayer(id).setStyle({fillColor: colorRange(count), fillOpacity: 0.7});
           } else {
             odLayer.getLayer(id).setStyle({fillColor: 'steelblue', fillOpacity: 0.1});
           };
@@ -87,10 +90,7 @@ jQuery(function() {
       var mode = jQuery(this).attr('od_mode');
       odLayer.clearLayers();
       odLayer.addData(window.odRelations[mode]);
-      rangeColorMax = window.odRelations[mode]['properties']['maxCount'];
-      rangeColor = d3.scale.linear().domain([1, rangeColorMax * 0.5])
-        .interpolate(d3.interpolateHcl)
-        .range([d3.rgb('#a6d9a7'), d3.rgb('#013307')]);
+      jQuery('.total-count').html(window.odRelations[mode].properties.totalCount);
     });
 
     jQuery('.od-mode-selector').first().click();

@@ -16,7 +16,6 @@ class Destinations
     grouped_results(db_output).map do |r|
       {
         id:           r[0][:id],
-        name:         r[0][:name],
         geometry:     r[0][:geometry],
         destinations: r[1].sort_by { |v| v[:count] }.reverse.map { |v| Hash[v[:end_grid], v[:count]] },
       }
@@ -27,7 +26,6 @@ class Destinations
     db_output.group_by do |r|
       {
         id:       r[:start_grid],
-        name:     r[:start_name],
         geometry: r[:geometry],
       }
     end
@@ -44,8 +42,7 @@ class Destinations
         location_start AS start_point,
         location_end AS end_point
         FROM (
-          SELECT * FROM plans
-          WHERE scenario_id = '#{district_id}_#{year}' AND mode = '#{mode}'
+          SELECT * FROM plans WHERE scenario_id = '#{district_id}_#{year}' AND mode = '#{mode}'
         )t1
       ),
     grid AS (
@@ -78,13 +75,8 @@ class Destinations
     SQL
   end
 
-  def max_count
-    # guard clause needed because only points are
-    # generated in the region hannover when
-    # calculating a new scenario
-    return 0 if mode_destinations.blank?
-
-    mode_destinations.max_by { |m| m[:count] }[:count]
+  def total_count
+    DB.fetch("SELECT * FROM plans WHERE scenario_id = '#{district_id}_#{year}' AND mode = '#{mode}'").count
   end
 
   def feature_collection
@@ -92,7 +84,7 @@ class Destinations
       type: 'FeatureCollection',
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
-      properties: { maxCount: max_count },
+      properties: { totalCount: total_count }
     }
   end
 
@@ -114,6 +106,7 @@ class Destinations
       next if %w[geometry id].include?(key.to_s)
       json.merge!(key => value)
     end
-    json
+    feature_max = feature[:destinations].max_by{ |k,v| v}.first[1]
+    json.merge(featureMaxCount: feature_max)
   end
 end

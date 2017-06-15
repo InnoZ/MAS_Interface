@@ -1,6 +1,8 @@
 de:
   locale_name: 'deutsch'
 
+  ways: 'Wege'
+
   service: 'Mobility Simulations'
   learn_more: 'Mehr erfahren'
 #  project: 'Projekt'

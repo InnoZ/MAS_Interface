@@ -34,12 +34,13 @@ class Scenario < ApplicationRecord
   end
 
   def modal_split
+    total_count = plans.size
     {
       'modal_split' =>
         modes.map do |mode|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
-            'share' => percent_calculator(plans.where(mode: mode).count, plans.size),
+            'share' => percent_calculator(plans.where(mode: mode).count, total_count),
           }
         end,
     }
