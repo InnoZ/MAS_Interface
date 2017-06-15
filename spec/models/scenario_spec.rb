@@ -59,20 +59,10 @@ RSpec.describe Scenario, type: :model do
     end
   end
 
-  describe 'creation' do
-    let(:district_id) { '03241' }
-    let(:year) { 2017 }
-    let(:new_scenario) { Scenario.find_by(district_id: district_id, year: year) }
+  describe '.make' do
+    let(:new_scenario) { Scenario.make(district_id: '03241', year: 2017) }
 
-    before do
-      MatsimStarter.new(district_id, year)
-    end
-
-    it 'is conducted by matsim' do
-      expect(new_scenario).to_not eq(nil)
-    end
-
-    it 'fills od_relations' do
+    it 'creates scenario and fills od_relations' do
       new_scenario.calculate_od_relations
       expect(new_scenario.od_relations).to_not eq(nil)
     end
