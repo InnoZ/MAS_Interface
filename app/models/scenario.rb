@@ -1,3 +1,4 @@
+# rubocop:disable ClassLength
 class Scenario < ApplicationRecord
   validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }

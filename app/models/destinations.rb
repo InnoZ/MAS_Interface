@@ -11,7 +11,6 @@ class Destinations
     geojson_ready(mode_destinations)
   end
 
-  # rubocop:disable AbcSize
   def geojson_ready(db_output)
     grouped_results(db_output).map do |r|
       {
@@ -84,7 +83,7 @@ class Destinations
       type: 'FeatureCollection',
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
-      properties: { totalCount: total_count }
+      properties: { totalCount: total_count },
     }
   end
 
@@ -106,7 +105,7 @@ class Destinations
       next if %w[geometry id].include?(key.to_s)
       json.merge!(key => value)
     end
-    feature_max = feature[:destinations].max_by{ |k,v| v}.first[1]
+    feature_max = feature[:destinations].max_by { |_k, v| v }.first[1]
     json.merge(featureMaxCount: feature_max)
   end
 end
