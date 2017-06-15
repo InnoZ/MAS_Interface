@@ -96,7 +96,7 @@ class Scenario < ApplicationRecord
   end
 
   def mode_order(array)
-    array.sort_by { |element| element[0] }
+    array.sort_by { |element| mode_priority(element[0]) }
   end
 
   def values_per_hour(mode)
@@ -123,7 +123,7 @@ class Scenario < ApplicationRecord
   end
 
   def available_modes
-    plans.pluck(:mode).uniq.sort
+    plans.pluck(:mode).uniq.sort_by { |element| mode_priority(element) }
   end
 
   def seed_text
@@ -141,13 +141,29 @@ class Scenario < ApplicationRecord
 
   def mode_colors
     {
-      'bike' => '#90A72F',
-      'car' => '#D57F0E',
-      'carsharing' => '#E9B100',
-      'ride' => '#D6393A',
-      'other' => '#35AD9C',
-      'walk' => '#CEC11D',
-      'pt' => '#5175AE',
+      'bike' => '#50a0b5',
+      'car' => '#f2b50c',
+      'carsharing' => '#db8012',
+      'ride' => '#f4c85b',
+      'other' => '#bdb8b3',
+      'walk' => '#3db783',
+      'pt' => '#c94380',
+    }
+  end
+
+  def mode_priority(mode)
+    mode_priorities.fetch(mode)
+  end
+
+  def mode_priorities
+    {
+      'bike' => 5,
+      'car' => 1,
+      'carsharing' => 3,
+      'ride' => 2,
+      'other' => 7,
+      'walk' => 6,
+      'pt' => 4,
     }
   end
 end
