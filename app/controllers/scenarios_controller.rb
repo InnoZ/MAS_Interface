@@ -13,7 +13,7 @@ class ScenariosController < ApplicationController
     @districts_germany = DistrictsGermany.all.to_json
   end
 
-  # rubocop:disable MethodLength, AbcSize
+  # rubocop:disable all
   def create
     unless scenario_params[:district_id].present?
       flash[:danger] = 'Bitte Landkreis wählen'

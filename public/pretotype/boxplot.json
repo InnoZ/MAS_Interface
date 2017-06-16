@@ -1,7 +1,7 @@
 [
   {
     label: "car",
-    color: "#D57F0E",
+    color: "#f2b50c",
     values: {
       Q1: 300,
       Q2: 350,
@@ -13,7 +13,7 @@
   },
   {
     label: "public transport",
-    color: "#5175AE",
+    color: "#c94380",
     values: {
       Q1: 120,
       Q2: 150,
@@ -24,8 +24,20 @@
     },
   },
   {
+    label: "bike",
+    color: "#50a0b5",
+    values: {
+      Q1: 70,
+      Q2: 120,
+      Q3: 145,
+      whisker_low: 45,
+      whisker_high: 195,
+      outliers: [225]
+    },
+  },
+  {
     label: "walk",
-    color: "#CEC11D",
+    color: "#3db783",
     values: {
       Q1: 50,
       Q2: 100,
@@ -35,16 +47,5 @@
       outliers: [0]
     },
   },
-  {
-    label: "bike",
-    color: "#90A72F",
-    values: {
-      Q1: 70,
-      Q2: 120,
-      Q3: 145,
-      whisker_low: 45,
-      whisker_high: 195,
-      outliers: [225]
-    },
-  }
+
 ];
