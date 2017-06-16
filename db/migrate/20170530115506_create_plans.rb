@@ -16,5 +16,17 @@ class CreatePlans < ActiveRecord::Migration[5.0]
     add_index(:plans, :agent_id)
     add_index(:plans, :location_start, using: 'gist')
     add_index(:plans, :location_end, using: 'gist')
+    add_index(:plans,
+      [
+        :agent_id,
+        :started_at,
+        :ended_at,
+        :from_activity_type,
+        :to_activity_type,
+        :location_start,
+        :location_end,
+        :mode,
+        :scenario_id
+      ], unique: true, name: 'index_plans_validation_unique')
   end
 end
