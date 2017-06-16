@@ -18,7 +18,7 @@ RSpec.describe Scenario, type: :model do
   end
 
   describe '#traffic_performance' do
-    it 'returns a hash with a specific format' do
+    it 'returns data in a specific nvd3 json format' do
       expect(scenario.traffic_performance).to eq(
         [
           {
@@ -39,7 +39,7 @@ RSpec.describe Scenario, type: :model do
   end
 
   describe '#carbon_emission' do
-    it 'returns a hash with a specific format' do
+    it 'returns data in a specific nvd3 json format' do
       expect(scenario.carbon_emission).to eq(
         [
           {
@@ -65,6 +65,7 @@ RSpec.describe Scenario, type: :model do
     it 'creates scenario and fills od_relations' do
       new_scenario.calculate_od_relations
       expect(new_scenario.od_relations).to_not eq(nil)
+      expect(new_scenario.density_count).to_not eq(nil)
     end
   end
 end

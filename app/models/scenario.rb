@@ -7,6 +7,7 @@ class Scenario < ApplicationRecord
     MatsimStarter.new(district_id, year)
     record = find_by(year: year, district_id: district_id)
     record.calculate_od_relations
+    record.calculate_density_count
     record
   end
 
@@ -21,6 +22,21 @@ class Scenario < ApplicationRecord
     hash = {}
     available_modes.each do |mode|
       hash[mode] = Destinations.new(district_id, year, mode).feature_collection
+    end
+    hash.to_json
+  end
+
+  def calculate_density_count
+    unless Grid.find_by(district_id: district_id, side_length: Grid.default_side_length)
+      GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run
+    end
+    update_attribute(:density_count, density_count_json)
+  end
+
+  def density_count_json
+    hash = {}
+    available_modes.each do |mode|
+      hash[mode] = Density.new(district_id, year, mode).feature_collection
     end
     hash.to_json
   end
