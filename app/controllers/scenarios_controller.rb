@@ -15,29 +15,28 @@ class ScenariosController < ApplicationController
 
   # rubocop:disable MethodLength, AbcSize
   def create
-    if !scenario_params[:district_id].present?
+    unless scenario_params[:district_id].present?
       flash[:danger] = 'Bitte Landkreis wählen'
       redirect_to :back
     else
-      matsim
-      @scenario = Scenario.find_by(
+      args = {
         district_id: String(scenario_params[:district_id]),
-        year: scenario_params[:year],
-        seed: false
-      )
-      # check if scenario exists and the system process exited correctly
-      if !@scenario.nil? && @scenario.calculate_od_relations && matsim
-        flash[:success] = 'Szenario erstellt oder bereits vorhanden'
-        redirect_to scenario_path(@scenario)
+        year: Integer(scenario_params[:year]),
+      }
+      @existing_scenario = Scenario.find_by(args)
+      if @existing_scenario
+        flash[:success] = 'Szenario bereits vorhanden'
+        redirect_to scenario_path(@existing_scenario)
+      else
+        if @scenario = Scenario.make(args)
+          flash[:success] = 'Szenario erstellt'
+          redirect_to scenario_path(@scenario)
+        end
       end
     end
   rescue => e
     flash[:danger] = "Ups, etwas ist schief gegangen => #{e.message}"
     redirect_to :back
-  end
-
-  def matsim
-    @matsim ||= MatsimStarter.new(String(scenario_params[:district_id]), Integer(scenario_params[:year]))
   end
 
   def scenario_params
