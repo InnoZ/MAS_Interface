@@ -49,10 +49,17 @@
       .col-sm-12.text-center
         - @scenario.available_modes.each do |mode|
           %button.btn.btn-small.od-mode-selector{od_mode: mode, style: "background: #{@scenario.mode_color(mode)}"}= t("mode_names.#{mode}").upcase
-        #grid-map
+        #od-map
           .total-count-container
             .total-count
             = t('ways')
+
+  .container-full.inner-top-xs
+    .row
+      .col-sm-12.text-center
+        - @scenario.available_modes.each do |mode|
+          %button.btn.btn-small.density-mode-selector{density_mode: mode, style: "background: #{@scenario.mode_color(mode)}"}= t("mode_names.#{mode}").upcase
+        #density-map
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}
@@ -62,4 +69,5 @@
   window.boxplot = #{@scenario.boxplot}
   window.carbonEmission = #{@scenario.carbon_emission.to_json}
   window.odRelations = #{@scenario.od_relations}
+  window.densityCount = #{@scenario.density_count}
   window.modeColors = #{@scenario.mode_colors.to_json}

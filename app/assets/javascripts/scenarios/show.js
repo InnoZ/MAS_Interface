@@ -3,10 +3,10 @@ jQuery(function() {
     staticDistrictMap('district-geometry', window.districtGeometry, 'rgb(206, 210, 236)');
   });
 
-  jQuery('#grid-map').each(function() {
+  jQuery('#od-map').each(function() {
     var resizeMap = function() {
       var mapHeight = jQuery(window).height() - jQuery('header').height();
-      jQuery('#grid-map').height(mapHeight);
+      jQuery('#od-map').height(mapHeight);
     };
     resizeMap();
     jQuery(window).resize(function() {
@@ -19,7 +19,7 @@ jQuery(function() {
     jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
 
     // disable zoomControl and scaleControl
-    var map = L.map('grid-map', {
+    var map = L.map('od-map', {
       zoomControl: false,
       scaleControl: false,
       maxZoom: 12,
@@ -102,6 +102,145 @@ jQuery(function() {
     });
 
     jQuery('.od-mode-selector').first().click();
+  });
+
+  jQuery('#density-map').each(function() {
+    var resizeMap = function() {
+      var mapHeight = jQuery(window).height() - jQuery('header').height();
+      jQuery('#density-map').height(mapHeight);
+    };
+    resizeMap();
+    jQuery(window).resize(function() {
+      // delay for browser minimizing/maximizing
+      setTimeout(function() {
+        resizeMap()
+      }, 100);
+    });
+    jQuery('.navbar-collapse').on('shown.bs.collapse', function() { resizeMap(); });
+    jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
+
+    // disable zoomControl and scaleControl
+    var map = L.map('density-map', {
+      zoomControl: false,
+      scaleControl: false,
+      maxZoom: 12,
+      minZoom: 7,
+      scrollWheelZoom: false
+    });
+
+    var district = L.geoJson(window.districtGeometry);
+    district.setStyle({ fillOpacity: 0, stroke: true, color: '#575757' });
+    district.addTo(map);
+    map.fitBounds(district.getBounds());
+
+    // place zoom control to topright
+    L.control.zoom({
+      position: 'topright'
+    }).addTo(map);
+
+    // place metric scale to bottomright
+    L.control.scale({
+      position: 'bottomright',
+      imperial: false
+    }).addTo(map);
+
+    // add innoz mapbox tilelayer
+    L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    function style(feature) {
+      return {
+        fillColor: 'blue',
+        weight: 2,
+        opacity: 0.7,
+        stroke: false,
+        fillOpacity: 0.4
+      };
+    }
+
+    function highlightFeature(e) {
+      var layer = e.target;
+
+      layer.setStyle({
+        weight: 2,
+        color: 'red',
+        stroke: true,
+        fillOpacity: 0.7
+      });
+      densityStatistics.update(layer.feature.properties);
+    }
+
+    function resetHighlight(e) {
+      densityLayer.resetStyle(e.target);
+      densityStatistics.update()
+    }
+
+    function zoomToFeature(e) {
+      map.fitBounds(e.target.getBounds());
+    }
+
+    function onEachFeature(feature, layer) {
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+      });
+    }
+
+    // add leaflet statistics container and fill it with charts
+    var densityStatistics = L.control({position: 'topleft'});
+
+    densityStatistics.onAdd = function (map) {
+      this._div = L.DomUtil.create('div', 'density-statistics-container')
+      this.update();
+      return this._div;
+    };
+
+    densityStatistics.update = function (properties) {
+      this._div.innerHTML =
+        (properties ? '<p>' + '<b>' +  'Count: ' + '</b>' + properties.densityCount + '</b>' + '</p>' +
+        '<p>' + '<b>' +  'Max Value: ' + '</b>' + colorRangeMax + '</b>' + '</p>'
+         : 'Hover over a hexagon');
+    };
+    densityStatistics.addTo(map);
+
+    // Disable dragging when user's cursor enters the element
+    densityStatistics.getContainer().addEventListener('mouseover', function () {
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.scrollWheelZoom.disable();
+      map.boxZoom.disable();
+      map.keyboard.disable();
+    });
+
+    // Re-enable dragging when user's cursor leaves the element
+    densityStatistics.getContainer().addEventListener('mouseout', function () {
+      map.dragging.enable();
+      map.touchZoom.enable();
+      map.doubleClickZoom.enable();
+      map.scrollWheelZoom.enable();
+      map.boxZoom.enable();
+      map.keyboard.enable();
+    });
+
+    densityLayer = L.geoJson(null, { style: style, onEachFeature: onEachFeature });
+    densityLayer.addTo(map);
+
+    jQuery('.density-mode-selector').click(function() {
+      jQuery(this).addClass('active').siblings().removeClass('active');
+      var mode = jQuery(this).attr('density_mode');
+      densityLayer.clearLayers();
+      densityLayer.addData(window.densityCount[mode]);
+      colorRangeMax = Math.max.apply(Math, window.densityCount[mode].features.map(function(feature) {
+        return feature.properties.densityCount;
+      }));
+      var baseColor = window.modeColors[mode];
+      jQuery('.density-statistics-container').css('background', baseColor);
+    });
+
+    jQuery('.density-mode-selector').first().click();
   });
 
   jQuery('#modal-split-chart').each(function() {
