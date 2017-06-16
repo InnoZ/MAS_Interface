@@ -55,7 +55,7 @@ jQuery(function() {
       var mode = jQuery('.od-mode-selector.active').attr('od_mode');
       var colorRangeMax = feature.properties.featureMaxCount;
       var colorRange = d3.scale.linear().domain([1, colorRangeMax])
-        .interpolate(d3.interpolateHcl)
+        .interpolate(d3.interpolateRgb)
         .range([brightColor, darkColor]);
       function mouseover(e) {
         layer.setStyle({weight: 2, color: 'red', stroke: true});
@@ -91,7 +91,7 @@ jQuery(function() {
       var mode = jQuery(this).attr('od_mode');
       var color = d3.rgb(window.modeColors[mode]);
       var colorToWhite = d3.scale.linear().domain([0, 1])
-        .interpolate(d3.interpolateHcl)
+        .interpolate(d3.interpolateRgb)
         .range([color, 'white']);
       brightColor = colorToWhite(0.5);
       darkColor = color.darker(2);
