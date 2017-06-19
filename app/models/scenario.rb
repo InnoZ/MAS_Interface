@@ -42,47 +42,42 @@ class Scenario < ApplicationRecord
   end
 
   def modal_split
-    total_count = plans.size
     {
       'modal_split' =>
         available_modes.map do |mode|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
             'color' => mode_color(mode),
-            'share' => percent_calculator(plans.where(mode: mode).count, total_count),
+            'share' => plans.where(mode: mode).count,
           }
         end,
     }
   end
 
   def traffic_performance
-    [
-      {
-        'key' => 'traffic_performance',
-        'values' => mode_order(person_km).flat_map do |mode, distance|
+    {
+      'traffic_performance' =>
+        mode_order(person_km).map do |mode, distance|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
             'color' => mode_color(mode),
-            'traffic_performance' => String(distance),
+            'traffic' => distance.to_i,
           }
         end,
-      },
-    ]
+    }
   end
 
   def carbon_emission
-    [
-      {
-        'key' => 'carbon_emission',
-        'values' => mode_order(carbon_emissions).flat_map do |mode, carbon_emission|
+    {
+      'carbon_emission' =>
+        mode_order(carbon_emissions).map do |mode, carbon_emission|
           {
             'mode' => I18n.t("mode_names.#{mode}"),
             'color' => mode_color(mode),
-            'carbon_emission' => String(carbon_emission.to_f),
+            'carbon' => carbon_emission.to_i,
           }
         end,
-      },
-    ]
+    }
   end
 
   def diurnal_json
@@ -107,15 +102,6 @@ class Scenario < ApplicationRecord
 
   def agent_size
     plans.select(:agent_id).size
-  end
-
-  def percent_calculator(part, all, multiplicator = 100.0)
-    # TODO: if there are no plans it doesn't make sense to return 0
-    # just for now to protect against ZeroDivision Error
-
-    return 0 if all.zero?
-
-    part.fdiv(all) * multiplicator
   end
 
   def plans

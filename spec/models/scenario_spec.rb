@@ -20,18 +20,17 @@ RSpec.describe Scenario, type: :model do
   describe '#traffic_performance' do
     it 'returns a hash with a specific format' do
       expect(scenario.traffic_performance).to eq(
+        'traffic_performance' =>
         [
           {
-            'key' => 'traffic_performance',
-            'values' =>
-              [
-                {
-                  'mode' => 'Carsharing', 'color' => '#db8012', 'traffic_performance' => '3.50'
-                },
-                {
-                  'mode' => 'Walk', 'color' => '#3db783', 'traffic_performance' => '4.50'
-                },
-              ],
+            'mode' => 'Carsharing',
+            'color' => '#db8012',
+            'traffic' => 3,
+          },
+          {
+            'mode' => 'Walk',
+            'color' => '#3db783',
+            'traffic' => 4,
           },
         ]
       )
@@ -41,18 +40,17 @@ RSpec.describe Scenario, type: :model do
   describe '#carbon_emission' do
     it 'returns a hash with a specific format' do
       expect(scenario.carbon_emission).to eq(
+        'carbon_emission' =>
         [
           {
-            'key' => 'carbon_emission',
-            'values' =>
-              [
-                {
-                  'mode' => 'Carsharing', 'color' => '#db8012', 'carbon_emission' => '5.0'
-                },
-                {
-                  'mode' => 'Walk', 'color' => '#3db783', 'carbon_emission' => '0.0'
-                },
-              ],
+            'mode' => 'Carsharing',
+            'color' => '#db8012',
+            'carbon' => 5,
+          },
+          {
+            'mode' => 'Walk',
+            'color' => '#3db783',
+            'carbon' => 0,
           },
         ]
       )
