@@ -83,7 +83,10 @@ class Destinations
       type: 'FeatureCollection',
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
-      properties: { totalCount: total_count },
+      properties: {
+        totalCount: total_count,
+        maxCount: mapped_features.map { |f| f[:properties][:featureStarts] }.compact.max,
+      },
     }
   end
 
@@ -105,7 +108,11 @@ class Destinations
       next if %w[geometry id].include?(key.to_s)
       json.merge!(key => value)
     end
-    feature_max = feature[:destinations].max_by { |_k, v| v }.first[1]
-    json.merge(featureMaxCount: feature_max)
+    values = feature[:destinations].map { |f| f.first[1] }
+    feature_max = values.max
+    feature_sum = values.compact.sum
+    json
+      .merge(featureMaxCount: feature_max)
+      .merge(featureStarts: feature_sum)
   end
 end
