@@ -33,8 +33,11 @@
   }
 }
 
-#modal-split-box {
+#donut-chart-box {
   height: 470px;
+  .nvd3.nv-pie text {
+    fill: white !important;
+  }
 }
 
 .box {

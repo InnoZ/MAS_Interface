@@ -115,6 +115,15 @@ jQuery(function() {
         .donut(true)
         .donutRatio(0.35)
 
+      var unit = (window.location.href.indexOf('/de') > -1) ? 'Wege' : 'trips';
+
+      chart.tooltip.contentGenerator(function (obj) {
+        content = '<h3 style="color: white; background-color: ';
+        content += obj.color + '">';
+        content += obj.data.mode + '</h3>' + '<p>' + obj.data.share + ' ' + unit + '</p>';
+        return content;
+      });
+
       chart.legend.vers('furious');
 
       d3.select('#modal-split-chart')
@@ -128,19 +137,29 @@ jQuery(function() {
 
   jQuery('#traffic-performance-chart').each(function() {
     nv.addGraph(function() {
-      var chart = nv.models.discreteBarChart()
+      var chart = nv.models.pieChart()
         .x(function(d) { return d.mode })
-        .y(function(d) { return parseFloat(d.traffic_performance) / 1000 })
-        .showValues(true)
-        .staggerLabels(true)
-        .valueFormat(d3.format(".0f"));
+        .y(function(d) { return d.traffic })
+        .showLabels(true)
+        .labelType("percent")
+        .showLegend(true)
+        .donut(true)
+        .donutRatio(0.35)
 
-      chart.yAxis
-        .axisLabel('x 1000 km')
-        .tickFormat(d3.format(".0f"));
+      var unit = (window.location.href.indexOf('/de') > -1) ? 'Kilometer' : 'kilometers';
+
+      chart.tooltip.contentGenerator(function (obj) {
+        content = '<h3 style="color: white; background-color: ';
+        content += obj.color + '">';
+        content += obj.data.mode + '</h3>' + '<p>' + obj.data.traffic + ' ' + unit + '</p>';
+        return content;
+      });
+
+      chart.legend.vers('furious');
 
       d3.select('#traffic-performance-chart')
-        .datum(trafficPerformance)
+        .datum(trafficPerformance.traffic_performance)
+        .transition().duration(350)
         .call(chart);
       nv.utils.windowResize(chart.update);
       return chart;
@@ -149,19 +168,29 @@ jQuery(function() {
 
   jQuery('#carbon-emission-chart').each(function() {
     nv.addGraph(function() {
-      var chart = nv.models.discreteBarChart()
+      var chart = nv.models.pieChart()
         .x(function(d) { return d.mode })
-        .y(function(d) { return parseFloat(d.carbon_emission) })
-        .showValues(true)
-        .staggerLabels(true)
-        .valueFormat(d3.format(".0f"));
+        .y(function(d) { return d.carbon })
+        .showLabels(true)
+        .labelType("percent")
+        .showLegend(true)
+        .donut(true)
+        .donutRatio(0.35)
 
-      chart.yAxis
-        .axisLabel('kg CO2')
-        .tickFormat(d3.format(".0f"));
+      var unit = (window.location.href.indexOf('/de') > -1) ? 'Kilogramm' : 'kilogram';
+
+      chart.tooltip.contentGenerator(function (obj) {
+        content = '<h3 style="color: white; background-color: ';
+        content += obj.color + '">';
+        content += obj.data.mode + '</h3>' + '<p>' + obj.data.carbon + ' ' + unit + '</p>';
+        return content;
+      });
+
+      chart.legend.vers('furious');
 
       d3.select('#carbon-emission-chart')
-        .datum(carbonEmission)
+        .datum(carbonEmission.carbon_emission)
+        .transition().duration(350)
         .call(chart);
       nv.utils.windowResize(chart.update);
       return chart;
