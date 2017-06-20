@@ -22,12 +22,14 @@ class GridFill
 
   def bounds
     Sequel.virtual_row do |o|
-      o.ST_Transform(
-        o.ST_SetSRID(
-          o.ST_GeomFromGeoJSON(district_json),
-          4326
-        ),
-        utm_zone.id
+      o.ST_Expand(
+        o.ST_Transform(
+          o.ST_SetSRID(
+            o.ST_GeomFromGeoJSON(district_json),
+            4326
+          ),
+          utm_zone.id
+        ), 1000
       )
     end
   end

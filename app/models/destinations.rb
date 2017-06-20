@@ -74,18 +74,15 @@ class Destinations
     SQL
   end
 
-  def total_count
-    DB.fetch("SELECT * FROM plans WHERE scenario_id = '#{district_id}_#{year}' AND mode = '#{mode}'").count
-  end
-
   def feature_collection
+    feature_starts = mapped_features.map { |f| f[:properties][:featureStarts] }.compact
     {
       type: 'FeatureCollection',
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
       properties: {
-        totalCount: total_count,
-        maxCount: mapped_features.map { |f| f[:properties][:featureStarts] }.compact.max,
+        totalCount: feature_starts.sum,
+        maxCount: feature_starts.max,
       },
     }
   end
