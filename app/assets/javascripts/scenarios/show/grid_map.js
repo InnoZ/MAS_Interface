@@ -3,6 +3,7 @@ jQuery(function() {
     var modeMaxCount;
     var currentData;
     var modeColor;
+    var totalModeCount;
 
     var resizeMap = function() {
       var mapHeight = jQuery(window).height() - jQuery('header').height();
@@ -46,34 +47,47 @@ jQuery(function() {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    var colorLegend = function(color) {
+      var gradient = 'rgba(0,0,0,0) 0%, ' + color + ' 100%';
+      jQuery('.current-count-bar')
+        .css({'background': 'linear-gradient(to left, ' + gradient + ')'})
+        .css({'background': '-webkit-linear-gradient(left, ' + gradient + ')'});
+      jQuery('.current-count').css('background', color);
+      jQuery('.total-count, .legend-zero').css('color', color);
+    };
+
     var onEachFeature = function (feature, layer) {
       layer._leaflet_id = feature.id; // for 'getLayer' function
       var opacity = (feature.properties.featureStarts / modeMaxCount) + 0.05;
-      feature.densityStyle = { fillColor: modeColor, fillOpacity: opacity, stroke: false };
+      feature.densityStyle = { fillColor: 'grey', fillOpacity: opacity, stroke: false };
       layer.setStyle(feature.densityStyle);
       var mode = jQuery('.od-mode-selector.active').attr('od_mode');
       function mouseover(e) {
         layer.setStyle({weight: 3, color: 'black', stroke: true});
         hideAllFeatures();
         highlightDestinations(feature);
+        featureSelected = true;
       };
       function mouseout(e) {
+        featureSelected = false;
         layer.setStyle({stroke: false});
-        highlightDensities();
+        setTimeout(function() { highlightDensities() }, 200);
       };
       layer.on('mouseover', mouseover);
       layer.on('mouseout', mouseout);
     };
 
     var highlightDestinations = function(feature) {
+      var featureMaxCount = feature.properties.featureMaxCount;
+      jQuery('.total-count').html('Total: ' + feature.properties.featureStarts)
+      colorLegend(modeColor);
+      jQuery('.current-count').html(featureMaxCount);
       jQuery.each(feature.properties.destinations, function(index, destination) {
         for (var id in destination){
           var count = destination[id];
-          var featureMaxCount = feature.properties.featureMaxCount;
-          var opacity = (count / featureMaxCount) + 0.05;
+          var opacity = (count / featureMaxCount);
           var style = { fillColor: modeColor, fillOpacity: opacity, stroke: (id == feature.id) ? true : false };
           odLayer.getLayer(id).setStyle(style);
-          jQuery('.current-count').html(featureMaxCount);
         };
       });
     };
@@ -85,10 +99,15 @@ jQuery(function() {
     };
 
     var highlightDensities = function() {
-      jQuery.each(currentData.features, function(index, feature) {
-        odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
-        jQuery('.current-count').html(modeMaxCount);
-      });
+      if (!featureSelected) {
+        jQuery.each(currentData.features, function(index, feature) {
+          odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
+          jQuery('.current-count').html(modeMaxCount)
+          jQuery('.total-count').html(totalModeCount);
+
+          colorLegend('grey');
+        });
+      };
     };
 
     odLayer = L.geoJson(null, {onEachFeature: onEachFeature});
@@ -100,18 +119,12 @@ jQuery(function() {
       currentData = window.odRelations[mode];
       modeColor = window.modeColors[mode];
       modeMaxCount = currentData.properties.maxCount;
+      totalModeCount = window.odRelations[mode].properties.totalCount;
       odLayer.clearLayers();
       odLayer.addData(currentData);
-      jQuery('.total-count')
-        .html('Total: ' + window.odRelations[mode].properties.totalCount)
-        .css('color', modeColor);
-      jQuery('.current-count')
-        .html(modeMaxCount)
-        .css('background', modeColor);
-      var gradient = 'rgba(0,0,0,0) 0%, ' + modeColor + ' 100%';
-      jQuery('.current-count-bar')
-        .css({'background': 'linear-gradient(to left, ' + gradient + ')'})
-        .css({'background': '-webkit-linear-gradient(left, ' + gradient + ')'});
+      colorLegend('grey');
+      jQuery('.total-count').html('Total: ' + totalModeCount)
+      jQuery('.current-count').html(modeMaxCount)
     });
 
     jQuery('.od-mode-selector').first().click();
