@@ -69,9 +69,11 @@ jQuery(function() {
       jQuery.each(feature.properties.destinations, function(index, destination) {
         for (var id in destination){
           var count = destination[id];
-          var opacity = (count / feature.properties.featureMaxCount) + 0.05;
+          var featureMaxCount = feature.properties.featureMaxCount;
+          var opacity = (count / featureMaxCount) + 0.05;
           var style = { fillColor: modeColor, fillOpacity: opacity, stroke: (id == feature.id) ? true : false };
           odLayer.getLayer(id).setStyle(style);
+          jQuery('.current-count').html(featureMaxCount);
         };
       });
     };
@@ -85,6 +87,7 @@ jQuery(function() {
     var highlightDensities = function() {
       jQuery.each(currentData.features, function(index, feature) {
         odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
+        jQuery('.current-count').html(modeMaxCount);
       });
     };
 
@@ -95,12 +98,20 @@ jQuery(function() {
       jQuery(this).addClass('active').siblings().removeClass('active');
       var mode = jQuery(this).attr('od_mode');
       currentData = window.odRelations[mode];
-      modeColor = d3.rgb(window.modeColors[mode]);
+      modeColor = window.modeColors[mode];
       modeMaxCount = currentData.properties.maxCount;
       odLayer.clearLayers();
       odLayer.addData(currentData);
-      jQuery('.total-count').html(window.odRelations[mode].properties.totalCount);
-      jQuery('.total-count-container').css('background', modeColor);
+      jQuery('.total-count')
+        .html('Total: ' + window.odRelations[mode].properties.totalCount)
+        .css('color', modeColor);
+      jQuery('.current-count')
+        .html(modeMaxCount)
+        .css('background', modeColor);
+      var gradient = 'rgba(0,0,0,0) 0%, ' + modeColor + ' 100%';
+      jQuery('.current-count-bar')
+        .css({'background': 'linear-gradient(to left, ' + gradient + ')'})
+        .css({'background': '-webkit-linear-gradient(left, ' + gradient + ')'});
     });
 
     jQuery('.od-mode-selector').first().click();
