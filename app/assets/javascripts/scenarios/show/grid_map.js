@@ -153,6 +153,7 @@ jQuery(function() {
       modeColor = window.modeColors[mode];
       modeMaxCount = currentData.properties.maxCount;
       totalModeCount = window.odRelations[mode].properties.totalCount;
+      if (lines) { map.removeLayer(lines) };
       odLayer.clearLayers();
       odLayer.addData(currentData);
       colorLegend(modeColor);
