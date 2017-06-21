@@ -73,7 +73,7 @@ jQuery(function() {
             selectedLayer.setStyle({stroke: false});
           };
           selectedLayer = layer;
-          layer.setStyle({weight: 5, color: modeColor, stroke: true});
+          layer.setStyle({weight: 2, color: 'white', opacity: 1, stroke: true});
           hideAllFeatures();
           highlightDestinations(feature, layer);
           featureSelected = true;
