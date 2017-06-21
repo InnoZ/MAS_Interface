@@ -5,6 +5,7 @@ jQuery(function() {
     var modeColor;
     var totalModeCount;
     var selectedLayer;
+    var lines;
 
     var resizeMap = function() {
       var mapHeight = jQuery(window).height() - jQuery('header').height();
@@ -64,38 +65,65 @@ jQuery(function() {
       layer.setStyle(feature.densityStyle);
       var mode = jQuery('.od-mode-selector.active').attr('od_mode');
       function click(e) {
+        if (lines) { map.removeLayer(lines) };
         if (selectedLayer == layer) {
-          selectedLayer = null;
-          featureSelected = false;
-          layer.setStyle({stroke: false});
-          highlightDensities();
+          unselectAll();
         } else {
           if (selectedLayer) {
             selectedLayer.setStyle({stroke: false});
           };
           selectedLayer = layer;
-          layer.setStyle({weight: 3, color: 'black', stroke: true});
+          layer.setStyle({weight: 5, color: modeColor, stroke: true});
           hideAllFeatures();
-          highlightDestinations(feature);
+          highlightDestinations(feature, layer);
           featureSelected = true;
         };
       };
       layer.on('click', click);
     };
 
-    var highlightDestinations = function(feature) {
+    var unselectAll = function() {
+      if (selectedLayer) {
+        selectedLayer.setStyle({stroke: false});
+        selectedLayer = null;
+        featureSelected = false;
+        highlightDensities();
+      };
+    };
+
+    map.on('click', function(e) {
+      unselectAll();
+      if (lines) { map.removeLayer(lines) };
+    });
+
+    var highlightDestinations = function(feature, layer) {
       var featureMaxCount = feature.properties.featureMaxCount;
       jQuery('.total-count').html('Total: ' + feature.properties.featureStarts)
       colorLegend(modeColor);
       jQuery('.current-count').html(featureMaxCount);
+      lines = L.featureGroup();
+      var selectedCentroid = layer.getBounds().getCenter();
+      var counter = 0;
       jQuery.each(feature.properties.destinations, function(index, destination) {
+        counter += 1;
         for (var id in destination){
           var count = destination[id];
           var opacity = (count / featureMaxCount);
           var style = { fillColor: modeColor, fillOpacity: opacity, stroke: (id == feature.id) ? true : false };
-          odLayer.getLayer(id).setStyle(style);
+          var destinationLayer = odLayer.getLayer(id);
+          if (destinationLayer) {
+            destinationLayer.setStyle(style);
+            if (counter < 10) {
+              var line = L.polyline(
+                [destinationLayer.getBounds().getCenter(), selectedCentroid],
+                { color: 'black', weight: 2, opacity: 0.3 }
+              );
+              line.addTo(lines);
+            };
+          };
         };
       });
+      lines.addTo(map);
     };
 
     var hideAllFeatures = function() {
