@@ -4,6 +4,7 @@ jQuery(function() {
     var currentData;
     var modeColor;
     var totalModeCount;
+    var selectedLayer;
 
     var resizeMap = function() {
       var mapHeight = jQuery(window).height() - jQuery('header').height();
@@ -59,22 +60,27 @@ jQuery(function() {
     var onEachFeature = function (feature, layer) {
       layer._leaflet_id = feature.id; // for 'getLayer' function
       var opacity = (feature.properties.featureStarts / modeMaxCount) + 0.05;
-      feature.densityStyle = { fillColor: 'grey', fillOpacity: opacity, stroke: false };
+      feature.densityStyle = { fillColor: modeColor, fillOpacity: opacity, stroke: false };
       layer.setStyle(feature.densityStyle);
       var mode = jQuery('.od-mode-selector.active').attr('od_mode');
-      function mouseover(e) {
-        layer.setStyle({weight: 3, color: 'black', stroke: true});
-        hideAllFeatures();
-        highlightDestinations(feature);
-        featureSelected = true;
+      function click(e) {
+        if (selectedLayer == layer) {
+          selectedLayer = null;
+          featureSelected = false;
+          layer.setStyle({stroke: false});
+          highlightDensities();
+        } else {
+          if (selectedLayer) {
+            selectedLayer.setStyle({stroke: false});
+          };
+          selectedLayer = layer;
+          layer.setStyle({weight: 3, color: 'black', stroke: true});
+          hideAllFeatures();
+          highlightDestinations(feature);
+          featureSelected = true;
+        };
       };
-      function mouseout(e) {
-        featureSelected = false;
-        layer.setStyle({stroke: false});
-        setTimeout(function() { highlightDensities() }, 200);
-      };
-      layer.on('mouseover', mouseover);
-      layer.on('mouseout', mouseout);
+      layer.on('click', click);
     };
 
     var highlightDestinations = function(feature) {
@@ -104,8 +110,7 @@ jQuery(function() {
           odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
           jQuery('.current-count').html(modeMaxCount)
           jQuery('.total-count').html(totalModeCount);
-
-          colorLegend('grey');
+          colorLegend(modeColor);
         });
       };
     };
@@ -122,7 +127,7 @@ jQuery(function() {
       totalModeCount = window.odRelations[mode].properties.totalCount;
       odLayer.clearLayers();
       odLayer.addData(currentData);
-      colorLegend('grey');
+      colorLegend(modeColor);
       jQuery('.total-count').html('Total: ' + totalModeCount)
       jQuery('.current-count').html(modeMaxCount)
     });
