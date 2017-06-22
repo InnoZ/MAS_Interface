@@ -1,27 +1,26 @@
-%section#hero.tint-bg
-  .container.inner-xs
-    = render 'layouts/flash'
+%section#hero
+  .container-full
     .row
-      .col-sm-4
+      .col-xs-12
         #district-geometry
-      .col-sm-8
-        %header
-          %ul
-            %h2
-              = "#{@scenario.district_name} #{@scenario.year}"
-          %ul= "Wege: #{@scenario.agent_size}"
-          %ul= "Bevölkerung: #{@scenario.population}"
-          %ul= "Bevölkerungsänderung gegenüber 2017: #{@scenario.population_diff_2017}"
-          %ul= "Fläche: #{@scenario.district_area}"
-          // placeholder for bbsr type
-          // can be removed when matsim delivers bbrs
-          - unless @scenario.bbsr.nil?
-            %ul= "BBSR Raumtyp: " + t("bbsr_names.#{String(@scenario.bbsr)}")
-          %ul= "Info: #{@scenario.seed_text}"
-%section#pie-charts
+          .blue-haze
+        .overlay
+          .district-name.landkreis
+            LANDKREIS
+          .district-name
+            = @scenario.district_name.upcase
+          %ul.info
+            %li= "Wege: #{@scenario.agent_size}"
+            %li= "Bevölkerung: #{@scenario.population}"
+            %li= "Bevölkerungsänderung gegenüber 2017: #{@scenario.population_diff_2017}"
+            %li= "Fläche: #{@scenario.district_area}"
+            %li= "Info: #{@scenario.seed_text}"
+
+%section#pie-charts.light-bg
   .container-fluid.inner-sm
     .row
       .col-xs-12
+        = render 'layouts/flash'
         %h2
           %i.icon-chart-pie
           Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?
@@ -62,7 +61,6 @@
           .panel-body
             %svg#carbon-emission-chart.box-chart
 
-
     -# .row
     -#   .col-sm-6.box
     -#     %h2.text-center Tagesganglinie
@@ -73,15 +71,16 @@
     -#     .box-chart
     -#       %svg#boxplot-chart
 
-%section#grid-map-section
+%section#grid-map-section.light-bg
   .container-fluid.inner-top-xs
     .row
       .col-xs-12
         %h2
           %i.icon-arrows-cw
           Wie sehen die Verkehrsströme im Landkreis aus?
+        %hr
     .row
-      .col-sm-12.text-center.od-mode-selector-container
+      .col-sm-12.od-mode-selector-container
         - @scenario.available_modes.each do |mode|
           - mode_color = @scenario.mode_color(mode)
           .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase

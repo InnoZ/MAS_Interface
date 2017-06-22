@@ -1,6 +1,6 @@
 jQuery(function() {
   jQuery('#district-geometry').each(function() {
-    staticDistrictMap('district-geometry', window.districtGeometry, 'rgb(206, 210, 236)');
+    staticDistrictMap('district-geometry', window.districtGeometry, 2, {fillOpacity: 0, opacity: 0}, true);
   });
 
   var makePieChart = function(div, data, attribute) {

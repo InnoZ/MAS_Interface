@@ -2,15 +2,47 @@
 
 #hero {
   #district-geometry {
-    height: 200px;
+    height: 500px;
     .leaflet-clickable {
       cursor: default;
+    }
+    .blue-haze {
+      position: absolute;
+      z-index: 999;
+      height: 100%;
+      width: 100%;
+      background: -webkit-linear-gradient(left, rgba($blue, 1), rgba($blue, 0.2)); /* For Safari 5.1 to 6.0 */
+      background: -moz-linear-gradient(right, rgba($blue, 1), rgba($blue, 0.2)); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(to right, rgba($blue, 1), rgba($blue, 0.2)); /* Standard syntax */
     }
   }
   header {
     h1, h2 {
       line-height: 60px;
       vertical-align: middle;
+    }
+  }
+  .overlay {
+    position: absolute;
+    z-index: 999;
+    top: 80px;
+    left: 50px;
+    .info {
+      margin-top: 20px;
+      color: white;
+    }
+    .district-name {
+      font-size: 50px;
+      letter-spacing: .05em;
+      background-color: $verydarkblue;
+      color: white;
+      padding: 25px;
+      font-weight: 900;
+      margin-bottom: 4px;
+      font-family: 'Lato', sans-serif;
+      &.landkreis {
+        width: 350px;
+      }
     }
   }
 }
@@ -68,7 +100,8 @@
     width: 100%;
   }
   .od-mode-selector-container {
-    margin-bottom: 7px;
+    margin-top: 20px;
+    margin-bottom: 45px;
     .od-mode-selector {
       display: inline;
     }

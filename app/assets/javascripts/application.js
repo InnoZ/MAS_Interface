@@ -45,12 +45,21 @@ jQuery(function() {
     var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>Innovationszentrum für Mobilität und gesellschaftlichen Wandel GmbH</a>");
   });
 
-  staticDistrictMap = function(divId, json, color)  {
-    map = L.map(divId, { zoomControl:false });
+  staticDistrictMap = function(divId, json, zoomIn, districtStyle, withTiles)  {
+    map = L.map(divId, { zoomControl: false });
+    if (withTiles) {
+      L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+    };
     var district = L.geoJson(json);
     district.addTo(map);
-    district.setStyle({fillOpacity: 1, fillColor: color, weight: 0});
+    district.setStyle(districtStyle);
     map.fitBounds(district.getBounds());
+    if (zoomIn) {
+      console.log(zoomIn);
+      map.zoomIn(zoomIn);
+    };
 
     // let map appear like static graphic
     map.dragging.disable();

@@ -9,6 +9,6 @@ jQuery(function() {
         return false;
       }
     });
-    staticDistrictMap(jQuery(this).attr('id'), geoJson, '#3F8DBF');
+    staticDistrictMap(jQuery(this).attr('id'), geoJson, null, {fillOpacity: 1, fillColor: '#3F8DBF', weight: 0}, false);
   });
 });
