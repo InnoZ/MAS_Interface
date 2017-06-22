@@ -65,4 +65,31 @@ jQuery(function() {
 
   // fade out flash messages after a while
   jQuery('.flash-message').delay(3000).fadeOut(400);
+
+  //color-buttons
+  jQuery('.color-button').click(function() {
+    var colorAttr = jQuery(this).attr('color');
+    if (colorAttr) {
+      var color = colorAttr;
+    } else {
+      var color = jQuery(this).css('color');
+    };
+    jQuery(this).css({
+      'color': 'white',
+      'background': color,
+      'border-color': color,
+    });
+    jQuery(this).siblings().each(function() {
+      var colorAttr = jQuery(this).attr('color');
+      if (colorAttr) {
+        var color = colorAttr;
+      } else {
+        var color = jQuery(this).css('border-color');
+      };
+      jQuery(this).css({
+        'color': color,
+        'background': 'none',
+      });
+    });
+  });
 });

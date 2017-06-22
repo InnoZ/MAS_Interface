@@ -52,10 +52,12 @@ jQuery(function() {
     var colorLegend = function(color) {
       var gradient = 'rgba(0,0,0,0) 0%, ' + color + ' 100%';
       jQuery('.current-count-bar')
-        .css({'background': 'linear-gradient(to left, ' + gradient + ')'})
-        .css({'background': '-webkit-linear-gradient(left, ' + gradient + ')'});
-      jQuery('.current-count').css('background', color);
-      jQuery('.total-count, .legend-zero').css('color', color);
+        .css({
+          'background': 'linear-gradient(to right, ' + gradient + ')',
+          'background': '-webkit-linear-gradient(left, ' + gradient + ')',
+          'border-color': color
+        });
+      jQuery('.legend').css('color', color);
     };
 
     var onEachFeature = function (feature, layer) {
@@ -63,7 +65,6 @@ jQuery(function() {
       var opacity = (feature.properties.featureStarts / modeMaxCount) + 0.05;
       feature.densityStyle = { fillColor: modeColor, fillOpacity: opacity, stroke: false };
       layer.setStyle(feature.densityStyle);
-      var mode = jQuery('.od-mode-selector.active').attr('od_mode');
       function click(e) {
         if (lines) { map.removeLayer(lines) };
         if (selectedLayer == layer) {
@@ -98,7 +99,7 @@ jQuery(function() {
 
     var highlightDestinations = function(feature, layer) {
       var featureMaxCount = feature.properties.featureMaxCount;
-      jQuery('.total-count').html('Total: ' + feature.properties.featureStarts)
+      jQuery('.total-count').html('Gesamt: ' + feature.properties.featureStarts)
       colorLegend(modeColor);
       jQuery('.current-count').html(featureMaxCount);
       lines = L.featureGroup();
@@ -147,7 +148,6 @@ jQuery(function() {
     odLayer.addTo(map);
 
     jQuery('.od-mode-selector').click(function() {
-      jQuery(this).addClass('active').siblings().removeClass('active');
       var mode = jQuery(this).attr('od_mode');
       currentData = window.odRelations[mode];
       modeColor = window.modeColors[mode];
@@ -157,7 +157,7 @@ jQuery(function() {
       odLayer.clearLayers();
       odLayer.addData(currentData);
       colorLegend(modeColor);
-      jQuery('.total-count').html('Total: ' + totalModeCount)
+      jQuery('.total-count').html('Gesamt: ' + totalModeCount)
       jQuery('.current-count').html(modeMaxCount)
     });
 

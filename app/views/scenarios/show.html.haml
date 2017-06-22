@@ -18,42 +18,83 @@
           - unless @scenario.bbsr.nil?
             %ul= "BBSR Raumtyp: " + t("bbsr_names.#{String(@scenario.bbsr)}")
           %ul= "Info: #{@scenario.seed_text}"
-%section#show
-  .container-fluid.inner-bottom-sm
+%section#pie-charts
+  .container-fluid.inner-sm
     .row
-      .col-sm-4.box#donut-chart-box
-        %h2.text-center Modal Split
-        %svg#modal-split-chart.box-chart
-      .col-sm-4.box#donut-chart-box
-        %h2.text-center Verkehrsleistung
-        %svg#traffic-performance-chart.box-chart
-      .col-sm-4.box#donut-chart-box
-        %h2.text-center CO2 Emissionen
-        %svg#carbon-emission-chart.box-chart
+      .col-xs-12
+        %h2
+          %i.icon-chart-pie
+          Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?
     .row
-      .col-sm-6.box
-        %h2.text-center Tagesganglinie
-        .box-chart
-          %svg#diurnal-curve-chart
-      .col-sm-6.box
-        %h2.text-center Wegedauer
-        .box-chart
-          %svg#boxplot-chart
+      .col-sm-4
+        .panel.panel-default
+          .panel-heading
+            .panel-title
+              %i.icon-road
+              Modal Split
+              .label.label-info= @scenario.year
+          .panel-body
+            %svg#modal-split-chart.box-chart
+      .col-sm-4
+        .panel.panel-default
+          .panel-heading
+            .panel-title
+              %i.icon-chart-bar
+              Verkehrsleistung
+              .label.label-info= @scenario.year
+          .panel-body
+            %svg#traffic-performance-chart.box-chart
+      .col-sm-4
+        .panel.panel-default
+          .panel-heading
+            .panel-title
+              %i.icon-leaf-1
+              CO2-Emissionen
+              .label.label-info= @scenario.year
+          .panel-body
+            %svg#carbon-emission-chart.box-chart
 
-  .container-full.inner-top-xs
+
+    -# .row
+    -#   .col-sm-6.box
+    -#     %h2.text-center Tagesganglinie
+    -#     .box-chart
+    -#       %svg#diurnal-curve-chart
+    -#   .col-sm-6.box
+    -#     %h2.text-center Wegedauer
+    -#     .box-chart
+    -#       %svg#boxplot-chart
+
+%section#grid-map-section
+  .container-fluid.inner-top-xs
     .row
-      .col-sm-12.text-center
+      .col-xs-12
+        %h2
+          %i.icon-arrows-cw
+          Wie sehen die Verkehrsströme im Landkreis aus?
+    .row
+      .col-sm-12.text-center.od-mode-selector-container
         - @scenario.available_modes.each do |mode|
-          %button.btn.btn-small.od-mode-selector{od_mode: mode, style: "background: #{@scenario.mode_color(mode)}"}= t("mode_names.#{mode}").upcase
-        #grid-map
-          .legend
-            .row
-              .total-count
-            .row
-              .current-count-bar
-                .legend-zero
-                  0
-              .current-count
+          - mode_color = @scenario.mode_color(mode)
+          .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
+      .col-xs-12
+        .panel.panel-default
+          .panel-heading
+            .panel-title
+              %i.icon-address
+              Start-Ziel-Beziehungen
+              .label.label-info= @scenario.year
+          .panel-body
+            .legend
+              .row
+                .col-xs-12
+                  .total-count
+                  .current-count-bar-container
+                    .legend-label Anzahl:
+                    .legend-label.legend-zero 0
+                    .current-count-bar
+                    .legend-label.current-count
+            #grid-map
 
 :javascript
   window.districtGeometry = #{@scenario.district_geometry.to_json}

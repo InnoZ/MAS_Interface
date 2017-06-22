@@ -10,7 +10,7 @@ jQuery(function() {
         .y(function(d) { return d.share })
         .showLabels(true)
         .labelType("percent")
-        .showLegend(true)
+        .showLegend(false)
         .donut(true)
         .donutRatio(0.35)
 
@@ -22,8 +22,6 @@ jQuery(function() {
         content += obj.data.mode + '</h3>' + '<p>' + obj.data.share + ' ' + unit + '</p>';
         return content;
       });
-
-      chart.legend.vers('furious');
 
       d3.select('#modal-split-chart')
         .datum(modalSplit.modal_split)
@@ -41,7 +39,7 @@ jQuery(function() {
         .y(function(d) { return d.traffic })
         .showLabels(true)
         .labelType("percent")
-        .showLegend(true)
+        .showLegend(false)
         .donut(true)
         .donutRatio(0.35)
 
@@ -53,8 +51,6 @@ jQuery(function() {
         content += obj.data.mode + '</h3>' + '<p>' + obj.data.traffic + ' ' + unit + '</p>';
         return content;
       });
-
-      chart.legend.vers('furious');
 
       d3.select('#traffic-performance-chart')
         .datum(trafficPerformance.traffic_performance)
@@ -72,7 +68,7 @@ jQuery(function() {
         .y(function(d) { return d.carbon })
         .showLabels(true)
         .labelType("percent")
-        .showLegend(true)
+        .showLegend(false)
         .donut(true)
         .donutRatio(0.35)
 
@@ -84,8 +80,6 @@ jQuery(function() {
         content += obj.data.mode + '</h3>' + '<p>' + obj.data.carbon + ' ' + unit + '</p>';
         return content;
       });
-
-      chart.legend.vers('furious');
 
       d3.select('#carbon-emission-chart')
         .datum(carbonEmission.carbon_emission)
@@ -101,10 +95,8 @@ jQuery(function() {
       var chart = nv.models.lineChart()
         .x(function(d) { return d[0]; })
         .y(function(d) { return d[1]; })
-        .showLegend(true)
+        .showLegend(false)
         .duration(350);
-
-      chart.legend.vers('furious');
 
       if(window.location.href.indexOf('/de') > -1) {
         chart.yAxis.axisLabel('Anzahl Wege');

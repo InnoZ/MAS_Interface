@@ -25,6 +25,8 @@
  *= require_tree
  */
 
+@import 'colors';
+
  .navbar-brand-mobile img {
    height: 40px;
  }
@@ -93,4 +95,34 @@ footer {
     width: 100%;
     height: 100%;
   }
+}
+
+.color-button {
+  // gets color via javscript
+  font-weight: bold;
+  padding: 3px 8px;
+  margin: 0 2px;
+  border-radius: 14px;
+  background: none;
+  font-size: 16px;
+  border-width: 2px;
+  border-style: solid;
+  cursor: pointer;
+}
+
+//panels
+.panel-title {
+  background: $grey;
+  padding: 10px 16px;
+  font-size: 20px;
+  text-transform: none;
+  color: $verydarkblue;
+  .label {
+    margin-left: 8px;
+    background-color:  $verydarkblue;
+    font-size: 18px;
+  }
+}
+.panel-body {
+  padding: 0;
 }
