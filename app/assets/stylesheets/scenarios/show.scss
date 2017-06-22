@@ -24,6 +24,21 @@
     height: 30vw;
     min-height: 300px;
   }
+  .chart-legend {
+    margin-top: 10px;
+    * {
+       float: left;
+       margin-right: 5px;
+    }
+    .chart-legend-item {
+      padding: 5px;
+      font-weight: bold;
+    }
+    .chart-legend-icon {
+      width: 25px;
+      height: 25px;
+    }
+  }
 }
 
 #grid-map-section {

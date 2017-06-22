@@ -25,7 +25,15 @@
         %h2
           %i.icon-chart-pie
           Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?
-    .row
+        %hr
+      .col-xs-12
+        .chart-legend
+          - @scenario.available_modes.each do |mode|
+            - mode_color = @scenario.mode_color(mode)
+            .chart-legend-item
+              .chart-legend-icon{style: "background: #{mode_color}"}
+              = t("mode_names.#{mode}").upcase
+    .row.inner-top-xs
       .col-sm-4
         .panel.panel-default
           .panel-heading

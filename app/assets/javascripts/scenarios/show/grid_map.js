@@ -138,7 +138,7 @@ jQuery(function() {
         jQuery.each(currentData.features, function(index, feature) {
           odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
           jQuery('.current-count').html(modeMaxCount)
-          jQuery('.total-count').html(totalModeCount);
+          jQuery('.total-count').html('Gesamt: ' + totalModeCount);
           colorLegend(modeColor);
         });
       };
