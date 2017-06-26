@@ -25,6 +25,10 @@ class Scenario < ApplicationRecord
     hash.to_json
   end
 
+  def full_name
+    district_name + ' | ' + year.to_s
+  end
+
   def district_name
     DistrictsGermany.name(district_id)
   end

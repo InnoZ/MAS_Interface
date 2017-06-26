@@ -5,7 +5,14 @@ class ScenariosController < ApplicationController
   end
 
   def show
-    @scenario = Scenario.find(params[:id])
+    unless params[:id_a]
+      redirect_to :root
+    else
+      @scenario_a = Scenario.find(params[:id_a])
+      if params[:id_b].present?
+        @scenario_b = Scenario.find(params[:id_b])
+      end
+    end
   end
 
   def new
