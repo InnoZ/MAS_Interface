@@ -20,6 +20,7 @@
     h1, h2 {
       line-height: 60px;
       vertical-align: middle;
+
     }
   }
   .overlay {
@@ -36,6 +37,7 @@
       letter-spacing: .05em;
       background-color: $verydarkblue;
       color: white;
+      line-height: 50px;
       padding: 25px;
       font-weight: 900;
       margin-bottom: 4px;
@@ -47,13 +49,20 @@
   }
 }
 
+#compare-form {
+  select {
+    width: 100%;
+    font-size: 23px;
+  }
+}
+
 #pie-charts {
   .nvd3.nv-pie text {
     fill: white !important;
     font-size: 16px;
   }
   .box-chart {
-    height: 30vw;
+    height: 20vw;
     min-height: 300px;
   }
   .chart-legend {

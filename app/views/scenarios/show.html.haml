@@ -12,20 +12,27 @@
           %ul.info
             %li= "Wege: #{@scenario_a.agent_size}"
             %li= "Bevölkerung: #{@scenario_a.population}"
-            %li= "Bevölkerungsänderung gegenüber 2017: #{@scenario_a.population_diff_2017}"
             %li= "Fläche: #{@scenario_a.district_area}"
             %li= "Info: #{@scenario_a.seed_text}"
 
-%section#pie-charts.light-bg
+%section#compare-form.side-padding
+  .container-fluid.inner-sm
+    .row
+      .col-xs-12.text-center
+        %h2 Mobilitätsszenarien vergleichen
+      = form_tag '/show', method: :get do
+        .col-xs-6
+          = select_tag 'id_a', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_a])
+        .col-xs-6
+          = select_tag 'id_b', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_b]), {include_blank: true}
+        .col-xs-12
+          = submit_tag 'Submit', class: 'btn btn-default'
+
+%section#pie-charts.light-bg.side-padding
   .container-fluid.inner-sm
     .row
       .col-xs-12
         = render 'layouts/flash'
-        = form_tag '/show', method: :get do
-          = select_tag 'id_a', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_a])
-          = select_tag 'id_b', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_b]), {include_blank: true}
-          = submit_tag 'Submit'
-        =  @scenario_b ? @scenario_b.full_name : 'nothing'
         %h2
           %i.icon-chart-pie
           Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?
@@ -82,7 +89,7 @@
     -#     .box-chart
     -#       %svg#boxplot-chart
 
-%section#grid-map-section.light-bg
+%section#grid-map-section.light-bg.side-padding
   .container-fluid.inner-top-xs
     .row
       .col-xs-12
