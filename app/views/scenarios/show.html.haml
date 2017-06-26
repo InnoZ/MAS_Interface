@@ -9,27 +9,27 @@
             LANDKREIS
           .district-name
             = @scenario_a.district_name.upcase
-          %ul.info
-            %li= "Wege: #{@scenario_a.agent_size}"
-            %li= "Bevölkerung: #{@scenario_a.population}"
-            %li= "Fläche: #{@scenario_a.district_area}"
-            %li= "Info: #{@scenario_a.seed_text}"
+          .info
+            %h4= "Bevölkerung: #{@scenario_a.population}"
+            %h4= "Fläche: #{@scenario_a.district_area}"
 
-%section#compare-form.side-padding
-  .container-fluid.inner-sm
+%section#compare-form
+  .container.inner-sm
     .row
       .col-xs-12.text-center
         %h2 Mobilitätsszenarien vergleichen
       = form_tag '/show', method: :get do
-        .col-xs-6
+        .col-sm-5
           = select_tag 'id_a', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_a])
-        .col-xs-6
-          = select_tag 'id_b', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_b]), {include_blank: true}
+        .col-sm-2.text-center
+          %h3 und
+        .col-sm-5
+          = select_tag 'id_b', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_b]), {prompt: 'Szenario wählen'}
         .col-xs-12
-          = submit_tag 'Submit', class: 'btn btn-default'
+          = submit_tag 'Okay', class: 'btn btn-default'
 
-%section#pie-charts.light-bg.side-padding
-  .container-fluid.inner-sm
+%section#pie-charts.light-bg
+  .container.inner-sm
     .row
       .col-xs-12
         = render 'layouts/flash'
@@ -46,38 +46,38 @@
               = t("mode_names.#{mode}").upcase
     - [@scenario_a, @scenario_b].each_with_index do |scenario, index|
       - if index == 0
-        - ab = '-a'
+        - ab = 'a'
       - else
-        - ab = '-b'
+        - ab = 'b'
       - if scenario
-        .row.inner-top-xs
+        .row
           .col-sm-4
             .panel.panel-default
               .panel-heading
-                .panel-title
+                .panel-title{class: ('light-panel-title' if ab == 'b')}
                   %i.icon-road
                   Modal Split
                   .label.label-info= scenario.year
               .panel-body
-                %svg.box-chart{id: 'modal-split-chart' + ab}
+                %svg.box-chart{id: 'modal-split-chart-' + ab}
           .col-sm-4
             .panel.panel-default
               .panel-heading
-                .panel-title
+                .panel-title{class: ('light-panel-title' if ab == 'b')}
                   %i.icon-chart-bar
                   Verkehrsleistung
                   .label.label-info= scenario.year
               .panel-body
-                %svg.box-chart{id: 'traffic-performance-chart' + ab}
+                %svg.box-chart{id: 'traffic-performance-chart-' + ab}
           .col-sm-4
             .panel.panel-default
               .panel-heading
-                .panel-title
+                .panel-title{class: ('light-panel-title' if ab == 'b')}
                   %i.icon-leaf-1
                   CO2-Emissionen
                   .label.label-info= scenario.year
               .panel-body
-                %svg.box-chart{id: 'carbon-emission-chart' + ab}
+                %svg.box-chart{id: 'carbon-emission-chart-' + ab}
 
     -# .row
     -#   .col-sm-6.box
@@ -89,8 +89,8 @@
     -#     .box-chart
     -#       %svg#boxplot-chart
 
-%section#grid-map-section.light-bg.side-padding
-  .container-fluid.inner-top-xs
+%section#grid-map-section.light-bg
+  .container.inner-top-xs
     .row
       .col-xs-12
         %h2
@@ -119,7 +119,8 @@
                     .legend-label.legend-zero 0
                     .current-count-bar
                     .legend-label.current-count
-            #grid-map
+            #grid-map-a
+            #grid-map-b
 
 :javascript
   window.boxplot = #{@scenario_a.boxplot}

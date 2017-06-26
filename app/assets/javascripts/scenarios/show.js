@@ -1,4 +1,14 @@
 jQuery(function() {
+  var IndentHeroOverlay = function() {
+    var col = jQuery('section#pie-charts > .container');
+    var padding = (jQuery(window).width() - col.width()) / 2 + 10;
+    jQuery('.overlay').css('left', padding);
+  };
+
+  jQuery(window).resize(function() {
+    IndentHeroOverlay();
+  }).resize();
+
   jQuery('#district-geometry').each(function() {
     staticDistrictMap('district-geometry', window.dataScenarioA.district_geometry, 2, {fillOpacity: 0, opacity: 0}, true);
   });

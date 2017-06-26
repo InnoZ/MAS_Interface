@@ -2,7 +2,7 @@
 
 #hero {
   #district-geometry {
-    height: 500px;
+    height: 470px;
     .leaflet-clickable {
       cursor: default;
     }
@@ -30,7 +30,9 @@
     left: 50px;
     .info {
       margin-top: 20px;
-      color: white;
+      h4 {
+        color: white;
+      }
     }
     .district-name {
       font-size: 50px;
@@ -53,6 +55,9 @@
   select {
     width: 100%;
     font-size: 23px;
+    border-radius: 10px;
+    border: 1px solid $blue;
+    overflow: hidden;
   }
 }
 
@@ -67,6 +72,7 @@
   }
   .chart-legend {
     margin-top: 10px;
+    height: 70px;
     * {
        float: left;
        margin-right: 5px;
@@ -105,7 +111,7 @@
       }
     }
   }
-  #grid-map {
+  #grid-map-a, #grid-map-b {
     width: 100%;
   }
   .od-mode-selector-container {

@@ -1,15 +1,18 @@
 jQuery(function() {
-  jQuery('#grid-map').each(function() {
+  var makeODMap = function(div, data, colors) {
+    var data = data;
+    var colors = colors;
     var modeMaxCount;
-    var currentData;
+    var modeData;
     var modeColor;
     var totalModeCount;
     var selectedLayer;
     var lines;
+    var odLayer;
 
     var resizeMap = function() {
-      var mapHeight = jQuery(window).height() - jQuery('header').height();
-      jQuery('#grid-map').height(mapHeight);
+      var mapHeight = jQuery(window).height() - jQuery('header').height() - 100;
+      jQuery('#' + div).height(mapHeight);
     };
     resizeMap();
     jQuery(window).resize(function() {
@@ -20,7 +23,7 @@ jQuery(function() {
     jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
 
     // disable zoomControl and scaleControl
-    var map = L.map('grid-map', {
+    var map = L.map(div, {
       zoomControl: false,
       scaleControl: false,
       maxZoom: 12,
@@ -128,14 +131,14 @@ jQuery(function() {
     };
 
     var hideAllFeatures = function() {
-      jQuery.each(currentData.features, function(index, feature) {
+      jQuery.each(modeData.features, function(index, feature) {
         odLayer.getLayer(feature.id).setStyle({fillOpacity: 0});
       });
     };
 
     var highlightDensities = function() {
       if (!featureSelected) {
-        jQuery.each(currentData.features, function(index, feature) {
+        jQuery.each(modeData.features, function(index, feature) {
           odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
           jQuery('.current-count').html(modeMaxCount)
           jQuery('.total-count').html('Gesamt: ' + totalModeCount);
@@ -149,18 +152,23 @@ jQuery(function() {
 
     jQuery('.od-mode-selector').click(function() {
       var mode = jQuery(this).attr('od_mode');
-      currentData = window.odRelationsScenarioA[mode];
-      modeColor = window.dataScenarioA.mode_colors[mode];
-      modeMaxCount = currentData.properties.maxCount;
-      totalModeCount = currentData.properties.totalCount;
+      modeData = data[mode];
+      modeColor = colors[mode];
+      modeMaxCount = modeData.properties.maxCount;
+      totalModeCount = modeData.properties.totalCount;
       if (lines) { map.removeLayer(lines) };
       odLayer.clearLayers();
-      odLayer.addData(currentData);
+      odLayer.addData(modeData);
       colorLegend(modeColor);
       jQuery('.total-count').html('Gesamt: ' + totalModeCount)
       jQuery('.current-count').html(modeMaxCount)
     });
 
     jQuery('.od-mode-selector').first().click();
-  });
+  };
+
+  makeODMap('grid-map-a', window.odRelationsScenarioA, window.dataScenarioA.mode_colors);
+  if (typeof window.odRelationsScenarioB !== 'undefined') {
+    makeODMap('grid-map-b', window.odRelationsScenarioB, window.dataScenarioB.mode_colors);
+  };
 });
