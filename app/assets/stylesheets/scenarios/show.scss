@@ -61,7 +61,7 @@
   }
 }
 
-#pie-charts {
+#line-charts, #pie-charts {
   .nvd3.nv-pie text {
     fill: white !important;
     font-size: 16px;
@@ -69,6 +69,15 @@
   .box-chart {
     height: 20vw;
     min-height: 300px;
+  }
+  .line-chart {
+    padding: 15px;
+    height: 15vw;
+    min-height: 200px;
+    // remove grid lines
+    .tick line {
+      display: none !important;
+    }
   }
   .chart-legend {
     margin-top: 10px;

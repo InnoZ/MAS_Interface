@@ -127,11 +127,17 @@ hr {
     background-color:  $verydarkblue;
   }
   &.light-panel-title {
-    color: $blue;
+    * {
+      color: $blue;
+    }
     .label {
       background-color: $blue;
+      color: white;
     }
   }
+}
+.panel-toggle {
+  background: none !important;
 }
 .panel-body {
   padding: 0;

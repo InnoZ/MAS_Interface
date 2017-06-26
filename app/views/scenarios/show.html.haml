@@ -30,97 +30,15 @@
 
 %section#pie-charts.light-bg
   .container.inner-sm
-    .row
-      .col-xs-12
-        = render 'layouts/flash'
-        %h2
-          %i.icon-chart-pie
-          Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?
-        %hr
-      .col-xs-12
-        .chart-legend
-          - @scenario_a.available_modes.each do |mode|
-            - mode_color = @scenario_a.mode_color(mode)
-            .chart-legend-item
-              .chart-legend-icon{style: "background: #{mode_color}"}
-              = t("mode_names.#{mode}").upcase
-    - [@scenario_a, @scenario_b].each_with_index do |scenario, index|
-      - if index == 0
-        - ab = 'a'
-      - else
-        - ab = 'b'
-      - if scenario
-        .row
-          .col-sm-4
-            .panel.panel-default
-              .panel-heading
-                .panel-title{class: ('light-panel-title' if ab == 'b')}
-                  %i.icon-road
-                  Modal Split
-                  .label.label-info= scenario.year
-              .panel-body
-                %svg.box-chart{id: 'modal-split-chart-' + ab}
-          .col-sm-4
-            .panel.panel-default
-              .panel-heading
-                .panel-title{class: ('light-panel-title' if ab == 'b')}
-                  %i.icon-chart-bar
-                  Verkehrsleistung
-                  .label.label-info= scenario.year
-              .panel-body
-                %svg.box-chart{id: 'traffic-performance-chart-' + ab}
-          .col-sm-4
-            .panel.panel-default
-              .panel-heading
-                .panel-title{class: ('light-panel-title' if ab == 'b')}
-                  %i.icon-leaf-1
-                  CO2-Emissionen
-                  .label.label-info= scenario.year
-              .panel-body
-                %svg.box-chart{id: 'carbon-emission-chart-' + ab}
+    = render 'pie_charts'
 
-    -# .row
-    -#   .col-sm-6.box
-    -#     %h2.text-center Tagesganglinie
-    -#     .box-chart
-    -#       %svg#diurnal-curve-chart
-    -#   .col-sm-6.box
-    -#     %h2.text-center Wegedauer
-    -#     .box-chart
-    -#       %svg#boxplot-chart
+%section#line-charts.light-bg
+  .container.inner-xs
+    = render 'line_charts'
 
 %section#grid-map-section.light-bg
-  .container.inner-top-xs
-    .row
-      .col-xs-12
-        %h2
-          %i.icon-arrows-cw
-          Wie sehen die Verkehrsströme im Landkreis aus?
-        %hr
-    .row
-      .col-sm-12.od-mode-selector-container
-        - @scenario_a.available_modes.each do |mode|
-          - mode_color = @scenario_a.mode_color(mode)
-          .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
-      .col-xs-12
-        .panel.panel-default
-          .panel-heading
-            .panel-title
-              %i.icon-address
-              Start-Ziel-Beziehungen
-              .label.label-info= @scenario_a.year
-          .panel-body
-            .legend
-              .row
-                .col-xs-12
-                  .total-count
-                  .current-count-bar-container
-                    .legend-label Anzahl:
-                    .legend-label.legend-zero 0
-                    .current-count-bar
-                    .legend-label.current-count
-            #grid-map-a
-            #grid-map-b
+  .container.inner-sm
+    = render 'grid_maps'
 
 :javascript
   window.boxplot = #{@scenario_a.boxplot}
