@@ -45,6 +45,17 @@ class Scenario < ApplicationRecord
     ).round(2)
   end
 
+  def json_all
+    {
+      'district_geometry' => district_geometry,
+      'modal_split' => modal_split,
+      'traffic_performance' => traffic_performance,
+      'diurnal_json' => diurnal_json,
+      'carbon_emission' => carbon_emission,
+      'mode_colors' => mode_colors,
+    }
+  end
+
   def modal_split
     {
       'modal_split' =>

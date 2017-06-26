@@ -1,6 +1,6 @@
 jQuery(function() {
   jQuery('#district-geometry').each(function() {
-    staticDistrictMap('district-geometry', window.districtGeometry, 2, {fillOpacity: 0, opacity: 0}, true);
+    staticDistrictMap('district-geometry', window.dataScenarioA.district_geometry, 2, {fillOpacity: 0, opacity: 0}, true);
   });
 
   var makePieChart = function(div, data, attribute) {
@@ -31,9 +31,15 @@ jQuery(function() {
   };
 
   jQuery('#pie-charts').each(function() {
-    makePieChart('#modal-split-chart', modalSplit.modal_split, 'share');
-    makePieChart('#traffic-performance-chart', trafficPerformance.traffic_performance, 'traffic');
-    makePieChart('#carbon-emission-chart', carbonEmission.carbon_emission, 'carbon');
+    jQuery(['a', 'b']).each(function(i, ab) {
+      var windowVariableName = 'dataScenario' + ab.toUpperCase();
+      var d = window[windowVariableName];
+      if (typeof d !== 'undefined') {
+        makePieChart('#modal-split-chart-' + ab, d.modal_split.modal_split, 'share');
+        makePieChart('#traffic-performance-chart-' + ab, d.traffic_performance.traffic_performance, 'traffic');
+        makePieChart('#carbon-emission-chart-' + ab, d.carbon_emission.carbon_emission, 'carbon');
+      };
+    });
   });
 
   // jQuery('#diurnal-curve-chart').each(function() {

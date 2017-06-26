@@ -39,7 +39,7 @@ jQuery(function() {
       imperial: false
     }).addTo(map);
 
-    var district = L.geoJson(window.districtGeometry);
+    var district = L.geoJson(window.dataScenarioA.district_geometry);
     district.setStyle({ fillOpacity: 0, stroke: true, color: '#575757' });
     district.addTo(map);
     map.fitBounds(district.getBounds());
@@ -149,10 +149,10 @@ jQuery(function() {
 
     jQuery('.od-mode-selector').click(function() {
       var mode = jQuery(this).attr('od_mode');
-      currentData = window.odRelations[mode];
-      modeColor = window.modeColors[mode];
+      currentData = window.odRelationsScenarioA[mode];
+      modeColor = window.dataScenarioA.mode_colors[mode];
       modeMaxCount = currentData.properties.maxCount;
-      totalModeCount = window.odRelations[mode].properties.totalCount;
+      totalModeCount = currentData.properties.totalCount;
       if (lines) { map.removeLayer(lines) };
       odLayer.clearLayers();
       odLayer.addData(currentData);

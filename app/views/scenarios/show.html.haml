@@ -115,11 +115,11 @@
             #grid-map
 
 :javascript
-  window.districtGeometry = #{@scenario_a.district_geometry.to_json}
-  window.modalSplit = #{@scenario_a.modal_split.to_json}
-  window.trafficPerformance = #{@scenario_a.traffic_performance.to_json}
-  window.diurnalCurve = #{@scenario_a.diurnal_json.to_json}
   window.boxplot = #{@scenario_a.boxplot}
-  window.carbonEmission = #{@scenario_a.carbon_emission.to_json}
-  window.odRelations = #{@scenario_a.od_relations}
-  window.modeColors = #{@scenario_a.mode_colors.to_json}
+  window.dataScenarioA = #{@scenario_a.json_all.to_json}
+  window.odRelationsScenarioA = #{@scenario_a.od_relations}
+
+- if @scenario_b
+  :javascript
+    window.dataScenarioB = #{@scenario_b.json_all.to_json}
+    window.odRelationsScenarioB = #{@scenario_b.od_relations}

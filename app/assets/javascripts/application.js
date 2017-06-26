@@ -57,7 +57,6 @@ jQuery(function() {
     district.setStyle(districtStyle);
     map.fitBounds(district.getBounds());
     if (zoomIn) {
-      console.log(zoomIn);
       map.zoomIn(zoomIn);
     };
 
