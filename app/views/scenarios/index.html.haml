@@ -1,33 +1,17 @@
-%section#index
-  .container.inner-xs
-    .row.text-center
-      .col-xs-12
-        %br
-        %h2= t('views.scenarios.my_scenarios')
-    .pull-right
-      %%a.edit-scene.icon-th-list{:href => "/scenarios"}
-
+%section#index-map
+  .container-full
     .row
-      .col-sm-12.portfolio
-        %ul.filter.text-center
-          %li
-            - @scenarios.all.map(&:year).uniq.sort.each do |year|
-              %a.active{'data-filter' => ".year-#{year}", href: '#'}
-                = year
-            %a.active{'data-filter' => '*', href: '#'}= t('all')
-
-        %ul.isotope.items.col-3.gap
-          - @scenarios.each_with_index do |s, i|
-            %li.item.thumb{class: "year-#{s.year}"}
-              %figure
-                = link_to show_district_path(s.district_id) do
-                  .icon-overlay.icn-link
-                    .index-district-map{id: "map_#{i}",  district_id: s.district_id}
-                %figcaption.bordered.no-top-border
-                  .info
-                    %h4= s.district_name
-                    %p= s.year
-                    %p= s.seed_text
+      .col-xs-12
+        #map-germany
+          .scenario-selection-form
+            .col-xs-12
+              %input#district-input{placeholder: 'Landkreis suchen'}
+            .col-xs-12
+              -# = f.button class: 'btn btn-default' do
+              -#   %i.icon-cog-alt
+              -# = render 'layouts/flash'
 
 :javascript
-  window.districts_germany = #{@districts_germany}
+  window.availableDistricts = #{@scenarios.map(&:district_id)}
+  window.districtsGermanyGeo = #{@districts_germany}
+  window.districtsGermanyList = #{raw DistrictsGermany.list.to_json}

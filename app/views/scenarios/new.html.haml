@@ -1,20 +1,9 @@
 %section#new
-  .container-full
+  .container.inner-sm
     .row
-      .col-xs-12
-        #map-germany
-          = form_for @scenario do |f|
-            .scenario-selection-form
-              .col-xs-12
-                %input#district-input{placeholder: t('views.simulate.select_area')}
-                = f.hidden_field 'district_id', class: 'hidden-district-input'
-              .col-xs-12
-                = f.select 'year', options_for_select(2017..2040)
-              .col-xs-12
-                = f.button class: 'btn btn-default' do
-                  %i.icon-cog-alt
-                = render 'layouts/flash'
-
-:javascript
-  window.districtsGermanyGeo = #{@districts_germany}
-  window.districtsGermanyList = #{raw DistrictsGermany.list.to_json}
+      .col-xs-12.text-center
+        %h1
+          Kommt in Kürze
+          %i.icon-github{style: 'font-size: 180px'}
+          %i.icon-rocket{style: 'font-size: 180px'}
+          %i.icon-s-evernote{style: 'font-size: 180px'}

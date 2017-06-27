@@ -19,7 +19,7 @@ jQuery(function() {
     resizeMap();
     jQuery(window).resize(function() {
       // delay for browser minimizing/maximizing
-      setTimeout(function() { resizeMap() }, 100);
+      setTimeout(function() { resizeMap(); map.invalidateSize(); }, 100);
     });
     jQuery('.navbar-collapse').on('shown.bs.collapse', function() { resizeMap(); });
     jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
