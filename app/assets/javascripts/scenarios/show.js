@@ -1,6 +1,16 @@
 jQuery(function() {
+  var IndentHeroOverlay = function() {
+    var col = jQuery('section#pie-charts > .container');
+    var padding = (jQuery(window).width() - col.width()) / 2 + 10;
+    jQuery('.overlay').css('left', padding);
+  };
+
+  jQuery(window).resize(function() {
+    IndentHeroOverlay();
+  }).resize();
+
   jQuery('#district-geometry').each(function() {
-    staticDistrictMap('district-geometry', window.districtGeometry, 2, {fillOpacity: 0, opacity: 0}, true);
+    staticDistrictMap('district-geometry', window.dataScenarioA.district_geometry, 2, {fillOpacity: 0, opacity: 0}, true);
   });
 
   var makePieChart = function(div, data, attribute) {
@@ -30,41 +40,44 @@ jQuery(function() {
     });
   };
 
-  jQuery('#pie-charts').each(function() {
-    makePieChart('#modal-split-chart', modalSplit.modal_split, 'share');
-    makePieChart('#traffic-performance-chart', trafficPerformance.traffic_performance, 'traffic');
-    makePieChart('#carbon-emission-chart', carbonEmission.carbon_emission, 'carbon');
+  var makeDiurnalCurve = function(div, data) {
+    nv.addGraph(function() {
+      var chart = nv.models.lineChart()
+        .x(function(d) { return d[0]; })
+        .y(function(d) { return d[1]; })
+        .showLegend(false);
+
+      if(window.location.href.indexOf('/de') > -1) {
+        chart.yAxis.axisLabel('Anzahl Wege');
+        chart.xAxis.axisLabel('Stunde');
+      } else {
+        chart.yAxis.axisLabel('Trips count');
+        chart.xAxis.axisLabel('Hour');
+      };
+
+      chart.xAxis.tickValues([0, '', '', 3, '', '', 6, '', '', 9, '', '', 12, '', '', 15, '', '', 18, '', '', 21, '', '']);
+      chart.useInteractiveGuideline(true);
+
+      d3.select(div)
+        .datum(data)
+        .call(chart)
+        .selectAll(".nv-axisMaxMin-x").remove()
+      nv.utils.windowResize(chart.update);
+      return chart;
+    });
+  };
+
+  jQuery(['a', 'b']).each(function(i, ab) {
+    var windowVariableName = 'dataScenario' + ab.toUpperCase();
+    var d = window[windowVariableName];
+    if (typeof d !== 'undefined') {
+      makePieChart('#modal-split-chart-' + ab, d.modal_split.modal_split, 'share');
+      makePieChart('#traffic-performance-chart-' + ab, d.traffic_performance.traffic_performance, 'traffic');
+      makePieChart('#carbon-emission-chart-' + ab, d.carbon_emission.carbon_emission, 'carbon');
+      makeDiurnalCurve('#diurnal-curve-chart-' + ab, d.diurnal_json)
+    };
   });
 
-  // jQuery('#diurnal-curve-chart').each(function() {
-  //   nv.addGraph(function() {
-  //     var chart = nv.models.lineChart()
-  //       .x(function(d) { return d[0]; })
-  //       .y(function(d) { return d[1]; })
-  //       .showLegend(false)
-  //       .duration(350);
-  //
-  //     if(window.location.href.indexOf('/de') > -1) {
-  //       chart.yAxis.axisLabel('Anzahl Wege');
-  //       chart.xAxis.axisLabel('Stunde');
-  //     } else {
-  //       chart.yAxis.axisLabel('Trips count');
-  //       chart.xAxis.axisLabel('Hour');
-  //     };
-  //
-  //     chart.xAxis.tickValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
-  //     chart.useVoronoi(false);
-  //     chart.isArea(false);
-  //     chart.useInteractiveGuideline(true);
-  //
-  //     d3.select('#diurnal-curve-chart')
-  //       .datum(diurnalCurve)
-  //       .call(chart)
-  //     nv.utils.windowResize(chart.update);
-  //     return chart;
-  //   });
-  // });
-  //
   // jQuery('#boxplot-chart').each(function() {
   //   nv.addGraph(function() {
   //     var chart = nv.models.boxPlotChart()

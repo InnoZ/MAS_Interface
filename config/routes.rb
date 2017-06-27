@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     get 'imprint', to: 'pages#imprint', as: :imprint
     get 'privacy', to: 'pages#privacy', as: :privacy
 
-    resources :scenarios
+    resources :scenarios, excpect: [:show]
+    get 'show(/:id_a)(/:id_b)', to: 'scenarios#show', as: :show_scenario
+
   end
 end

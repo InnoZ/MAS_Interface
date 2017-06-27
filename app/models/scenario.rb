@@ -25,6 +25,10 @@ class Scenario < ApplicationRecord
     hash.to_json
   end
 
+  def full_name
+    district_name + ' | ' + year.to_s
+  end
+
   def district_name
     DistrictsGermany.name(district_id)
   end
@@ -39,6 +43,17 @@ class Scenario < ApplicationRecord
       DB["SELECT ST_Area(ST_GeomFromGeoJSON('#{district}')::geography);"].first[:st_area] /
       1_000_000
     ).round(2)
+  end
+
+  def json_all
+    {
+      'district_geometry' => district_geometry,
+      'modal_split' => modal_split,
+      'traffic_performance' => traffic_performance,
+      'diurnal_json' => diurnal_json,
+      'carbon_emission' => carbon_emission,
+      'mode_colors' => mode_colors,
+    }
   end
 
   def modal_split

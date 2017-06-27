@@ -1,0 +1,55 @@
+.row
+  .col-xs-12
+    %h2
+      %i.icon-arrows-cw
+      Wie sehen die Verkehrsströme im Landkreis aus?
+    %hr
+.row
+  .col-sm-12.od-mode-selector-container
+    - @scenario_a.available_modes.each do |mode|
+      - mode_color = @scenario_a.mode_color(mode)
+      .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
+
+  .col-xs-12
+    #accordion.panel-group
+      .panel.panel-default
+        .panel-heading
+          %h4.panel-title
+            %a.panel-toggle{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#content1"}
+              %span
+                %i.icon-address
+                Start-Ziel-Beziehungen
+                .label.label-info= @scenario_a.year
+        #content1.panel-collapse.collapse.in
+          .panel-body
+            .legend
+              .row
+                .col-xs-12
+                  .total-count
+                  .current-count-bar-container
+                    .legend-label Anzahl:
+                    .legend-label.legend-zero 0
+                    .current-count-bar
+                    .legend-label.current-count
+            #grid-map-a
+      - if @scenario_b
+        .panel.panel-default
+          .panel-heading
+            %h4.panel-title.light-panel-title
+              %a.panel-toggle.collapsed{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#content2"}
+                %span
+                  %i.icon-address
+                  Start-Ziel-Beziehungen
+                  .label.label-info= @scenario_b.year
+          #content2.panel-collapse.collapse
+            .panel-body
+              .legend
+                .row
+                  .col-xs-12
+                    .total-count
+                    .current-count-bar-container
+                      .legend-label Anzahl:
+                      .legend-label.legend-zero 0
+                      .current-count-bar
+                      .legend-label.current-count
+              #grid-map-b

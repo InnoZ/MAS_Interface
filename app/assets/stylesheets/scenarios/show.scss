@@ -2,7 +2,7 @@
 
 #hero {
   #district-geometry {
-    height: 500px;
+    height: 470px;
     .leaflet-clickable {
       cursor: default;
     }
@@ -20,6 +20,7 @@
     h1, h2 {
       line-height: 60px;
       vertical-align: middle;
+
     }
   }
   .overlay {
@@ -29,13 +30,16 @@
     left: 50px;
     .info {
       margin-top: 20px;
-      color: white;
+      h4 {
+        color: white;
+      }
     }
     .district-name {
       font-size: 50px;
       letter-spacing: .05em;
       background-color: $verydarkblue;
       color: white;
+      line-height: 50px;
       padding: 25px;
       font-weight: 900;
       margin-bottom: 4px;
@@ -47,17 +51,37 @@
   }
 }
 
-#pie-charts {
+#compare-form {
+  select {
+    width: 100%;
+    font-size: 23px;
+    border-radius: 10px;
+    border: 1px solid $blue;
+    overflow: hidden;
+  }
+}
+
+#line-charts, #pie-charts {
   .nvd3.nv-pie text {
     fill: white !important;
     font-size: 16px;
   }
   .box-chart {
-    height: 30vw;
+    height: 20vw;
     min-height: 300px;
+  }
+  .line-chart {
+    padding: 15px;
+    height: 15vw;
+    min-height: 200px;
+    // remove grid lines
+    .tick line {
+      display: none !important;
+    }
   }
   .chart-legend {
     margin-top: 10px;
+    height: 70px;
     * {
        float: left;
        margin-right: 5px;
@@ -96,7 +120,7 @@
       }
     }
   }
-  #grid-map {
+  #grid-map-a, #grid-map-b {
     width: 100%;
   }
   .od-mode-selector-container {

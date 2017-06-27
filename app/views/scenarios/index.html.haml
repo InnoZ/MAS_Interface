@@ -20,7 +20,7 @@
           - @scenarios.each_with_index do |s, i|
             %li.item.thumb{class: "year-#{s.year}"}
               %figure
-                = link_to scenario_path(s) do
+                = link_to show_scenario_path(s) do
                   .icon-overlay.icn-link
                     .index-district-map{id: "map_#{i}",  district_id: s.district_id}
                 %figcaption.bordered.no-top-border

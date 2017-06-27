@@ -123,9 +123,21 @@ hr {
   color: $verydarkblue;
   .label {
     margin-left: 8px;
-    background-color:  $verydarkblue;
     font-size: 18px;
+    background-color:  $verydarkblue;
   }
+  &.light-panel-title {
+    * {
+      color: $blue;
+    }
+    .label {
+      background-color: $blue;
+      color: white;
+    }
+  }
+}
+.panel-toggle {
+  background: none !important;
 }
 .panel-body {
   padding: 0;

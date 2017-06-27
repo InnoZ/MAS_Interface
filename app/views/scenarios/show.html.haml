@@ -8,107 +8,44 @@
           .district-name.landkreis
             LANDKREIS
           .district-name
-            = @scenario.district_name.upcase
-          %ul.info
-            %li= "Wege: #{@scenario.agent_size}"
-            %li= "Bevölkerung: #{@scenario.population}"
-            %li= "Bevölkerungsänderung gegenüber 2017: #{@scenario.population_diff_2017}"
-            %li= "Fläche: #{@scenario.district_area}"
-            %li= "Info: #{@scenario.seed_text}"
+            = @scenario_a.district_name.upcase
+          .info
+            %h4= "Bevölkerung: #{@scenario_a.population}"
+            %h4= "Fläche: #{@scenario_a.district_area}"
+
+%section#compare-form
+  .container.inner-sm
+    .row
+      .col-xs-12.text-center
+        %h2 Mobilitätsszenarien vergleichen
+      = form_tag '/show', method: :get do
+        .col-sm-5
+          = select_tag 'id_a', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_a])
+        .col-sm-2.text-center
+          %h3 und
+        .col-sm-5
+          = select_tag 'id_b', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_b]), {prompt: 'Szenario wählen'}
+        .col-xs-12
+          = submit_tag 'Okay', class: 'btn btn-default'
 
 %section#pie-charts.light-bg
-  .container-fluid.inner-sm
-    .row
-      .col-xs-12
-        = render 'layouts/flash'
-        %h2
-          %i.icon-chart-pie
-          Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?
-        %hr
-      .col-xs-12
-        .chart-legend
-          - @scenario.available_modes.each do |mode|
-            - mode_color = @scenario.mode_color(mode)
-            .chart-legend-item
-              .chart-legend-icon{style: "background: #{mode_color}"}
-              = t("mode_names.#{mode}").upcase
-    .row.inner-top-xs
-      .col-sm-4
-        .panel.panel-default
-          .panel-heading
-            .panel-title
-              %i.icon-road
-              Modal Split
-              .label.label-info= @scenario.year
-          .panel-body
-            %svg#modal-split-chart.box-chart
-      .col-sm-4
-        .panel.panel-default
-          .panel-heading
-            .panel-title
-              %i.icon-chart-bar
-              Verkehrsleistung
-              .label.label-info= @scenario.year
-          .panel-body
-            %svg#traffic-performance-chart.box-chart
-      .col-sm-4
-        .panel.panel-default
-          .panel-heading
-            .panel-title
-              %i.icon-leaf-1
-              CO2-Emissionen
-              .label.label-info= @scenario.year
-          .panel-body
-            %svg#carbon-emission-chart.box-chart
+  .container.inner-sm
+    = render 'pie_charts'
 
-    -# .row
-    -#   .col-sm-6.box
-    -#     %h2.text-center Tagesganglinie
-    -#     .box-chart
-    -#       %svg#diurnal-curve-chart
-    -#   .col-sm-6.box
-    -#     %h2.text-center Wegedauer
-    -#     .box-chart
-    -#       %svg#boxplot-chart
+%section#line-charts.light-bg
+  .container.inner-xs
+    = render 'line_charts'
 
 %section#grid-map-section.light-bg
-  .container-fluid.inner-top-xs
-    .row
-      .col-xs-12
-        %h2
-          %i.icon-arrows-cw
-          Wie sehen die Verkehrsströme im Landkreis aus?
-        %hr
-    .row
-      .col-sm-12.od-mode-selector-container
-        - @scenario.available_modes.each do |mode|
-          - mode_color = @scenario.mode_color(mode)
-          .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
-      .col-xs-12
-        .panel.panel-default
-          .panel-heading
-            .panel-title
-              %i.icon-address
-              Start-Ziel-Beziehungen
-              .label.label-info= @scenario.year
-          .panel-body
-            .legend
-              .row
-                .col-xs-12
-                  .total-count
-                  .current-count-bar-container
-                    .legend-label Anzahl:
-                    .legend-label.legend-zero 0
-                    .current-count-bar
-                    .legend-label.current-count
-            #grid-map
+  .container.inner-sm
+    = render 'grid_maps'
 
 :javascript
-  window.districtGeometry = #{@scenario.district_geometry.to_json}
-  window.modalSplit = #{@scenario.modal_split.to_json}
-  window.trafficPerformance = #{@scenario.traffic_performance.to_json}
-  window.diurnalCurve = #{@scenario.diurnal_json.to_json}
-  window.boxplot = #{@scenario.boxplot}
-  window.carbonEmission = #{@scenario.carbon_emission.to_json}
-  window.odRelations = #{@scenario.od_relations}
-  window.modeColors = #{@scenario.mode_colors.to_json}
+  window.boxplot = #{@scenario_a.boxplot}
+  window.dataScenarioA = #{@scenario_a.json_all.to_json}
+  window.odRelationsScenarioA = #{@scenario_a.od_relations}
+
+- if @scenario_b
+  :javascript
+    window.dataScenarioB = #{@scenario_b.json_all.to_json}
+    window.odRelationsScenarioB = #{@scenario_b.od_relations}
