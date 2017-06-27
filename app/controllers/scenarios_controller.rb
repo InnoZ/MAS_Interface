@@ -5,7 +5,7 @@ class ScenariosController < ApplicationController
   end
 
   def show
-    unless params[:district]
+    unless params[:district] && Scenario.find_by(district_id: params[:district])
       redirect_to :root
     else
       @scenarios = Scenario.where(district_id: params[:district]).order(:year)

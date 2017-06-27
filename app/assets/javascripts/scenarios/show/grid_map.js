@@ -24,12 +24,24 @@ jQuery(function() {
     jQuery('.navbar-collapse').on('shown.bs.collapse', function() { resizeMap(); });
     jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
 
-    // disable zoomControl and scaleControl
-    var map = L.map(div, {
+    L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
+
+    map = L.mapbox.map(div, 'innoz-developer.mj43ge61', {
       zoomControl: false,
       scaleControl: false,
       scrollWheelZoom: false
     });
+
+    // var map = L.map(div, {
+    //   zoomControl: false,
+    //   scaleControl: false,
+    //   scrollWheelZoom: false
+    // });
+    //
+    // // add innoz mapbox tilelayer
+    // L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
 
     // place zoom control to topright
     L.control.zoom({
@@ -46,11 +58,6 @@ jQuery(function() {
     district.setStyle({ fillOpacity: 0, stroke: true, color: '#575757' });
     district.addTo(map);
     map.fitBounds(district.getBounds());
-
-    // add innoz mapbox tilelayer
-    L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
 
     var colorLegend = function(color) {
       var gradient = 'rgba(0,0,0,0) 0%, ' + color + ' 100%';

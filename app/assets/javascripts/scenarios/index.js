@@ -12,14 +12,21 @@ jQuery(function() {
     jQuery('.navbar-collapse').on('shown.bs.collapse', function() { resizeMap(); });
     jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
 
-    map = L.map('map-germany', {
+    L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
+
+    map = L.mapbox.map('map-germany', 'innoz-developer.mj43ge61', {
       maxZoom: 9,
       minZoom: 7,
     });
 
-    L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    // map = L.map('map-germany', {
+    //   maxZoom: 9,
+    //   minZoom: 7,
+    // });
+    //
+    // L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
 
     // Variable to keep track of highlighted marker
     var highlightedLayer = null;
