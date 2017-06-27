@@ -16,17 +16,19 @@
 %section#compare-form
   .container.inner-sm
     .row
+      .col-xs-12
+        = render 'layouts/flash'
       .col-xs-12.text-center
         %h2 Mobilitätsszenarien vergleichen
-      = form_tag '/show', method: :get do
+      = form_tag '/show/' + params[:district], method: :get do
         .col-sm-5
-          = select_tag 'id_a', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_a])
+          = select_tag 'year_a', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_a])
         .col-sm-2.text-center
           %h3 und
         .col-sm-5
-          = select_tag 'id_b', options_from_collection_for_select(Scenario.all, :id, :full_name, params[:id_b]), {prompt: 'Szenario wählen'}
+          = select_tag 'year_b', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_b]), {prompt: 'Szenario wählen'}
         .col-xs-12
-          = submit_tag 'Okay', class: 'btn btn-default'
+          = submit_tag 'Okay', name: nil, class: 'btn btn-default'
 
 %section#pie-charts.light-bg
   .container.inner-sm

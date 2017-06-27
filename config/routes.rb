@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'privacy', to: 'pages#privacy', as: :privacy
 
     resources :scenarios, excpect: [:show]
-    get 'show(/:id_a)(/:id_b)', to: 'scenarios#show', as: :show_scenario
+    get 'show/:district(/:year_a)(/:year_b)', to: 'scenarios#show', as: :show_district
 
   end
 end

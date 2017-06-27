@@ -5,12 +5,16 @@ class ScenariosController < ApplicationController
   end
 
   def show
-    unless params[:id_a]
+    unless params[:district]
       redirect_to :root
     else
-      @scenario_a = Scenario.find(params[:id_a])
-      if params[:id_b].present?
-        @scenario_b = Scenario.find(params[:id_b])
+      @scenarios = Scenario.where(district_id: params[:district]).order(:year)
+      @scenario_a = @scenarios.first
+      if params[:year_a].present?
+        @scenario_a = Scenario.find_by(year: params[:year_a].to_i)
+      end
+      if params[:year_b].present?
+        @scenario_b = Scenario.find_by(year: params[:year_b].to_i)
       end
     end
   end
