@@ -17,6 +17,7 @@ jQuery(function() {
     map = L.mapbox.map('map-germany', 'innoz-developer.mj43ge61', {
       maxZoom: 9,
       minZoom: 7,
+      zoomControl: false,
     });
 
     // map = L.map('map-germany', {
@@ -27,6 +28,17 @@ jQuery(function() {
     // L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
     //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     // }).addTo(map);
+
+    // place zoom control to topright
+    L.control.zoom({
+      position: 'topright'
+    }).addTo(map);
+
+    // place metric scale to bottomright
+    L.control.scale({
+      position: 'bottomright',
+      imperial: false
+    }).addTo(map);
 
     // Variable to keep track of highlighted marker
     var highlightedLayer = null;
@@ -72,6 +84,7 @@ jQuery(function() {
         var id = feature.properties.id;
         highlightLayer(id);
         if ( window.availableDistricts.includes(id) ) {
+          jQuery('.loading-overlay').show();
           window.location.href = '/show/' + id;
         } else {
           alert('Für diesen Kreis wurden noch keine Szenarien berechnet.');

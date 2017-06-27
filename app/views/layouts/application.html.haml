@@ -18,4 +18,6 @@
     = render 'layouts/navbar'
     %main
       = yield
+      .loading-overlay
+        .loading-text loading...
     = render 'layouts/footer'

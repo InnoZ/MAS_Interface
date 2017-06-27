@@ -28,7 +28,6 @@ jQuery(function() {
 
     map = L.mapbox.map(div, 'innoz-developer.mj43ge61', {
       zoomControl: false,
-      scaleControl: false,
       scrollWheelZoom: false
     });
 

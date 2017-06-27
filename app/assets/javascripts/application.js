@@ -48,7 +48,9 @@ jQuery(function() {
   staticDistrictMap = function(divId, json, zoomIn, districtStyle)  {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
 
-    map = L.mapbox.map(divId, 'innoz-developer.mj43ge61');
+    map = L.mapbox.map(divId, 'innoz-developer.mj43ge61', {
+      zoomControl: false,
+    });
     // map = L.map(divId, { zoomControl: false });
     // L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
     //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
