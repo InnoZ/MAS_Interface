@@ -2,7 +2,7 @@
   .col-xs-12
     %h2
       %i.icon-chart-line
-      Wann werden welche Verkehrsmittel im Tagesverlauf genutzt?
+      = t '.when_are_modes_used'
     %hr
   .col-xs-12
     .chart-legend
@@ -21,7 +21,7 @@
           .panel-heading
             .panel-title{class: ('light-panel-title' if ab == 'b')}
               %i.icon-chart-line
-              Tagesgang
+              = t '.diurnal_curve'
               .label.label-info= scenario.year
           .panel-body
             %svg.line-chart{id: 'diurnal-curve-chart-' + ab}

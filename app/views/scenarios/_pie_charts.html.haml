@@ -2,7 +2,7 @@
   .col-xs-12
     %h2
       %i.icon-chart-pie
-      Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?
+      = t '.how_are_modes_split'
     %hr
   .col-xs-12
     .chart-legend
@@ -21,7 +21,7 @@
           .panel-heading
             .panel-title{class: ('light-panel-title' if ab == 'b')}
               %i.icon-road
-              Modal Split
+              = t 'modal_split'
               .label.label-info= scenario.year
           .panel-body
             %svg.box-chart{id: 'modal-split-chart-' + ab}
@@ -30,7 +30,7 @@
           .panel-heading
             .panel-title{class: ('light-panel-title' if ab == 'b')}
               %i.icon-chart-bar
-              Verkehrsleistung
+              = t 'traffic_performance'
               .label.label-info= scenario.year
           .panel-body
             %svg.box-chart{id: 'traffic-performance-chart-' + ab}
@@ -39,7 +39,7 @@
           .panel-heading
             .panel-title{class: ('light-panel-title' if ab == 'b')}
               %i.icon-leaf-1
-              CO2-Emissionen
+              = t 'co2_emissions'
               .label.label-info= scenario.year
           .panel-body
             %svg.box-chart{id: 'carbon-emission-chart-' + ab}

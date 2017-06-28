@@ -2,7 +2,7 @@
   .col-xs-12
     %h2
       %i.icon-arrows-cw
-      Wie sehen die Verkehrsströme im Landkreis aus?
+      = t '.how_looks_traffic_flow'
     %hr
 .row
   .col-sm-12.od-mode-selector-container
@@ -18,7 +18,7 @@
             %a.panel-toggle{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#content1"}
               %span
                 %i.icon-address
-                Start-Ziel-Beziehungen
+                = t '.od_relations'
                 .label.label-info= @scenario_a.year
         #content1.panel-collapse.collapse.in
           .panel-body
@@ -27,7 +27,7 @@
                 .col-xs-12
                   .total-count
                   .current-count-bar-container
-                    .legend-label Anzahl:
+                    .legend-label= t 'count' + ':'
                     .legend-label.legend-zero 0
                     .current-count-bar
                     .legend-label.current-count
@@ -39,7 +39,7 @@
               %a.panel-toggle.collapsed{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#content2"}
                 %span
                   %i.icon-address
-                  Start-Ziel-Beziehungen
+                  = t '.od_relations'
                   .label.label-info= @scenario_b.year
           #content2.panel-collapse.collapse
             .panel-body
@@ -48,7 +48,7 @@
                   .col-xs-12
                     .total-count
                     .current-count-bar-container
-                      .legend-label Anzahl:
+                      .legend-label= t 'count' + ':'
                       .legend-label.legend-zero 0
                       .current-count-bar
                       .legend-label.current-count

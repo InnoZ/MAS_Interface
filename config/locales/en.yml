@@ -1,10 +1,14 @@
 en:
   locale_name: 'english'
-
+  district: 'District'
   ways: 'ways'
-
   service: 'Mobility Simulations'
   learn_more: 'Learn more'
+  and: 'and'
+  count: 'Count'
+  modal_split: 'Modal split'
+  traffic_performance: 'Traffic performance'
+  co2_emissions: 'CO2 emissions'
 #  project: 'Project'
 #  challenge: 'Challenge'
 #  approach: 'Approach'

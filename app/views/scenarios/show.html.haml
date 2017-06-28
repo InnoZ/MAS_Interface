@@ -6,12 +6,12 @@
           .blue-haze
         .overlay
           .district-name.landkreis
-            LANDKREIS
+            = t('district').upcase
           .district-name
             = @scenario_a.district_name.upcase
           .info
-            %h4= "Bevölkerung: #{@scenario_a.population}"
-            %h4= "Fläche: #{@scenario_a.district_area}"
+            %h4= "#{t('.population')}: #{@scenario_a.population}"
+            %h4= "#{t('.area')} #{@scenario_a.district_area}"
 
 %section#compare-form
   .container.inner-sm
@@ -19,12 +19,12 @@
       .col-xs-12
         = render 'layouts/flash'
       .col-xs-12.text-center
-        %h2 Mobilitätsszenarien vergleichen
+        %h2= t '.compare_scenarios'
       = form_tag '/show/' + params[:district], method: :get do
         .col-sm-5
           = select_tag 'year_a', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_a])
         .col-sm-2.text-center
-          %h3 und
+          %h3= t 'and'
         .col-sm-5
           = select_tag 'year_b', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_b]), {prompt: 'Szenario wählen'}
         .col-xs-12
