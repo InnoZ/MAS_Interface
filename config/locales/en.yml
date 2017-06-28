@@ -6,6 +6,8 @@ en:
   learn_more: 'Learn more'
   and: 'and'
   count: 'Count'
+  total: 'Total'
+  hour: 'Hour'
   modal_split: 'Modal split'
   traffic_performance: 'Traffic performance'
   co2_emissions: 'CO2 emissions'

@@ -47,13 +47,8 @@ jQuery(function() {
         .y(function(d) { return d[1]; })
         .showLegend(false);
 
-      if(window.location.href.indexOf('/de') > -1) {
-        chart.yAxis.axisLabel('Anzahl Wege');
-        chart.xAxis.axisLabel('Stunde');
-      } else {
-        chart.yAxis.axisLabel('Trips count');
-        chart.xAxis.axisLabel('Hour');
-      };
+      chart.yAxis.axisLabel(I18n.t('count'));
+      chart.xAxis.axisLabel('hour');
 
       chart.xAxis.tickValues([0, '', '', 3, '', '', 6, '', '', 9, '', '', 12, '', '', 15, '', '', 18, '', '', 21, '', '']);
       chart.useInteractiveGuideline(true);

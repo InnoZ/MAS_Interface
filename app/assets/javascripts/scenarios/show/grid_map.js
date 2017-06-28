@@ -109,7 +109,7 @@ jQuery(function() {
     var highlightDestinations = function(feature, layer) {
       var featureMaxCount = feature.properties.featureMaxCount;
       colorLegend(modeColor);
-      legend.find('.total-count').html('Gesamt: ' + feature.properties.featureStarts)
+      legend.find('.total-count').html(`${I18n.t('total')}: ${feature.properties.featureStarts}`)
       legend.find('.current-count').html(featureMaxCount);
       lines = L.featureGroup();
       var selectedCentroid = layer.getBounds().getCenter();
@@ -147,7 +147,7 @@ jQuery(function() {
         jQuery.each(modeData.features, function(index, feature) {
           odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
           jQuery('.current-count').html(modeMaxCount)
-          jQuery('.total-count').html('Gesamt: ' + totalModeCount);
+          jQuery('.total-count').html(`${I18n.t('total')}: ${totalModeCount}`);
           colorLegend(modeColor);
         });
       };
@@ -166,7 +166,7 @@ jQuery(function() {
       odLayer.clearLayers();
       odLayer.addData(modeData);
       colorLegend(modeColor);
-      legend.find('.total-count').html('Gesamt: ' + totalModeCount)
+      legend.find('.total-count').html(`${I18n.t('total')}: ${totalModeCount}`)
       legend.find('.current-count').html(modeMaxCount)
     });
 

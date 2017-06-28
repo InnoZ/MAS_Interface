@@ -45,6 +45,7 @@ gem 'capybara-screenshot'
 gem 'sequel'
 gem 'pg'
 gem 'activerecord-postgis-adapter'
+gem 'i18n-js'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

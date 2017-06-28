@@ -11,10 +11,10 @@ class ScenariosController < ApplicationController
       @scenarios = Scenario.where(district_id: params[:district]).order(:year)
       @scenario_a = @scenarios.first
       if params[:year_a].present?
-        @scenario_a = Scenario.find_by(year: params[:year_a].to_i)
+        @scenario_a = @scenarios.find_by(year: params[:year_a].to_i)
       end
       if params[:year_b].present?
-        @scenario_b = Scenario.find_by(year: params[:year_b].to_i)
+        @scenario_b = @scenarios.find_by(year: params[:year_b].to_i)
       end
     end
   end

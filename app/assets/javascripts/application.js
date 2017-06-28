@@ -28,6 +28,7 @@
 //= require awesomplete
 //= require d3.v3
 //= require nv.d3
+//= require i18n/translations
 //= require_self
 //= require_tree
 
@@ -42,7 +43,7 @@ jQuery(function() {
     });
     var innozCoordinates = [52.481991, 13.357194];
     map.setView(innozCoordinates, 12);
-    var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>Innovationszentrum für Mobilität und gesellschaftlichen Wandel GmbH</a>");
+    var marker = L.marker(innozCoordinates).addTo(map).bindPopup(`<a href='http://www.innoz.de'>${I18n.t('innoz')}</a>`);
   });
 
   staticDistrictMap = function(divId, json, zoomIn, districtStyle)  {
