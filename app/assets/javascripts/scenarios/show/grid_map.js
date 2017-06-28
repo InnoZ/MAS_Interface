@@ -1,5 +1,6 @@
 jQuery(function() {
   var makeODMap = function(div, odRelations, data) {
+    var map;
     var odRelations = odRelations;
     var data = data;
     var modeMaxCount;
