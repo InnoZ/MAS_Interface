@@ -56,16 +56,6 @@
   }
 }
 
-#compare-form {
-  select {
-    width: 100%;
-    font-size: 23px;
-    border-radius: 10px;
-    border: 1px solid $blue;
-    overflow: hidden;
-  }
-}
-
 #line-charts, #pie-charts {
   .nvd3.nv-pie text {
     fill: white !important;

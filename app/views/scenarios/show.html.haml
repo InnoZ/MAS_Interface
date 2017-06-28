@@ -26,11 +26,11 @@
         %h2= t '.compare_scenarios'
       = form_tag '/show/' + params[:district], method: :get do
         .col-sm-5
-          = select_tag 'year_a', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_a])
+          = select_tag 'year_a', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_a]), {class: 'big-select'}
         .col-sm-2.text-center
           %h3= t 'and'
         .col-sm-5
-          = select_tag 'year_b', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_b]), {prompt: t('.choose_scenario')}
+          = select_tag 'year_b', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_b]), {prompt: t('.choose_scenario'), class: 'big-select'}
         .col-xs-12
           = submit_tag 'Okay', name: nil, class: 'btn btn-default'
 

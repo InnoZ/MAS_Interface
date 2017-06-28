@@ -4,14 +4,15 @@
       .col-sm-4.col-sm-offset-4
         = render 'layouts/flash'
         = form_for @scenario do |f|
-          .col-xs-12
-            %input#district-input.form-control{type: 'text'}
+          .row
             = f.hidden_field 'district_id', class: 'hidden-district-input'
-          .col-xs-12
-            = f.select 'year', options_for_select(2017..2040)
-          .col-xs-12
-            = f.button class: 'btn btn-default' do
-              %i.icon-cog-alt
+            .col-xs-12
+              %input#district-input.big-input
+            .col-xs-12
+              = f.select 'year', options_for_select(2017..2040), {}, {class: 'big-select'}
+            .col-xs-12
+              = f.button class: 'btn btn-default' do
+                %i.icon-cog-alt
 
 :javascript
   window.districtsGermanyList = #{raw @districts_germany}
