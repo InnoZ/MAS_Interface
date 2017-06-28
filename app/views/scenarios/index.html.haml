@@ -5,12 +5,8 @@
         #map-germany
           .scenario-selection-form
             .col-xs-12
-              %input#district-input{placeholder: t('.search_district')}
+              %input#district-input.big-input{placeholder: t('.search_district')}
               %i.icon-search-1
-            .col-xs-12
-              -# = f.button class: 'btn btn-default' do
-              -#   %i.icon-cog-alt
-              -# = render 'layouts/flash'
 
 :javascript
   window.availableDistricts = #{@scenarios.map(&:district_id)}

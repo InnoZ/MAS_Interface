@@ -21,7 +21,7 @@ class ScenariosController < ApplicationController
 
   def new
     @scenario = Scenario.new
-    @districts_germany = DistrictsGermany.all.to_json
+    @districts_germany = DistrictsGermany.list.to_json
   end
 
   # rubocop:disable all
@@ -37,11 +37,17 @@ class ScenariosController < ApplicationController
       @existing_scenario = Scenario.find_by(args)
       if @existing_scenario
         flash[:success] = 'Szenario bereits vorhanden'
-        redirect_to scenario_path(@existing_scenario)
+        redirect_to show_district_path(
+          district: @existing_scenario.district_id,
+          year_a: scenario_params[:year]
+        )
       else
         if @scenario = Scenario.make(args)
           flash[:success] = 'Szenario erstellt'
-          redirect_to scenario_path(@scenario)
+          redirect_to show_district_path(
+            district: @scenario.district_id,
+            year_a: scenario_params[:year]
+          )
         end
       end
     end
