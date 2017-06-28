@@ -24,9 +24,14 @@
     }
   }
   .overlay {
+    .btn {
+      background: none;
+      border: 1px solid white;
+      margin: 0 0 20px 0;
+    }
     position: absolute;
     z-index: 999;
-    top: 80px;
+    top: 40px;
     left: 50px;
     .info {
       margin-top: 20px;

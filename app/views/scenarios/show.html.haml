@@ -5,6 +5,10 @@
         #district-geometry
           .blue-haze
         .overlay
+          = link_to scenarios_path do
+            .btn.btn-default
+              %i.icon-left-1
+              = t '.change_district'
           .district-name.landkreis
             = t('district').upcase
           .district-name
@@ -26,7 +30,7 @@
         .col-sm-2.text-center
           %h3= t 'and'
         .col-sm-5
-          = select_tag 'year_b', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_b]), {prompt: 'Szenario wählen'}
+          = select_tag 'year_b', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_b]), {prompt: t('.choose_scenario')}
         .col-xs-12
           = submit_tag 'Okay', name: nil, class: 'btn btn-default'
 

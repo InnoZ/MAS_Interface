@@ -3,9 +3,11 @@ de:
     index:
       search_district: 'Landkreis suchen'
     show:
+      change_district: 'Landkreis wechseln'
       population: 'Bevölkerung'
       area: 'Fläche'
       compare_scenarios: 'Mobilitätsszenarien vergleichen'
+      choose_scenario: 'Szenario wählen'
     pie_charts:
       how_are_modes_split: 'Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?'
     grid_maps:

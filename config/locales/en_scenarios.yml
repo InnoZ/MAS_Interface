@@ -3,9 +3,11 @@ en:
     index:
       search_district: 'Search district'
     show:
+      change_district: 'Change district'
       population: 'Population'
       area: 'Area'
       compare_scenarios: 'Compare mobility scenarios'
+      choose_scenario: 'Choose scenario'
     pie_charts:
       how_are_modes_split: 'How are traffic modes split?'
     grid_maps:
