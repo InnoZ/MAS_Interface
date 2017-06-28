@@ -151,11 +151,10 @@ hr {
   left: 0;
   width: 100vw;
   height: 100vw;
-  background-color: rgba(black, 0.7);
-  .loading-text {
+  background-color: rgba($verydarkblue, 0.7);
+  img {
+    width: 70px;
     position: absolute;
-    font-size: 30px;
-    color: white;
     left: calc(50% - 30px);
     top: 50vh;
   }

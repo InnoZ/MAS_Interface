@@ -82,7 +82,7 @@ jQuery(function() {
       var name = feature.properties.name;
       function onclick(e) {
         var id = feature.properties.id;
-        highlightLayer(id);
+        highlightLayer(id, false);
         if ( window.availableDistricts.includes(id) ) {
           jQuery('.loading-overlay').show();
           window.location.href = '/show/' + id;
@@ -114,19 +114,21 @@ jQuery(function() {
         map.dragging.enable();
       });
 
-    var highlightLayer = function(id) {
+    var highlightLayer = function(id, zoomTo) {
       removeHighlight();
       highlightedLayer = featureById[id];
       highlightedLayer.setStyle({'weight': 3});
-      map.fitBounds(highlightedLayer.getBounds());
       jQuery('#district-input').val(highlightedLayer.feature.properties.name);
+      if (zoomTo) {
+        map.fitBounds(highlightedLayer.getBounds());
+      };
     };
 
     new Awesomplete('#district-input', {
       list: districtsGermanyList,
       replace: function(input) {
         this.input.value = input.label;
-        highlightLayer(input.value);
+        highlightLayer(input.value, true);
       }
     });
   });
