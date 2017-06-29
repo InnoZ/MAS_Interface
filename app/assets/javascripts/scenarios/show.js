@@ -47,7 +47,7 @@ jQuery(function() {
         .y(function(d) { return d[1]; })
         .showLegend(false);
 
-      chart.yAxis.axisLabel(I18n.t('count'));
+      chart.yAxis.axisLabel(I18n.count);
       chart.xAxis.axisLabel('hour');
 
       chart.xAxis.tickValues([0, '', '', 3, '', '', 6, '', '', 9, '', '', 12, '', '', 15, '', '', 18, '', '', 21, '', '']);

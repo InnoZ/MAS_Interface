@@ -23,5 +23,7 @@
     = render 'layouts/footer'
 
 :javascript
-  I18n.defaultLocale = "#{I18n.default_locale}";
-  I18n.locale = "#{I18n.locale}";
+  window.I18n = #{translations_for_js.to_json.html_safe};
+
+  // for disabling aoi animation in tests, css elements can not be found otherwise
+  window.notInTestEnvironment = #{!Rails.env.test?}

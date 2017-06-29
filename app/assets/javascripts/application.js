@@ -28,7 +28,6 @@
 //= require awesomplete
 //= require d3.v3
 //= require nv.d3
-//= require i18n/translations
 //= require_self
 //= require_tree
 

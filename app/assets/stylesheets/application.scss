@@ -11,18 +11,16 @@
  * It is generally better to create a new file per style scope.
 
  *= require jquery-ui
- *= require bootstrap_loader
- *= require template_styles
  *= require owl.carousel
  *= require owl.transitions
  *= require animate.min
  *= require aos
  *= require fontello
- *= require blue
  *= require mapbox
  *= require awesomplete
  *= require nv.d3
  *= require_tree
+ *= require blue
  */
 
 @import 'colors';
