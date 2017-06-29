@@ -84,7 +84,7 @@ jQuery(function() {
             selectedLayer.setStyle({stroke: false});
           };
           selectedLayer = layer;
-          layer.setStyle({weight: 2, color: 'white', opacity: 1, stroke: true});
+          layer.setStyle({weight: 3, color: 'white', opacity: 1, stroke: true});
           hideAllFeatures();
           highlightDestinations(feature, layer);
           featureSelected = true;
@@ -127,7 +127,7 @@ jQuery(function() {
             if (counter < 10) {
               var line = L.polyline(
                 [destinationLayer.getBounds().getCenter(), selectedCentroid],
-                { color: 'black', weight: 2, opacity: 0.3 }
+                { color: 'white', weight: 2, opacity: 1 }
               );
               line.addTo(lines);
             };

@@ -53,17 +53,17 @@ jQuery(function() {
     var defaultStyle = {
       'color': '#283645',
       'opacity': 0.8,
-      'weight': 0.2,
-      'fillColor': 'steelblue',
-      'fillOpacity': 0.1,
+      'weight': 0.4,
+      'fillColor': '#3F8DBF',
+      'fillOpacity': 0.4,
     };
 
     var highlightedStyle = {
       'color': '#283645',
       'opacity': 0.8,
-      'weight': 0.2,
-      'fillColor': 'steelblue',
-      'fillOpacity': 0.5,
+      'weight': 0.4,
+      'fillColor': '#3F8DBF',
+      'fillOpacity': 0.6,
     };
 
     var featureById = {};
