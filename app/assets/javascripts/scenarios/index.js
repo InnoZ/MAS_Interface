@@ -73,7 +73,7 @@ jQuery(function() {
       // Keep track of highlighted marker
       if (id) { featureById[id] = layer };
 
-      if ( window.availableDistricts.includes(id) ) {
+      if ( window.availableDistricts.indexOf(id) != -1 ) {
         layer.setStyle(highlightedStyle);
       } else {
         layer.setStyle(defaultStyle);
@@ -83,7 +83,7 @@ jQuery(function() {
       function onclick(e) {
         var id = feature.properties.id;
         highlightLayer(id, false);
-        if ( window.availableDistricts.includes(id) ) {
+        if ( window.availableDistricts.indexOf(id) != -1 ) {
           jQuery('.loading-overlay').show();
           window.location.href = '/show/' + id;
         } else {

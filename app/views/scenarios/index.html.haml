@@ -9,6 +9,6 @@
               %i.icon-search-1
 
 :javascript
-  window.availableDistricts = #{@scenarios.map(&:district_id)}
+  window.availableDistricts = #{@available_districts}
   window.districtsGermanyGeo = #{@districts_germany}
   window.districtsGermanyList = #{raw DistrictsGermany.list.to_json}

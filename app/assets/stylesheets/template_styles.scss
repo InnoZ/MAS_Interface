@@ -71,19 +71,19 @@ body {
 main {
 	background-color: #FFF;
 }
-// NOT WORKING IN TESTS OTHERWISE
-// main:before {
-// 	content: "";
-// 	position: fixed;
-// 	top: 0;
-// 	left: 0;
-// 	bottom: 0;
-// 	right: 0;
-// 	z-index: 1;
-// 	background: #ffffff;
-// 	transition: 0.4s ease-out 0.2s;
-// 	transition-property: opacity, visibility;
-// }
+NOT WORKING IN TESTS OTHERWISE
+main:before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 1;
+	background: #ffffff;
+	transition: 0.4s ease-out 0.2s;
+	transition-property: opacity, visibility;
+}
 main.js-reveal:before {
 	opacity: 0;
 	visibility: hidden;
