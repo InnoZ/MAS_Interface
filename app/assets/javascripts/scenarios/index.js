@@ -83,12 +83,6 @@ jQuery(function() {
       function onclick(e) {
         var id = feature.properties.id;
         highlightLayer(id, false);
-        if ( window.availableDistricts.indexOf(id) != -1 ) {
-          jQuery('.loading-overlay').show();
-          window.location.href = '/show/' + id;
-        } else {
-          alert('Für diesen Kreis wurden noch keine Szenarien berechnet.');
-        };
       };
       layer.on('click', onclick);
     };
@@ -122,6 +116,14 @@ jQuery(function() {
       if (zoomTo) {
         map.fitBounds(highlightedLayer.getBounds());
       };
+      if ( window.availableDistricts.indexOf(id) != -1 ) {
+        var link = 'show/' + id;
+        jQuery('.district-info-box').html(
+          '<a class="btn btn-default" href=' + link + '>show scenario</a>'
+        ).click(function() { jQuery('.loading-overlay').show() });
+      } else {
+        jQuery('.district-info-box').html('Für diesen Kreis wurden noch keine Szenarien berechnet.');
+      };
     };
 
     new Awesomplete('#district-input', {
@@ -131,5 +133,14 @@ jQuery(function() {
         highlightLayer(input.value, true);
       }
     });
+
+    var infoBox = jQuery('.district-info-box');
+    jQuery('#district-input')
+      .on('awesomplete-open', function() {
+        infoBox.hide();
+      })
+      .on('awesomplete-close', function() {
+        infoBox.show();
+      });
   });
 });

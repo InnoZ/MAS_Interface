@@ -3,10 +3,13 @@
     .row
       .col-xs-12
         #map-germany
-          .scenario-selection-form
+          .scenario-selection-container
             .col-xs-12
               %input#district-input.big-input{placeholder: t('.search_district')}
               %i.icon-search-1
+            .col-xs-12
+              .district-info-box
+                Landkreis über Karte oder Suchfeld wählen
 
 :javascript
   window.availableDistricts = #{@available_districts}

@@ -3,12 +3,12 @@
 #map-germany {
   height: 80vh;
 
-  .scenario-selection-form {
+  .scenario-selection-container {
     max-width: 500px;
     position: absolute;
     top:  10px;
     left: 0;
-    z-index: 9999;
+    z-index: 999;
     i {
       position: absolute;
       right: 20px;
@@ -19,7 +19,18 @@
     .awesomplete {
       width: 100%;
       ul {
+        z-index: 99999 !important;
         font-size: 20px;
+      }
+    }
+    .district-info-box {
+      background: white;
+      border: 1px solid grey;
+      padding: 15px;
+      color: grey;
+      .btn {
+        margin: 0;
+        width: 100%
       }
     }
   }
