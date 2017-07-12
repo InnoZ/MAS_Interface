@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => '/queue'
 
   scope '(:locale)', locale: /de|en/ do
     get '' => 'pages#index', as: :root
