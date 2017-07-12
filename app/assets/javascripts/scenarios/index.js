@@ -119,8 +119,8 @@ jQuery(function() {
       if ( window.availableDistricts.indexOf(id) != -1 ) {
         var link = 'show/' + id;
         jQuery('.district-info-box').html(
-          '<a class="btn btn-default" href=' + link + '>show scenario</a>'
-        ).click(function() { jQuery('.loading-overlay').show() });
+          '<a class="btn btn-default" onclick="jQuery(\'.loading-overlay\').show()" href=' + link + '>show scenario</a>'
+        );
       } else {
         jQuery('.district-info-box').html('Für diesen Kreis wurden noch keine Szenarien berechnet.');
       };

@@ -111,7 +111,7 @@ jQuery(function() {
       var highlightDestinations = function(feature, layer) {
         var featureMaxCount = feature.properties.featureMaxCount;
         colorLegend(modeColor);
-        legend.find('.total-count').html("I18n.total" + ": " + feature.properties.featureStarts)
+        legend.find('.total-count').html(I18n.total + ": " + feature.properties.featureStarts)
         legend.find('.current-count').html(featureMaxCount);
         lines = L.featureGroup();
         var selectedCentroid = layer.getBounds().getCenter();
