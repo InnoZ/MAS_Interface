@@ -43,6 +43,16 @@ You can access the site in the browser with
 or 
 *localhost:3000*
 
+### Further dependencies
+
+Some tasks, such as email notification and scenario creation are performed in queues. For those, ActiveJob with sidekiq adapter is used, requiring the package `redis-server`. To start the queuing engine, use
+
+```bash
+sidekiq -C config/sidekiq.yml
+```
+
+Queues can be tracked on an inteface. Visit *localhost:3000/queue*.
+
 ### Specs
 
 When everything is set up correctly, all specs should pass. Run
