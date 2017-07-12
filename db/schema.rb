@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614113316) do
+ActiveRecord::Schema.define(version: 20170712141031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20170614113316) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.json     "od_relations"
+    t.json     "modal_split"
     t.index ["carbon_emissions"], name: "index_scenarios_on_carbon_emissions", using: :btree
     t.index ["district_id", "year", "seed"], name: "index_scenarios_on_district_id_and_year_and_seed", unique: true, using: :btree
     t.index ["district_id"], name: "index_scenarios_on_district_id", using: :btree

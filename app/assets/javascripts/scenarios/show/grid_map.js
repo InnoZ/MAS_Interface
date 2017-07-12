@@ -33,17 +33,6 @@ jQuery(function() {
         scrollWheelZoom: false
       });
 
-      // var map = L.map(div, {
-      //   zoomControl: false,
-      //   scaleControl: false,
-      //   scrollWheelZoom: false
-      // });
-      //
-      // // add innoz mapbox tilelayer
-      // L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
-      //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      // }).addTo(map);
-
       // place zoom control to topright
       L.control.zoom({
         position: 'topright'
@@ -155,9 +144,6 @@ jQuery(function() {
         };
       };
 
-      odLayer = L.geoJson(null, {onEachFeature: onEachFeature});
-      odLayer.addTo(map);
-
       jQuery('.od-mode-selector').click(function() {
         var mode = jQuery(this).attr('od_mode');
         modeData = odRelations[mode];
@@ -165,8 +151,9 @@ jQuery(function() {
         modeMaxCount = modeData.properties.maxCount;
         totalModeCount = modeData.properties.totalCount;
         if (lines) { map.removeLayer(lines) };
-        odLayer.clearLayers();
-        odLayer.addData(modeData);
+        if (odLayer) { map.removeLayer(odLayer) };
+        odLayer = L.geoJson(modeData, {onEachFeature: onEachFeature});
+        odLayer.addTo(map);
         colorLegend(modeColor);
         legend.find('.total-count').html(I18n.total + ": " + totalModeCount);
         legend.find('.current-count').html(modeMaxCount);

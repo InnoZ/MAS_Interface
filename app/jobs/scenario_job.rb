@@ -5,6 +5,6 @@ class ScenarioJob < ApplicationJob
     MatsimStarter.new(district_id, year)
     Scenario
       .find_by(year: year, district_id: district_id)
-      .calculate_od_relations
+      .calculate_od_relations_and_modal_split
   end
 end

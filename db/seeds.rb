@@ -6,7 +6,6 @@
 # bundle exec rake db:seed
 
 SEED_PATH = Rails.root.join('db', 'seeds')
-DISTRICT_IDS = %w[09180 03404]
 
 if File.file?("#{SEED_PATH}/seeds.dump")
   unless Scenario.find_by(seed: true) && DB[:plans].count > 800_000
@@ -14,22 +13,17 @@ if File.file?("#{SEED_PATH}/seeds.dump")
     Kernel.system "psql mas_interface_#{Rails.env} < #{SEED_PATH}/seeds.dump"
 
     # create grids
-    DISTRICT_IDS.each do |district_id|
-      scenario = Scenario.find_by(district_id: district_id, seed: true)
-      if scenario.od_relations
-        puts "OD relations for District ID: #{district_id} already calculated"
-        next
-      end
-      puts "calculating OD relations for District ID: #{district_id}"
-      scenario.calculate_od_relations
+    Scenario.where(seed: true).each do |scenario|
+      puts "calculating OD relations for district #{scenario.district_id} | #{scenario.year}"
+      scenario.calculate_od_relations_and_modal_split
     end
   end
 end
 
 random_district_ids = DistrictsGermany.list.map { |d| d[1] }.sample(10)
 random_district_ids.each do |id|
-  puts "makes scenario #{id} || 2017"
-  Scenario.make(district_id: id, year: 2017)
-  puts "makes scenario #{id} || 2030"
-  Scenario.make(district_id: id, year: 2030)
+  puts "enqueue scenario #{id} || 2017"
+  ScenarioJob.perform_later(id, 2017)
+  puts "enqueue scenario #{id} || 2030"
+  ScenarioJob.perform_later(id, 2030)
 end

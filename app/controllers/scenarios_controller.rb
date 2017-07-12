@@ -17,6 +17,9 @@ class ScenariosController < ApplicationController
       if params[:year_b].present?
         @scenario_b = @scenarios.find_by(year: params[:year_b].to_i)
       end
+      if @scenario_a && @scenario_b
+        @trend = Trend.new(@scenario_a, @scenario_b).json
+      end
     end
   end
 
