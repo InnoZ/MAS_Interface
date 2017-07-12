@@ -4,6 +4,7 @@
   height: 80vh;
 
   .scenario-selection-container {
+    display: none;
     max-width: 500px;
     position: absolute;
     top:  10px;
@@ -18,6 +19,7 @@
     }
     .awesomplete {
       width: 100%;
+      margin-bottom: 8px;
       ul {
         z-index: 99999 !important;
         font-size: 20px;
@@ -28,7 +30,7 @@
       border: 1px solid grey;
       padding: 15px;
       color: grey;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       .btn {
         margin: 0;
         width: 100%

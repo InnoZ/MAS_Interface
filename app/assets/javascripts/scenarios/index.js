@@ -134,13 +134,8 @@ jQuery(function() {
       }
     });
 
-    var infoBox = jQuery('.district-info-box');
-    jQuery('#district-input')
-      .on('awesomplete-open', function() {
-        infoBox.hide();
-      })
-      .on('awesomplete-close', function() {
-        infoBox.show();
-      });
+    setTimeout(function() {
+      jQuery('.scenario-selection-container').show();
+    }, 1);
   });
 });

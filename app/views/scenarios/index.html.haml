@@ -1,17 +1,12 @@
 %section#index-map
   .container-full
-    .row
-      .col-xs-12
-        #map-germany
-          .scenario-selection-container
-            .col-xs-12
-              %input#district-input.big-input{placeholder: t('.search_district')}
-              %i.icon-search-1
-            .col-xs-12
-              .district-info-box
-                Landkreis über Karte oder Suchfeld wählen
-            .col-xs-12
-              = render 'layouts/flash'
+    #map-germany
+      .col-xs-12.scenario-selection-container
+        %input#district-input.big-input{placeholder: t('.search_district')}
+        %i.icon-search-1
+        .district-info-box
+          Landkreis über Karte oder Suchfeld wählen
+        = render 'layouts/flash'
 
 :javascript
   window.availableDistricts = #{@available_districts}
