@@ -10,6 +10,8 @@
             .col-xs-12
               .district-info-box
                 Landkreis über Karte oder Suchfeld wählen
+            .col-xs-12
+              = render 'layouts/flash'
 
 :javascript
   window.availableDistricts = #{@available_districts}
