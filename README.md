@@ -45,7 +45,11 @@ or
 
 ### Further dependencies
 
-Some tasks, such as email notification and scenario creation are performed in queues. For those, ActiveJob with sidekiq adapter is used, requiring the package `redis-server`. To start the queuing engine, use `sidekiq -C config/sidekiq.yml`.
+Some tasks, such as email notification and scenario creation are performed in queues. For those, ActiveJob with sidekiq adapter is used, requiring the package `redis-server`. To start the queuing engine, use
+
+```sidekiq -C config/sidekiq.yml```
+
+Queues can be tracked on an inteface. Visit `localhost:3000/queue`.
 
 ### Specs
 
