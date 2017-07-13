@@ -168,11 +168,11 @@ jQuery(function() {
         odLayer.clearLayers();
         odLayer.addData(modeData);
         colorLegend(modeColor);
-        legend.find('.total-count').html(I18n.total + ": " + totalModeCount)
-        legend.find('.current-count').html(modeMaxCount)
+        legend.find('.total-count').html(I18n.total + ": " + totalModeCount);
+        legend.find('.current-count').html(modeMaxCount);
       });
 
-      jQuery('.od-mode-selector').first().click();
+      jQuery('.od-mode-selector').last().click();
     };
 
     makeODMap('grid-map-a', window.odRelationsScenarioA, window.dataScenarioA);
