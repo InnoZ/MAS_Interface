@@ -20,15 +20,6 @@ jQuery(function() {
       zoomControl: false,
     });
 
-    // map = L.map('map-germany', {
-    //   maxZoom: 9,
-    //   minZoom: 7,
-    // });
-    //
-    // L.tileLayer('//{s}.tiles.mapbox.com/v3/innoz-developer.h1ma7egc/{z}/{x}/{y}.png', {
-    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(map);
-
     // place zoom control to topright
     L.control.zoom({
       position: 'topright'
@@ -112,17 +103,22 @@ jQuery(function() {
       removeHighlight();
       highlightedLayer = featureById[id];
       highlightedLayer.setStyle({'weight': 3});
-      jQuery('#district-input').val(highlightedLayer.feature.properties.name);
+      jQuery('#district-input').val('');
       if (zoomTo) {
         map.fitBounds(highlightedLayer.getBounds());
       };
+      var box = jQuery('.district-info-box');
+      box.fadeIn();
+      box.find('.header').html("<i class='icon-location-1'></i>" + highlightedLayer.feature.properties.name);
       if ( window.availableDistricts.indexOf(id) != -1 ) {
         var link = 'show/' + id;
-        jQuery('.district-info-box').html(
+        box.find('.info').html(
           '<a class="btn btn-default" onclick="jQuery(\'.loading-overlay\').show()" href=' + link + '>show scenario</a>'
         );
       } else {
-        jQuery('.district-info-box').html('Für diesen Kreis wurden noch keine Szenarien berechnet.');
+        box.find('.info').html(
+          'Für diesen Kreis wurden noch keine Szenarien berechnet.'
+        );
       };
     };
 
@@ -134,6 +130,7 @@ jQuery(function() {
       }
     });
 
+    // only for page loading style
     setTimeout(function() {
       jQuery('.scenario-selection-container').show();
     }, 1);
