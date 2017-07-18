@@ -11,6 +11,7 @@ de:
   modal_split: 'Modal Split'
   traffic_performance: 'Verkehrsleistung'
   co2_emissions: 'CO2-Emissionen'
+  to: 'bis'
 #  project: 'Projekt'
 #  challenge: 'Herausforderung'
 #  approach: 'Herangehensweise'

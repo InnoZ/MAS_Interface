@@ -1,0 +1,28 @@
+.row
+  .col-xs-12.text-center
+    %h2= t '.miv_vs_umweltverband'
+    %h3= t '.who_wins_and_who_looses'
+
+.row
+  .col-xs-4
+  .col-xs-4.cell.white-bottom-border.text-center
+    = image_tag 'icon_miv', height: 50
+    = "#{params[:year_a]} #{t('to')} #{params[:year_b]}"
+  .col-xs-4.cell.white-bottom-border.text-center
+    = image_tag 'icon_umweltverbund', height: 50
+    = "#{params[:year_a]} #{t('to')} #{params[:year_b]}"
+
+- @trend.each do |feature, values|
+  .row
+    .col-xs-4.cell
+      = t feature.to_s
+    - [:car, :pt].each do |mode|
+      .col-xs-4.cell.white-bottom-border.text-center
+        %p
+          - if values[mode] > 0
+            %i.icon-up
+          - elsif values[mode] < 0
+            %i.icon-down
+          - else
+            %i.icon-record
+          = "#{values[mode].abs} #{values[:unit]}"

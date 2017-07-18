@@ -92,6 +92,27 @@
   }
 }
 
+#comparison {
+  font-size: 26px;
+  img {
+    margin-right: 15px;
+  }
+  h2, h3 {
+    color: white;
+  }
+  p {
+    font-size: 60px;
+    font-weight: bold;
+  }
+  .cell {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  .white-bottom-border {
+    border-bottom: 1px solid white;
+  }
+}
+
 #grid-map-section {
   .legend {
     padding: 10px;

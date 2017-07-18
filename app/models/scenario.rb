@@ -3,11 +3,12 @@ class Scenario < ApplicationRecord
   validates :district_id, presence: true
   validates :year, presence: true, numericality: { only_integer: true }
 
-  def calculate_od_relations
+  def calculate_od_relations_and_modal_split
     unless Grid.find_by(district_id: district_id, side_length: Grid.default_side_length)
       GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run
     end
     update_attribute(:od_relations, od_relations_json)
+    update_attribute(:modal_split, modal_split_json)
   end
 
   def od_relations_json
@@ -16,6 +17,16 @@ class Scenario < ApplicationRecord
       hash[mode] = Destinations.new(district_id, year, mode).feature_collection
     end
     hash.to_json
+  end
+
+  def modal_split_json
+    available_modes.map do |mode|
+      {
+        'mode' => mode,
+        'color' => mode_color(mode),
+        'share' => plans.where(mode: mode).count,
+      }
+    end.to_json
   end
 
   def full_name
@@ -41,7 +52,6 @@ class Scenario < ApplicationRecord
   def json_all
     {
       'district_geometry' => district_geometry,
-      'modal_split' => modal_split,
       'traffic_performance' => traffic_performance,
       'diurnal_json' => diurnal_json,
       'carbon_emission' => carbon_emission,
@@ -49,49 +59,30 @@ class Scenario < ApplicationRecord
     }
   end
 
-  def modal_split
-    {
-      'modal_split' =>
-        available_modes.map do |mode|
-          {
-            'mode' => I18n.t("mode_names.#{mode}"),
-            'color' => mode_color(mode),
-            'share' => plans.where(mode: mode).count,
-          }
-        end,
-    }
-  end
-
   def traffic_performance
-    {
-      'traffic_performance' =>
-        mode_order(person_km).map do |mode, distance|
-          {
-            'mode' => I18n.t("mode_names.#{mode}"),
-            'color' => mode_color(mode),
-            'traffic' => distance.to_i,
-          }
-        end,
-    }
+    mode_order(person_km).map do |mode, distance|
+      {
+        'mode' => mode,
+        'color' => mode_color(mode),
+        'traffic' => distance.to_i,
+      }
+    end
   end
 
   def carbon_emission
-    {
-      'carbon_emission' =>
-        mode_order(carbon_emissions).map do |mode, carbon_emission|
-          {
-            'mode' => I18n.t("mode_names.#{mode}"),
-            'color' => mode_color(mode),
-            'carbon' => carbon_emission.to_i,
-          }
-        end,
-    }
+    mode_order(carbon_emissions).map do |mode, carbon_emission|
+      {
+        'mode' => mode,
+        'color' => mode_color(mode),
+        'carbon' => carbon_emission.to_i,
+      }
+    end
   end
 
   def diurnal_json
     available_modes.map do |mode|
       {
-        'key' => I18n.t("mode_names.#{mode}"),
+        'key' => mode,
         'color' => mode_color(mode),
         'values' => values_per_hour(mode),
       }

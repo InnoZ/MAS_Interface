@@ -26,7 +26,7 @@ jQuery(function() {
     chart.tooltip.contentGenerator(function (obj) {
       content = '<h3 style="color: white; background-color: ';
       content += obj.color + '">';
-      content += obj.data.mode + '</h3>' + '<p>' + obj.data[attribute] + '</p>';
+      content += I18n.mode_names[obj.data.mode] + '</h3>' + '<p>' + obj.data[attribute] + '</p>';
       return content;
     });
 
@@ -62,16 +62,19 @@ jQuery(function() {
     });
   };
 
+  console.log(window.dataScenarioA);
   jQuery(['a', 'b']).each(function(i, ab) {
     var windowVariableName = 'dataScenario' + ab.toUpperCase();
     var d = window[windowVariableName];
     if (typeof d !== 'undefined') {
-      makePieChart('#modal-split-chart-' + ab, d.modal_split.modal_split, 'share');
-      makePieChart('#traffic-performance-chart-' + ab, d.traffic_performance.traffic_performance, 'traffic');
-      makePieChart('#carbon-emission-chart-' + ab, d.carbon_emission.carbon_emission, 'carbon');
+      makePieChart('#modal-split-chart-' + ab, window['modalSplit' + ab.toUpperCase()], 'share');
+      makePieChart('#traffic-performance-chart-' + ab, d.traffic_performance, 'traffic');
+      makePieChart('#carbon-emission-chart-' + ab, d.carbon_emission, 'carbon');
       makeDiurnalCurve('#diurnal-curve-chart-' + ab, d.diurnal_json)
     };
   });
+
+  console.log(window.trend);
 
   // jQuery('#boxplot-chart').each(function() {
   //   nv.addGraph(function() {
