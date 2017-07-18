@@ -6,7 +6,6 @@ de:
       change_district: 'Landkreis wechseln'
       population: 'Bevölkerung'
       area: 'Fläche'
-      compare_scenarios: 'Mobilitätsszenarien vergleichen'
       choose_scenario: 'Szenario wählen'
     comparison:
       miv_vs_umweltverband: 'MIV vs. Umweltverbund'

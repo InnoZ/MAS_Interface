@@ -6,7 +6,6 @@ en:
       change_district: 'Change district'
       population: 'Population'
       area: 'Area'
-      compare_scenarios: 'Compare mobility scenarios'
       choose_scenario: 'Choose scenario'
     comparison:
       miv_vs_umweltverband: 'MIT vs. environmental traffic'
