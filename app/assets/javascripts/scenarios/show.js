@@ -13,6 +13,13 @@ jQuery(function() {
     staticDistrictMap('district-geometry', window.dataScenarioA.district_geometry, 2, {fillOpacity: 0, opacity: 0}, true);
   });
 
+  var drawTooltip = function(color, key, value) {
+    content = '<h3 style="color: white; background-color: ';
+    content += color + '">';
+    content += key + '</h3>' + '<p>' + value + '</p>';
+    return content;
+  };
+
   var makePieChart = function(div, data, attribute) {
     var chart = nv.models.pieChart()
       .x(function(d) { return d.mode })
@@ -23,11 +30,8 @@ jQuery(function() {
       .donut(true)
       .donutRatio(0.35)
 
-    chart.tooltip.contentGenerator(function (obj) {
-      content = '<h3 style="color: white; background-color: ';
-      content += obj.color + '">';
-      content += I18n.mode_names[obj.data.mode] + '</h3>' + '<p>' + obj.data[attribute] + '</p>';
-      return content;
+    chart.tooltip.contentGenerator(function(obj) {
+      drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
     });
 
     nv.addGraph(function() {
@@ -51,7 +55,13 @@ jQuery(function() {
       chart.xAxis.axisLabel('hour');
 
       chart.xAxis.tickValues([0, '', '', 3, '', '', 6, '', '', 9, '', '', 12, '', '', 15, '', '', 18, '', '', 21, '', '']);
-      chart.useInteractiveGuideline(true);
+      // deactivate guidelines since tooltip is on wrong position - seemingly this is connected with positioning inside of a bootstrap panel
+      chart.useInteractiveGuideline(false);
+
+      chart.tooltip.contentGenerator(function(obj) {
+        var o = obj.series[0];
+        return drawTooltip(o.color, I18n.mode_names[o.key], o.value);
+      });
 
       d3.select(div)
         .datum(data)
@@ -62,7 +72,6 @@ jQuery(function() {
     });
   };
 
-  console.log(window.dataScenarioA);
   jQuery(['a', 'b']).each(function(i, ab) {
     var windowVariableName = 'dataScenario' + ab.toUpperCase();
     var d = window[windowVariableName];
@@ -73,8 +82,6 @@ jQuery(function() {
       makeDiurnalCurve('#diurnal-curve-chart-' + ab, d.diurnal_json)
     };
   });
-
-  console.log(window.trend);
 
   // jQuery('#boxplot-chart').each(function() {
   //   nv.addGraph(function() {
