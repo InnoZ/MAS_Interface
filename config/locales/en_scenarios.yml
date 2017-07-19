@@ -6,7 +6,6 @@ en:
       change_district: 'Change district'
       population: 'Population'
       area: 'Area'
-      choose_scenario: 'Choose scenario'
     comparison:
       miv_vs_umweltverband: 'MIT vs. environmental traffic'
       who_wins_and_who_looses: 'Who wins and who looses? And what does this mean for the carbon emission?'

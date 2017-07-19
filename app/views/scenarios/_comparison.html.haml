@@ -7,10 +7,10 @@
   .col-xs-4
   .col-xs-4.cell.white-bottom-border.text-center
     = image_tag 'icon_miv', height: 50
-    = "#{params[:year_a]} #{t('to')} #{params[:year_b]}"
+    = "#{@scenario_a.year} #{t('to')} #{@scenario_b.year}"
   .col-xs-4.cell.white-bottom-border.text-center
     = image_tag 'icon_umweltverbund', height: 50
-    = "#{params[:year_a]} #{t('to')} #{params[:year_b]}"
+    = "#{@scenario_a.year} #{t('to')} #{@scenario_b.year}"
 
 - @trend.each do |feature, values|
   .row

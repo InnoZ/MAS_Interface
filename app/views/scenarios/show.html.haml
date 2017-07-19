@@ -17,21 +17,22 @@
             %h4= "#{t('.population')}: #{@scenario_a.population}"
             %h4= "#{t('.area')} #{@scenario_a.district_area}"
 
-%section#compare-form
-  .container.inner-sm
-    .row
-      .col-xs-12
-        = render 'layouts/flash'
-      .col-xs-12.text-center
-      = form_tag '/show/' + params[:district], method: :get do
-        .col-sm-4
-          = select_tag 'year_a', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_a]), {class: 'big-select'}
-        .col-sm-1.text-center
-          .and= t 'and'
-        .col-sm-4
-          = select_tag 'year_b', options_from_collection_for_select(@scenarios, :year, :full_name, params[:year_b]), {prompt: t('.choose_scenario'), class: 'big-select'}
-        .col-sm-2.col-sm-offset-1
-          = submit_tag 'Okay', name: nil, class: 'btn btn-default'
+- if @scenarios.length > 1
+  %section#compare-form
+    .container.inner-sm
+      .row
+        .col-xs-12
+          = render 'layouts/flash'
+        .col-xs-12.text-center
+        = form_tag '/show/' + params[:district], method: :get do
+          .col-sm-4
+            = select_tag 'year_a', options_from_collection_for_select(@scenarios - [@scenario_b], :year, :full_name, @scenario_a&.year), {class: 'big-select'}
+          .col-sm-1.text-center
+            .and= t 'and'
+          .col-sm-4
+            = select_tag 'year_b', options_from_collection_for_select(@scenarios - [@scenario_a], :year, :full_name, @scenario_b&.year), {class: 'big-select'}
+          .col-sm-2.col-sm-offset-1
+            = submit_tag 'Okay', name: nil, class: 'btn btn-default'
 
 %section#pie-charts.light-bg
   .container.inner-sm

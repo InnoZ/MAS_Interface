@@ -6,7 +6,6 @@ de:
       change_district: 'Landkreis wechseln'
       population: 'Bevölkerung'
       area: 'Fläche'
-      choose_scenario: 'Szenario wählen'
     comparison:
       miv_vs_umweltverband: 'MIV vs. Umweltverbund'
       who_wins_and_who_looses: 'Wer gewinnt und wer verliert? Und was bedeutet das für die CO2-Emissionen?'

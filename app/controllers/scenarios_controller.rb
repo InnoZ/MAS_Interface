@@ -6,11 +6,10 @@ class ScenariosController < ApplicationController
   end
 
   def show
-    unless params[:district] && Scenario.find_by(district_id: params[:district])
-      redirect_to :root
-    else
+    if params[:district] && Scenario.find_by(district_id: params[:district])
       @scenarios = Scenario.where(district_id: params[:district]).order(:year)
       @scenario_a = @scenarios.first
+      @scenario_b = @scenarios.last unless @scenarios.first == @scenarios.last
       if params[:year_a].present?
         @scenario_a = @scenarios.find_by(year: params[:year_a].to_i)
       end
@@ -20,6 +19,8 @@ class ScenariosController < ApplicationController
       if @scenario_a && @scenario_b
         @trend = Trend.new(@scenario_a, @scenario_b).json
       end
+    else
+      redirect_to :root
     end
   end
 
