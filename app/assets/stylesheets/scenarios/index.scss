@@ -10,7 +10,7 @@
     top:  10px;
     left: 0;
     z-index: 999;
-    i {
+    i.icon-search-1 {
       position: absolute;
       right: 20px;
       top: 10px;
@@ -18,21 +18,39 @@
       color: $verydarkblue;
     }
     .awesomplete {
+      margin-bottom: 4px;
       width: 100%;
-      margin-bottom: 8px;
       ul {
         z-index: 99999 !important;
         font-size: 20px;
       }
     }
     .district-info-box {
+      display: none;
+      .header {
+        i.icon-location-1 {
+          font-size: 35px;
+          margin-right: 7px;
+        }
+        * {
+          vertical-align: middle;
+          line-height: 35px;
+        }
+        background: $grey;
+        padding: 12px 15px;
+        font-size: 23px;
+        font-weight: bold;
+        color: $verydarkblue;
+      }
+      .info {
+        padding: 15px;
+      }
       background: white;
       border: 1px solid grey;
-      padding: 15px;
       color: grey;
-      margin-bottom: 8px;
       .btn {
         margin: 0;
+        margin-top: 15px;
         width: 100%
       }
     }
