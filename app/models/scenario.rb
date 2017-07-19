@@ -19,6 +19,14 @@ class Scenario < ApplicationRecord
     hash.to_json
   end
 
+  def scenario_map_infos
+    {
+      district_id: district_id,
+      year: year,
+      population: population,
+    }
+  end
+
   def modal_split_json
     available_modes.map do |mode|
       {

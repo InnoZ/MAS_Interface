@@ -1,5 +1,11 @@
 jQuery(function() {
   jQuery('#map-germany').each(function() {
+    var findScenarioById = function(district_id){
+        return jQuery.grep(window.availableDistricts, function(n, i){
+          return n.district_id == district_id;
+        });
+    };
+
     var resizeMap = function() {
       var mapHeight = jQuery(window).height() - jQuery('header').height();
       jQuery('#map-germany').height(mapHeight);
@@ -64,7 +70,7 @@ jQuery(function() {
       // Keep track of highlighted marker
       if (id) { featureById[id] = layer };
 
-      if ( window.availableDistricts.indexOf(id) != -1 ) {
+      if ( findScenarioById(id).length > 0 ) {
         layer.setStyle(highlightedStyle);
       } else {
         layer.setStyle(defaultStyle);
@@ -100,21 +106,23 @@ jQuery(function() {
       });
 
     var highlightLayer = function(id, zoomTo) {
+      var scenarios = findScenarioById(id)
       removeHighlight();
       highlightedLayer = featureById[id];
       highlightedLayer.setStyle({'weight': 3});
       jQuery('#district-input').val('');
-      if (zoomTo) {
-        map.fitBounds(highlightedLayer.getBounds());
-      };
+      if (zoomTo) { map.fitBounds(highlightedLayer.getBounds()) };
       var box = jQuery('.district-info-box');
       box.fadeIn();
       box.find('.header').html("<i class='icon-location-1'></i>" + highlightedLayer.feature.properties.name);
-      if ( window.availableDistricts.indexOf(id) != -1 ) {
+      if ( scenarios.length > 0 ) {
         var link = 'show/' + id;
         box.find('.info').html(
           '<a class="btn btn-default" onclick="jQuery(\'.loading-overlay\').show()" href=' + link + '>show scenario</a>'
         );
+        jQuery.each(scenarios, function(i, s) {
+          box.find('.info').prepend('<b>' + s.year + '</b>: ' + s.population + ' Einwohner<br>');
+        });
       } else {
         box.find('.info').html(
           'Für diesen Kreis wurden noch keine Szenarien berechnet.'
