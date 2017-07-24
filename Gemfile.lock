@@ -257,6 +257,7 @@ DEPENDENCIES
   postgresql
   puma (~> 3.0)
   rails (~> 5.0.2)
+  redis (~> 3.0)
   rspec-rails
   rubocop
   sass-rails (~> 5.0)
