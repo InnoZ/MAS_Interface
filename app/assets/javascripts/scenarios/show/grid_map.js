@@ -1,16 +1,7 @@
 jQuery(function() {
   jQuery('#grid-map-section').each(function() {
     var makeODMap = function(div, odRelations, data) {
-      var map;
-      var odRelations = odRelations;
-      var data = data;
-      var modeMaxCount;
-      var modeData;
-      var modeColor;
-      var totalModeCount;
-      var selectedLayer;
-      var lines;
-      var odLayer;
+      var map, modeMaxCount, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
 
       var legend = jQuery('#' + div).prev('.legend');
 
@@ -60,42 +51,32 @@ jQuery(function() {
         legend.css('color', color);
       };
 
+      var setInitialStyle = function() {
+        odLayer.setStyle({fillOpacity: 0, color: 'grey', opacity: 1, weight: 0.3});
+      };
+
       var onEachFeature = function (feature, layer) {
-        layer._leaflet_id = feature.id; // for 'getLayer' function
-        var opacity = (feature.properties.featureStarts / modeMaxCount) + 0.05;
-        feature.densityStyle = { fillColor: modeColor, fillOpacity: opacity, stroke: false };
-        layer.setStyle(feature.densityStyle);
+        var opacity = (feature.properties.featureStarts / modeMaxCount) + 0.2;
         function click(e) {
           if (lines) { map.removeLayer(lines) };
-          if (selectedLayer == layer) {
-            unselectAll();
-          } else {
-            if (selectedLayer) {
-              selectedLayer.setStyle({stroke: false});
-            };
-            selectedLayer = layer;
-            layer.setStyle({weight: 3, color: 'white', opacity: 1, stroke: true});
-            hideAllFeatures();
-            highlightDestinations(feature, layer);
-            featureSelected = true;
+          if (selectedLayer) {
+            selectedLayer.setStyle({stroke: false});
           };
+          selectedLayer = layer;
+            layer.setStyle({weight: 3, color: 'white', opacity: 1, stroke: true});
+          setInitialStyle();
+          highlightDestinations(feature, layer);
+          featureSelected = true;
         };
         layer.on('click', click);
       };
 
-      var unselectAll = function() {
-        if (selectedLayer) {
-          selectedLayer.setStyle({stroke: false});
-          selectedLayer = null;
-          featureSelected = false;
-          highlightDensities();
-        };
+      var findOdFeatureById = function(id) {
+        jQuery.each(odLayer._layers, function(index, elem) {
+          if (elem.feature.id == id) { target = elem; return false; }
+        });
+        return target;
       };
-
-      map.on('click', function(e) {
-        unselectAll();
-        if (lines) { map.removeLayer(lines) };
-      });
 
       var highlightDestinations = function(feature, layer) {
         var featureMaxCount = feature.properties.featureMaxCount;
@@ -111,7 +92,7 @@ jQuery(function() {
             var count = destination[id];
             var opacity = (count / featureMaxCount);
             var style = { fillColor: modeColor, fillOpacity: opacity, stroke: (id == feature.id) ? true : false };
-            var destinationLayer = odLayer.getLayer(id);
+            var destinationLayer = findOdFeatureById(id);
             if (destinationLayer) {
               destinationLayer.setStyle(style);
               if (counter < 10) {
@@ -127,23 +108,6 @@ jQuery(function() {
         lines.addTo(map);
       };
 
-      var hideAllFeatures = function() {
-        jQuery.each(modeData.features, function(index, feature) {
-          odLayer.getLayer(feature.id).setStyle({fillOpacity: 0});
-        });
-      };
-
-      var highlightDensities = function() {
-        if (!featureSelected) {
-          jQuery.each(modeData.features, function(index, feature) {
-            odLayer.getLayer(feature.id).setStyle(feature.densityStyle);
-            jQuery('.current-count').html(modeMaxCount)
-            jQuery('.total-count').html(I18n.total + ": " + totalModeCount);
-            colorLegend(modeColor);
-          });
-        };
-      };
-
       jQuery('.od-mode-selector').click(function() {
         var mode = jQuery(this).attr('od_mode');
         modeData = odRelations[mode];
@@ -154,6 +118,7 @@ jQuery(function() {
         if (odLayer) { map.removeLayer(odLayer) };
         odLayer = L.geoJson(modeData, {onEachFeature: onEachFeature});
         odLayer.addTo(map);
+        setInitialStyle();
         colorLegend(modeColor);
         legend.find('.total-count').html(I18n.total + ": " + totalModeCount);
         legend.find('.current-count').html(modeMaxCount);
