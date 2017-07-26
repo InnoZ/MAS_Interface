@@ -41,7 +41,7 @@ jQuery(function() {
       map.fitBounds(district.getBounds());
 
       var colorLegend = function(color) {
-        var gradient = 'rgba(0,0,0,0) 0%, ' + color + ' 100%';
+        var gradient = 'white 0%, ' + color + ' 100%';
         legend.find('.current-count-bar')
           .css({
             'background': 'linear-gradient(to right, ' + gradient + ')',
@@ -52,18 +52,15 @@ jQuery(function() {
       };
 
       var setInitialStyle = function() {
-        odLayer.setStyle({fillOpacity: 0, color: 'grey', opacity: 1, weight: 0.3});
+        odLayer.setStyle({fillOpacity: 0, color: 'grey', opacity: 1, weight: 0.2});
       };
 
       var onEachFeature = function (feature, layer) {
         var opacity = (feature.properties.featureStarts / modeMaxCount) + 0.2;
         function click(e) {
           if (lines) { map.removeLayer(lines) };
-          if (selectedLayer) {
-            selectedLayer.setStyle({stroke: false});
-          };
           selectedLayer = layer;
-            layer.setStyle({weight: 3, color: 'white', opacity: 1, stroke: true});
+            layer.setStyle({weight: 3, color: 'white', opacity: 1});
           setInitialStyle();
           highlightDestinations(feature, layer);
           featureSelected = true;
@@ -91,7 +88,7 @@ jQuery(function() {
           for (var id in destination){
             var count = destination[id];
             var opacity = (count / featureMaxCount);
-            var style = { fillColor: modeColor, fillOpacity: opacity, stroke: (id == feature.id) ? true : false };
+            var style = { fillColor: modeColor, fillOpacity: opacity };
             var destinationLayer = findOdFeatureById(id);
             if (destinationLayer) {
               destinationLayer.setStyle(style);
