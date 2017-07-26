@@ -13,8 +13,13 @@ class MatsimStarter
 
   # rubocop:disable LineLength
   def run
-    sleep(20)
-    Kernel.system("java -mx4g -cp #{JAVA_PATH} com.innoz.toolbox.run.Main #{district_id} #{year} #{folder} #{rails_env}  >/dev/null 2>&1")
+    sleep(10)
+    if rails_env == 'production'
+      java_class = 'Main'
+    else
+      java_class = 'Preto'
+    end
+    Kernel.system("java -mx4g -cp #{JAVA_PATH} com.innoz.toolbox.run.#{java_class} #{district_id} #{year} #{folder} #{rails_env}  >/dev/null 2>&1")
   end
 
   private
