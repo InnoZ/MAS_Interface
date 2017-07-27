@@ -52,7 +52,7 @@ jQuery(function() {
       'opacity': 0.8,
       'weight': 0.4,
       'fillColor': '#3F8DBF',
-      'fillOpacity': 0.4,
+      'fillOpacity': 0.3,
     };
 
     var highlightedStyle = {
@@ -60,7 +60,7 @@ jQuery(function() {
       'opacity': 0.8,
       'weight': 0.4,
       'fillColor': '#3F8DBF',
-      'fillOpacity': 0.6,
+      'fillOpacity': 0.7,
     };
 
     var featureById = {};
