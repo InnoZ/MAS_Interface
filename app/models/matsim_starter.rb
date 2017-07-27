@@ -1,6 +1,6 @@
 class MatsimStarter
   OUTPUT_PATH = Rails.root.join('public', 'matsim', 'output')
-  JAVA_PATH = Rails.root.join('lib', 'matsim', 'java', 'innoz-toolbox-0.1-SNAPSHOT-2017-07-25.jar')
+  JAVA_PATH = Rails.root.join('lib', 'matsim', 'java', 'innoz-toolbox-0.1-SNAPSHOT-2017-07-27.jar')
 
   def initialize(district_id, year, folder = OUTPUT_PATH, rails_env = Rails.env)
     @district_id = district_id
