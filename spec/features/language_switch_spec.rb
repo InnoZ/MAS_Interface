@@ -22,9 +22,6 @@ feature 'Language switch', js: true do
     find('a', text: 'english').trigger('click')
     find('a', text: 'Contact').trigger('click')
     expect(page).to have_content('Get in touch')
-    screenshot_and_open_image
-
     expect(page).to_not have_content('Kontaktieren Sie uns')
-    screenshot_and_open_image
   end
 end

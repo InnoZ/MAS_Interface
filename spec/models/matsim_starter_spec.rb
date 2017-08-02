@@ -7,7 +7,7 @@ RSpec.describe MatsimStarter, type: :model do
   let(:year) { 2017 }
   let(:scenario) { Scenario.find_by({district_id: district_id, year: year}) }
 
-  it 'creates a scenario' do
+  it 'creates a scenario', :hard_cleanup do
     expect(Scenario.all.count).to eq 0
     expect(Grid.all.count).to eq 0
     described_class.new(district_id, year)

@@ -24,10 +24,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
   config.before(:each, no_transaction: true) do
     DatabaseCleaner.strategy = :truncation
   end
@@ -37,12 +33,21 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
   end
 
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  config.before(:each, hard_cleanup: true) do
+    # hack to empty tables since DatabaseCleaner refuses to do its job
+    # in case of data inserted by Matsim
+    DB[:scenarios].delete
+    DB[:grids].delete
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
