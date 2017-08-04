@@ -103,4 +103,9 @@ jQuery(function() {
       });
     });
   });
+
+  // login
+  jQuery('.open-login-modal').click(function() {
+    jQuery('#login-modal').modal('show');
+  });
 });

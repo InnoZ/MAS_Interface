@@ -6,6 +6,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/poltergeist'
+require 'factories'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -16,6 +17,8 @@ end
 Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+
   config.before(:each, js: true) do
     Capybara.page.driver.browser.resize(1600, 1000)
   end
@@ -54,7 +57,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

@@ -21,3 +21,10 @@
             - pages.each do |p|
               %li{class: ('active-navbar-li' if current_page?(controller: 'pages', action: p))}
                 = link_to t('views.nav.' + p), send(p + '_path')
+
+          .nav-user-area
+            - if current_user
+              = link_to 'logout', '/logout', class: 'logout'
+            - else
+              .open-login-modal
+                login

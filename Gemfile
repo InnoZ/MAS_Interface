@@ -46,6 +46,8 @@ gem 'sequel'
 gem 'pg'
 gem 'activerecord-postgis-adapter'
 gem 'sidekiq'
+gem 'bcrypt'
+gem 'factory_girl'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

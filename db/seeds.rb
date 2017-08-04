@@ -8,15 +8,13 @@
 SEED_PATH = Rails.root.join('db', 'seeds')
 
 if File.file?("#{SEED_PATH}/seeds.dump")
-  unless Scenario.find_by(seed: true) && DB[:plans].count > 800_000
-    puts 'loading dump with scenarios and agent plans...'
-    Kernel.system "psql mas_interface_#{Rails.env} < #{SEED_PATH}/seeds.dump"
+  puts 'loading dump with scenarios and agent plans...'
+  Kernel.system "psql mas_interface_#{Rails.env} < #{SEED_PATH}/seeds.dump"
 
-    # create grids
-    Scenario.where(seed: true).each do |scenario|
-      puts "calculating OD relations for district #{scenario.district_id} | #{scenario.year}"
-      scenario.calculate_od_relations_and_modal_split
-    end
+  # create grids
+  Scenario.where(seed: true).each do |scenario|
+    puts "calculating OD relations for district #{scenario.district_id} | #{scenario.year}"
+    scenario.calculate_od_relations_and_modal_split
   end
 end
 
