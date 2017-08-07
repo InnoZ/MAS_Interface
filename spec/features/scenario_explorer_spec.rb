@@ -7,7 +7,5 @@ feature 'Scenario Explorer', js: true do
   end
 
   scenario 'Visit index page and see german text' do
-    sleep(1)
-    screenshot_and_open_image
   end
 end
