@@ -16,8 +16,11 @@
           %ul.nav.navbar-nav
             %li{class: ('active-navbar-li' if current_page?(scenarios_path))}
               = link_to 'Scenario Explorer', scenarios_path
-            %li{class: ('active-navbar-li' if current_page?(new_scenario_path))}
-              = link_to 'Scenario Creator', new_scenario_path
+
+            - if current_user
+              %li{class: ('active-navbar-li' if current_page?(new_scenario_path))}
+                = link_to 'Scenario Creator', new_scenario_path
+
             - pages.each do |p|
               %li{class: ('active-navbar-li' if current_page?(controller: 'pages', action: p))}
                 = link_to t('views.nav.' + p), send(p + '_path')
