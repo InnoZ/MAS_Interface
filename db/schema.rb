@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712141031) do
+ActiveRecord::Schema.define(version: 20170804103308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,13 @@ ActiveRecord::Schema.define(version: 20170712141031) do
     t.index ["population_diff_2017"], name: "index_scenarios_on_population_diff_2017", using: :btree
     t.index ["trips"], name: "index_scenarios_on_trips", using: :btree
     t.index ["year"], name: "index_scenarios_on_year", using: :btree
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

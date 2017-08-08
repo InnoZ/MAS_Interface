@@ -1,0 +1,15 @@
+#login-modal.modal.fade{role: 'dialog', 'data-backdrop' => 'static'}
+  .modal-dialog.modal-xs
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        %h4.modal-title Log in
+      = form_tag '/login' do
+        .modal-body
+          .col-xs-12
+            = text_field_tag :email, nil, placeholder: 'Email', class: 'form-control'
+          .col-xs-12
+            = password_field_tag :password, nil, placeholder: 'Password', class: 'form-control'
+        .modal-footer
+          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+          = button_tag('Log in', type: 'submit', class: 'btn btn-success')

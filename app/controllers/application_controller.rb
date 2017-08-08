@@ -3,7 +3,13 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+  helper_method :current_user
+
   private
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
 
   def browser_language
     language_header = request.env['HTTP_ACCEPT_LANGUAGE']
