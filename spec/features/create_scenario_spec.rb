@@ -6,7 +6,6 @@ feature 'Create Scenario', js: true do
   end
 
   scenario 'is accessable with login', type: :routing do
-    create :user
     login
     expect(get: 'scenarios/new').to be_routable
   end
