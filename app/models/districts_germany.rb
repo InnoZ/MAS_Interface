@@ -6,7 +6,7 @@ class DistrictsGermany
         p.fetch('name'),
         p.fetch('id'),
       ]
-    end.sort
+    end
   end
 
   def self.all
@@ -28,6 +28,8 @@ class DistrictsGermany
   end
 
   def self.features
-    all.fetch('features')
+    all.fetch('features').sort_by do |feature|
+      feature['properties']['population']
+    end
   end
 end
