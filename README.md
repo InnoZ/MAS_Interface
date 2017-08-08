@@ -124,3 +124,13 @@ code remains consistent.
 - Filenames: underscore separated, lowercase, english
   e.g. `city_overview.haml`
 
+### Server config and deployment
+
+The rails deployment is mostly based on this tutorial: https://www.digitalocean.com/community/tutorials/how-to-deploy-a-rails-app-with-unicorn-and-nginx-on-ubuntu-14-04
+
+We use a system user 'apprunner', i.e. for managing the repository folder and access the rails database.
+Two init scripts are set to start all necessary services on server startup (i.e. after automatic reboot):
+
+- `/etc/init.d/unicorn_mas_interface` to start the webserver (based on the unicorn service explained in the tutorial)
+
+- `/etc/rc.local` to start the sidekiq queue engine (starts command `sudo su apprunner -c "cd /srv/MAS_Interface && bundle exec sidekiq -C config/sidekiq.yml -e production"`)
