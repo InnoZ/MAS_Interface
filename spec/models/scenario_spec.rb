@@ -5,10 +5,23 @@ RSpec.describe Scenario, type: :model do
     described_class.new(
       district_id: '03404',
       year: 2017,
+      population: 1,
+      population_diff_2017: 0,
+      trips: 'none',
+      diurnal_curve: 'none',
       person_km: [%w[carsharing 3.50], %w[walk 4.50]],
       carbon_emissions: [%w[carsharing 5], %w[walk 0.0]],
       seed: false
     )
+  end
+
+  describe '#calculate_od_relations_and_modal_split' do
+    it 'inserts something into od_relations and modal_split' do
+      scenario.calculate_od_relations_and_modal_split
+      # hashs are empty, because mocked scenario has no agent plans
+      expect(scenario.od_relations).to eq('{}')
+      expect(scenario.modal_split).to eq('[]')
+    end
   end
 
   describe '#seed_text' do

@@ -15,4 +15,8 @@ RSpec.describe MatsimStarter, type: :model do
     expect(Scenario.all.count).to eq 1
     expect(Grid.all.count).to eq 775
   end
+
+  it 'creates a scenario', :hard_cleanup do
+    described_class.new('00000', 2017)
+  end
 end
