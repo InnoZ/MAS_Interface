@@ -9,11 +9,12 @@ class MatsimStarter
     @folder = folder
     @rails_env = rails_env
     raise "#{year} must be between 2017 and 2040" unless year_range.include?(year)
-    run
+    run_matsim
+    calculate_stats
   end
 
   # rubocop:disable LineLength
-  def run
+  def run_matsim
     if rails_env == 'production'
       java_class = 'Main'
     else
@@ -21,6 +22,12 @@ class MatsimStarter
       java_class = 'Preto'
     end
     Kernel.system("java -mx4g -cp #{JAVA_PATH} com.innoz.toolbox.run.#{java_class} #{district_id} #{year} #{folder} #{rails_env} #{LOG_PATH} >/dev/null 2>&1")
+  end
+
+  def calculate_stats
+    error = 'Matsim scenario creation not completed. Look into matsim logfiles for more information.'
+    raise error unless (scenario = Scenario.find_by(year: year, district_id: district_id))
+    scenario.calculate_od_relations_and_modal_split
   end
 
   private

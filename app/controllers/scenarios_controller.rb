@@ -5,6 +5,7 @@ class ScenariosController < ApplicationController
     @available_districts = @scenarios.map(&:scenario_map_infos).to_json
   end
 
+  # rubocop:disable all
   def show
     if params[:district] && Scenario.find_by(district_id: params[:district])
       @scenarios = Scenario.where(district_id: params[:district]).order(:year)

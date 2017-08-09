@@ -1,3 +1,4 @@
+# disable some routes
 class UserConstraint
   def matches?(request)
     request.session[:user_id] && User.find(request.session[:user_id])

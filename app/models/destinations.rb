@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Destinations
   attr_reader :district_id, :year, :mode
 

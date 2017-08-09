@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get 'imprint', to: 'pages#imprint', as: :imprint
     get 'privacy', to: 'pages#privacy', as: :privacy
 
-    resources :scenarios, except: [:show, :new]
+    resources :scenarios, except: %i[show new]
     get 'show/:district(/:year_a)(/:year_b)', to: 'scenarios#show', as: :show_district
     get 'scenarios/new', to: 'scenarios#new', as: :new_scenario, constraints: UserConstraint.new
 

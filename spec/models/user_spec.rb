@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     described_class.new(
       email: 'test@test.com',
       password: 'secret',
-      password_confirmation: 'secret',
+      password_confirmation: 'secret'
     )
   end
 

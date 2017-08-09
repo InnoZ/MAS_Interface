@@ -4,6 +4,7 @@ class Trend
     @scenario_b = scenario_b
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def json
     {
       modal_split: {
