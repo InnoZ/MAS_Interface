@@ -1,7 +1,7 @@
 jQuery(function() {
   jQuery('#density-map-section').each(function() {
     var makeDensityMap = function(div, odRelations, data) {
-      var map, modeMaxCount, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
+      var map, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
 
       var legend = jQuery('#' + div).prev('.legend');
 
@@ -59,11 +59,21 @@ jQuery(function() {
       });
 
       jQuery('.density-mode-selector').last().click();
+
+      // make maps accessable seperately from outside
+      if (div == 'density-map-a') {
+        mapA = map;
+      } else {
+        mapB = map;
+      };
     };
 
     makeDensityMap('density-map-a', window.odRelationsScenarioA, window.dataScenarioA);
     if (typeof window.odRelationsScenarioB !== 'undefined') {
       makeDensityMap('density-map-b', window.odRelationsScenarioB, window.dataScenarioB);
     };
+
+    mapA.on('moveend', function() { mapB.fitBounds(mapA.getBounds()) });
+    mapB.on('moveend', function() { mapA.fitBounds(mapB.getBounds()) });
   });
 });
