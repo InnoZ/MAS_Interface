@@ -33,7 +33,7 @@ class ScenariosController < ApplicationController
   def create
     unless scenario_params[:district_id].present?
       flash[:danger] = 'Bitte Landkreis wählen'
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     else
       args = {
         district_id: String(scenario_params[:district_id]),
