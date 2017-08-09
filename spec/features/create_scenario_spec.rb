@@ -5,9 +5,10 @@ feature 'Create Scenario', js: true do
     expect(get: 'scenarios/new').to_not be_routable
   end
 
-  scenario 'is accessable with login', type: :routing do
-    create :user
+  scenario 'is accessable with login' do
     login
-    expect(get: 'scenarios/new').to be_routable
+    find('a', text: 'SCENARIO CREATOR').trigger('click')
+    expect(page).to have_content('2017')
+    expect(page).to have_css('.icon-cog-alt')
   end
 end

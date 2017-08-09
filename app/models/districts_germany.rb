@@ -21,6 +21,12 @@ class DistrictsGermany
     feature(id).fetch('properties').fetch('name')
   end
 
+  def self.feature_by_name(name)
+    features.find do |d|
+      d.fetch('properties').fetch('name') == name
+    end
+  end
+
   def self.feature(id)
     features.find do |d|
       d.fetch('properties').fetch('id') == id

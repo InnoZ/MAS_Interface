@@ -33,15 +33,14 @@ RSpec.describe Scenario, type: :model do
   describe '#traffic_performance' do
     it 'returns a hash with a specific format' do
       expect(scenario.traffic_performance).to eq(
-        'traffic_performance' =>
         [
           {
-            'mode' => 'Carsharing',
+            'mode' => 'carsharing',
             'color' => '#db8012',
             'traffic' => 3,
           },
           {
-            'mode' => 'Walk',
+            'mode' => 'walk',
             'color' => '#3db783',
             'traffic' => 4,
           },
@@ -53,29 +52,19 @@ RSpec.describe Scenario, type: :model do
   describe '#carbon_emission' do
     it 'returns a hash with a specific format' do
       expect(scenario.carbon_emission).to eq(
-        'carbon_emission' =>
         [
           {
-            'mode' => 'Carsharing',
+            'mode' => 'carsharing',
             'color' => '#db8012',
             'carbon' => 5,
           },
           {
-            'mode' => 'Walk',
+            'mode' => 'walk',
             'color' => '#3db783',
             'carbon' => 0,
           },
         ]
       )
-    end
-  end
-
-  describe '.make' do
-    let(:new_scenario) { Scenario.make(district_id: '03241', year: 2017) }
-
-    it 'creates scenario and fills od_relations' do
-      new_scenario.calculate_od_relations
-      expect(new_scenario.od_relations).to_not eq(nil)
     end
   end
 end

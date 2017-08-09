@@ -3,9 +3,9 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
