@@ -1,0 +1,35 @@
+.row
+  .col-xs-12
+    %h2
+      %i.icon-arrows-cw
+      = t '.how_looks_traffic_flow'
+    %hr
+.row
+  .col-sm-12.mode-selector-container
+    - @scenario_a.available_modes.each do |mode|
+      - mode_color = @scenario_a.mode_color(mode)
+      .color-button.density-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
+
+  .col-xs-6
+    .legend
+      .row
+        .col-xs-12
+          .total-count
+          .current-count-bar-container
+            .legend-label= t 'count' + ':'
+            .legend-label.legend-zero 0
+            .current-count-bar
+            .legend-label.current-count
+    #density-map-a
+
+  .col-xs-6
+    .legend
+      .row
+        .col-xs-12
+          .total-count
+          .current-count-bar-container
+            .legend-label= t 'count' + ':'
+            .legend-label.legend-zero 0
+            .current-count-bar
+            .legend-label.current-count
+    #density-map-b

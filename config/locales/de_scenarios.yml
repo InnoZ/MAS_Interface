@@ -11,7 +11,7 @@ de:
       who_wins_and_who_looses: 'Wer gewinnt und wer verliert? Und was bedeutet das für die CO2-Emissionen?'
     pie_charts:
       how_are_modes_split: 'Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?'
-    grid_maps:
+    od_maps:
       how_looks_traffic_flow: 'Wie sehen die Verkehrsströme im Landkreis aus?'
       od_relations: 'Start-Ziel-Beziehungen'
     line_charts:

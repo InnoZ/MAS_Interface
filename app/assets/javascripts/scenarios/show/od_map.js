@@ -1,5 +1,5 @@
 jQuery(function() {
-  jQuery('#grid-map-section').each(function() {
+  jQuery('#od-map-section').each(function() {
     var makeODMap = function(div, odRelations, data) {
       var map, modeMaxCount, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
 
@@ -56,7 +56,6 @@ jQuery(function() {
       };
 
       var onEachFeature = function (feature, layer) {
-        var opacity = (feature.properties.featureStarts / modeMaxCount) + 0.2;
         function click(e) {
           if (lines) { map.removeLayer(lines) };
           selectedLayer = layer;
@@ -124,11 +123,11 @@ jQuery(function() {
       jQuery('.od-mode-selector').last().click();
     };
 
-    makeODMap('grid-map-a', window.odRelationsScenarioA, window.dataScenarioA);
+    makeODMap('od-map-a', window.odRelationsScenarioA, window.dataScenarioA);
 
     jQuery('#accordion').on('shown.bs.collapse', function () {
       if (typeof window.odRelationsScenarioB !== 'undefined') {
-        makeODMap('grid-map-b', window.odRelationsScenarioB, window.dataScenarioB);
+        makeODMap('od-map-b', window.odRelationsScenarioB, window.dataScenarioB);
       };
     });
   });
