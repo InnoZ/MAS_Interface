@@ -12,6 +12,7 @@ feature 'Login' do
   scenario 'lets users logging in', js: true do
     fill_in('Password', with: 'secret')
     find('.btn', text: 'LOG IN').trigger('click')
+    expect(page).to_not have_content('login')
     expect(page).to have_content('logout')
   end
 
@@ -19,5 +20,6 @@ feature 'Login' do
     fill_in('Password', with: 'wrong')
     find('.btn', text: 'LOG IN').trigger('click')
     expect(page).to_not have_content('logout')
+    expect(page).to have_content('login')
   end
 end

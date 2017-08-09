@@ -34,11 +34,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each, no_transaction: true) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :truncation, {except: %w[spatial_ref_sys]}
   end
 
   config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :truncation, {except: %w[spatial_ref_sys]}
   end
 
   config.before(:each) do
