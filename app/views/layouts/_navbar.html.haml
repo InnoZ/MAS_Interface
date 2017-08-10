@@ -25,11 +25,9 @@
               %li{class: ('active-navbar-li' if current_page?(controller: 'pages', action: p))}
                 = link_to t('views.nav.' + p), send(p + '_path')
 
-            %li.pull-right
-              %a
-                .nav-user-area
-                  - if current_user
-                    = link_to 'logout', '/logout', class: 'logout'
-                  - else
-                    .open-login-modal
-                      login
+            %li.pull-right.nav-user-area
+              - if current_user
+                = link_to 'logout', '/logout', class: 'logout'
+              - else
+                %a
+                  .open-login-modal login
