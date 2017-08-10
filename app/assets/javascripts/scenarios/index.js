@@ -47,7 +47,7 @@ jQuery(function() {
       }
     }
 
-    var defaultStyle = {
+    var zeroStyle = {
       'color': '#283645',
       'opacity': 0.8,
       'weight': 0.4,
@@ -55,11 +55,19 @@ jQuery(function() {
       'fillOpacity': 0.3,
     };
 
-    var highlightedStyle = {
+    var defaultStyle = {
       'color': '#283645',
       'opacity': 0.8,
       'weight': 0.4,
       'fillColor': '#3F8DBF',
+      'fillOpacity': 0.7,
+    };
+
+    var highlightedStyle = {
+      'color': '#283645',
+      'opacity': 0.8,
+      'weight': 0.4,
+      'fillColor': '#96116d',
       'fillOpacity': 0.7,
     };
 
@@ -70,10 +78,12 @@ jQuery(function() {
       // Keep track of highlighted marker
       if (id) { featureById[id] = layer };
 
-      if ( findScenarioById(id).length > 0 ) {
+      if ( findScenarioById(id).length > 2 ) {
         layer.setStyle(highlightedStyle);
-      } else {
+      } else if ( findScenarioById(id).length > 0 ) {
         layer.setStyle(defaultStyle);
+      } else {
+        layer.setStyle(zeroStyle);
       };
 
       var name = feature.properties.name;
