@@ -25,7 +25,7 @@ class MatsimStarter
   end
 
   def calculate_stats
-    error = 'Matsim scenario creation not completed. Look into matsim logfiles for more information.'
+    error = 'Matsim scenario creation not completed. User \'matsim\' existing? Look into matsim logfiles for more information.'
     raise error unless (scenario = Scenario.find_by(year: year, district_id: district_id))
     scenario.calculate_od_relations_and_modal_split
   end

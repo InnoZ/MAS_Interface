@@ -43,11 +43,8 @@ en:
       contact_us: 'Contact us'
 
     index:
-      header_part1: 'Mobility Simulations'
-      header_part2: 'Simulating your mobility scenarios'
-      header_text: 'Mobility data and simulations for innovative services – easily accessable, adaptable and understandable.'
-      intro_header: 'We support your decision making'
-      intro_text: 'TEXT'
+      header: 'Ein Blick in die Zukunft der Mobilität'
+      header_text: 'Wer heute erkennt, was morgen Realität sein wird, kann besser planen. Mit automatisierter Multiagentensimulation entstehen Zukunftsszenarien, die zeigen was sein wird - einfach, schnell und unkompliziert.'
 
     scenarios:
       my_scenarios: 'My scenarios'

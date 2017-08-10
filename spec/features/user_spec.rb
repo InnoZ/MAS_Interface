@@ -12,14 +12,14 @@ feature 'Login' do
   scenario 'lets users logging in', js: true do
     fill_in('Password', with: 'secret')
     find('.btn', text: 'LOG IN').trigger('click')
-    expect(page).to_not have_content('login')
-    expect(page).to have_content('logout')
+    expect(page).to_not have_css('a', text: 'LOGIN')
+    expect(page).to have_css('a', text: 'LOGOUT')
   end
 
   scenario 'lets users not log in with wrong password', js: true do
     fill_in('Password', with: 'wrong')
     find('.btn', text: 'LOG IN').trigger('click')
-    expect(page).to_not have_content('logout')
-    expect(page).to have_content('login')
+    expect(page).to_not have_css('a', text: 'LOGOUT')
+    expect(page).to have_css('a', text: 'LOGIN')
   end
 end

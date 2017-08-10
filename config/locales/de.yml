@@ -50,11 +50,8 @@ de:
 #      location: 'Ort:'
 
     index:
-      header_part1: 'Mobility Simulations'
-      header_part2: 'Wir berechnen Ihre Mobilitätsszenarien'
-      header_text: 'Toolgestützte Beratung auf Grundlage großer, verschnittener Datenmengen aus der Mobilitätswelt - immer aktuell und auf alle Gebietsgrößen und Zeiträume skalierbar.'
-      intro_header: 'Das InnoZ berät Sie'
-      intro_text: 'Wir beraten Sie zu neuen Formen der digital vernetzten (e)Mobilität, angefangen bei Strategie- und Maßnahmenkonzepten über Machbarkeitsstudien bis hin zur Umsetzung über Demonstratoren und Testbetriebe. Wir verbinden dabei klassische Methoden mit echtzeitbasierten Datenanalysen und regionalspezifischen Modellierungen. Sie als Kunde oder Stakeholder können hiermit schneller und kostengünstiger entscheiden, ob sich investive Entscheidungen im Bereich der Mobilität volks- und betriebswirtschaftlich lohnen.'
+      header: 'Ein Blick in die Zukunft der Mobilität'
+      header_text: 'Wer heute erkennt, was morgen Realität sein wird, kann besser planen. Mit automatisierter Multiagentensimulation entstehen Zukunftsszenarien, die zeigen was sein wird - einfach, schnell und unkompliziert.'
 
     scenarios:
       my_scenarios: 'Meine Szenarien'
