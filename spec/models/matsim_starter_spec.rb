@@ -15,7 +15,7 @@ RSpec.describe MatsimStarter, type: :model do
   end
 
   it 'raises runtime error if matsim does not create scenario' do
-    error = 'Matsim scenario creation not completed. Look into matsim logfiles for more information.'
+    error = 'Matsim scenario creation not completed. User \'matsim\' existing? Look into matsim logfiles for more information.'
     expect { described_class.new(nil, 2017) }.to raise_error(RuntimeError, error)
   end
 end

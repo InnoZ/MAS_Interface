@@ -1,0 +1,12 @@
+#request-modal.modal.fade{role: 'dialog', 'data-backdrop' => 'static'}
+  .modal-dialog.modal-xs
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        %h4.modal-title Zugang anfragen
+      = form_tag '/login' do
+        .modal-body
+          .col-xs-12
+            %p Hier können Sie bald einen Zugang anfragen...
+        .modal-footer
+          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Okay

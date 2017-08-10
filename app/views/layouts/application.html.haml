@@ -22,8 +22,9 @@
         = image_tag 'cogs'
     = render 'layouts/footer'
 
-    = render 'layouts/login_modal' 
-
+    = render 'layouts/login_modal'
+    = render 'layouts/creator_modal'
+    = render 'layouts/request_modal'
 
 :javascript
   window.I18n = #{translations_for_js.to_json.html_safe};

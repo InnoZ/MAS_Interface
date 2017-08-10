@@ -1,0 +1,29 @@
+@import 'colors';
+
+#login-modal {
+  .modal-body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    min-height: 0;
+  }
+}
+
+#creator-modal {
+  p {
+    margin-top: 15px;
+  }
+  .btn {
+    width: 100%;
+  }
+  .btn-white {
+    background: $grey;
+    color: $verydarkblue !important;
+    margin-top: 0;
+  }
+}
+
+#request-modal {
+  p {
+    margin-top: 30px;
+  }
+}

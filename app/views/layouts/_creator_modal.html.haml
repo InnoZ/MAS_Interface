@@ -1,0 +1,18 @@
+#creator-modal.modal.fade{role: 'dialog', 'data-backdrop' => 'static'}
+  .modal-dialog.modal-xs
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        %h4.modal-title Anmelden
+      = form_tag '/login' do
+        .modal-body
+          .col-xs-12.text-center
+            %p
+              Sie sind Pertaner im Projekt ENavi und haben
+              %b bereits Zugangsdaten erhalten?
+          .col-xs-12
+            .btn{'data-dismiss' => 'modal', 'data-toggle' => 'modal', 'data-target' => '#login-modal'}
+              Ja, anmelden
+          .col-xs-12
+            .btn.btn-white{'data-dismiss' => 'modal', 'data-toggle' => 'modal', 'data-target' => '#request-modal'}
+              Nein, Zugangsdaten anfragen

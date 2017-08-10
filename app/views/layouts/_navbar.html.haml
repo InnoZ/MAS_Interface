@@ -17,9 +17,11 @@
             %li{class: ('active-navbar-li' if current_page?(scenarios_path))}
               = link_to 'Scenario Explorer', scenarios_path
 
-            - if current_user
-              %li{class: ('active-navbar-li' if current_page?(new_scenario_path))}
+            %li{class: ('active-navbar-li' if current_page?(new_scenario_path) || current_page?(creator_path))}
+              - if current_user
                 = link_to 'Scenario Creator', new_scenario_path
+              - else
+                = link_to 'Scenario Creator', creator_path
 
             - pages.each do |p|
               %li{class: ('active-navbar-li' if current_page?(controller: 'pages', action: p))}
@@ -29,4 +31,5 @@
               - if current_user
                 = link_to 'logout', '/logout', class: 'logout'
               - else
-                %a.open-login-modal login
+                %a.open-login-modal{'data-toggle' => 'modal', 'data-target' => '#login-modal'}
+                  login
