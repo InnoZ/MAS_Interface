@@ -5,7 +5,7 @@
       = t '.how_looks_traffic_flow'
     %hr
 .row
-  .col-sm-12.od-mode-selector-container
+  .col-sm-12.mode-selector-container
     - @scenario_a.available_modes.each do |mode|
       - mode_color = @scenario_a.mode_color(mode)
       .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
@@ -31,7 +31,8 @@
                     .legend-label.legend-zero 0
                     .current-count-bar
                     .legend-label.current-count
-            #grid-map-a
+            #od-map-a
+
       - if @scenario_b
         .panel.panel-default
           .panel-heading
@@ -52,4 +53,4 @@
                       .legend-label.legend-zero 0
                       .current-count-bar
                       .legend-label.current-count
-              #grid-map-b
+              #od-map-b

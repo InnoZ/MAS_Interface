@@ -44,12 +44,16 @@
       = render 'comparison'
 
 %section#line-charts.light-bg
-  .container.inner-xs
+  .container.inner-sm
     = render 'line_charts'
 
-%section#grid-map-section.light-bg
-  .container.inner-sm
-    = render 'grid_maps'
+%section#density-map-section.light-bg
+  .container.inner-xs
+    = render 'density_maps'
+
+%section#od-map-section.light-bg
+  .container.inner-xs
+    = render 'od_maps'
 
 :javascript
   window.boxplot = #{@scenario_a.boxplot}

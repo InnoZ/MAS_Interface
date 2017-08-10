@@ -125,8 +125,13 @@
   }
 }
 
-#grid-map-section {
+#od-map-section, #density-map-section {
   .legend {
+    background: white;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border: 1px solid $grey;
+    font-size: 14px;
     padding: 10px;
     .total-count {
       float: left;
@@ -137,25 +142,28 @@
         float: left;
       }
       .current-count-bar {
-        width: 300px;
-        height: 26px;
-        border: 1px solid grey;
+        width: 200px;
+        margin-top: 2px;
+        height: 22px;
       }
       .legend-label {
         margin-left: 15px;
         margin-right: 15px;
-        font-size: 18px;
+        font-size: 14px;
       }
     }
   }
-  #grid-map-a, #grid-map-b {
+  #od-map-a, #od-map-b {
     width: 100%;
   }
-  .od-mode-selector-container {
+  .mode-selector-container {
     margin-top: 20px;
     margin-bottom: 45px;
-    .od-mode-selector {
+    .od-mode-selector, .density-mode-selector {
       display: inline;
     }
+  }
+  #density-map-a, #density-map-b {
+    height: 350px;
   }
 }
