@@ -3,8 +3,11 @@ namespace :initial_queue do
   task start: :environment do
     all_district_ids = DistrictsGermany.list.map { |d| d[1] }
     all_district_ids.each do |id|
-      ScenarioJob.set(queue: :low_priority).perform_later(id, 2017)
-      ScenarioJob.set(queue: :low_priority).perform_later(id, 2030)
+      [2017, 2030].each do |year|
+        unless Scenario.find_by(district_id: id, year: year)
+          ScenarioJob.set(queue: :low_priority).perform_later(id, year)
+        end
+      end
     end
   end
 end
