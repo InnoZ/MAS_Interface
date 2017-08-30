@@ -37,13 +37,6 @@
    padding-top: 15px;
  }
 
- .navbar-logo {
-   background-image: image-url('logo_simulations_1');
-   &:hover {
-     background-image: image-url('logo_simulations_2');
-   }
- }
-
  .active-navbar-li {
   a {
     color: $grey !important;

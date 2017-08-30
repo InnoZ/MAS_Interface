@@ -25,3 +25,8 @@ random_district_ids.each do |id|
   puts "enqueue scenario #{id} || 2030"
   ScenarioJob.perform_later(id, 2030)
 end
+
+User.create(
+  email: 'user@test.com',
+  password: 'secret'
+)

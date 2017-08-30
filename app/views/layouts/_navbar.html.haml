@@ -4,7 +4,7 @@
       .container
         .navbar-brand.navbar-brand-mobile
           = link_to root_path do
-            .navbar-logo
+            = image_tag 'logo_simulations_1', class: 'navbar-logo', data: { alt_source: asset_path('logo_simulations_2') }
         %a.navbar-toggle.btn.responsive-menu.pull-right{'data-target' => '.navbar-collapse', 'data-toggle' => 'collapse'}
           %i.icon-menu-1
     .yamm
@@ -12,7 +12,7 @@
         .container
           = link_to root_path do
             .navbar-brand
-              = image_tag 'logo_simulations_1', class: 'navbar-logo'
+              = image_tag('logo_simulations_1', class: 'navbar-logo', onmouseover: "this.src='#{asset_path('logo_simulations_2')}'", onmouseout: "this.src='#{asset_path('logo_simulations_1')}'")
           %ul.nav.navbar-nav
             %li{class: ('active-navbar-li' if current_page?(scenarios_path))}
               = link_to 'Scenario Explorer', scenarios_path
