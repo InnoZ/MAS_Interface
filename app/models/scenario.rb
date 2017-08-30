@@ -22,6 +22,7 @@ class Scenario < ApplicationRecord
   def scenario_map_infos
     {
       district_id: district_id,
+      name: name,
       year: year,
       population: population,
     }

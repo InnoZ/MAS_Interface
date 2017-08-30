@@ -17,14 +17,6 @@
       font-size: 30px;
       color: $verydarkblue;
     }
-    .awesomplete {
-      margin-bottom: 4px;
-      width: 100%;
-      ul {
-        z-index: 99999 !important;
-        font-size: 20px;
-      }
-    }
     .district-info-box {
       display: none;
       .header {
@@ -36,7 +28,7 @@
           vertical-align: middle;
           line-height: 35px;
         }
-        background: $grey;
+        background: $lightgrey;
         padding: 12px 15px;
         font-size: 23px;
         font-weight: bold;

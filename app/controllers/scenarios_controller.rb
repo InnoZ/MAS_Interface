@@ -48,7 +48,11 @@ class ScenariosController < ApplicationController
           year_a: scenario_params[:year]
         )
       else
-        ScenarioJob.set(queue: :high_priority).perform_later(args[:district_id], args[:year])
+        ScenarioJob.set(queue: :high_priority).perform_later(
+          scenario_params[:district_id],
+          scenario_params[:year].to_i,
+          scenario_params[:name],
+        )
         flash[:success] = 'Szenario wird erstellt. Bitte haben Sie etwas Geduld.'
         redirect_to scenarios_path
       end
@@ -59,6 +63,6 @@ class ScenariosController < ApplicationController
   end
 
   def scenario_params
-    params.require(:scenario).permit(:district_id, :year)
+    params.require(:scenario).permit(:district_id, :year, :name)
   end
 end

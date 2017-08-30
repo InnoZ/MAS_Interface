@@ -12,20 +12,25 @@
         .col-sm-8
           .row
             .col-xs-12.inner-bottom-xs
-              %h2 Neues Scenario
+              .pre-header Neues Scenario
               %hr
           .row
             = render 'layouts/flash'
             .col-xs-4
-              %h4 Scenariotitel
+              .input-label SCENARIOTITEL
             .col-xs-8
-              = f.select 'year', options_for_select(2017..2040), {}, {class: 'big-select'}
+              = f.text_field :name, class: 'form-control'
           .row.inner-xs
             .col-xs-4
-              %h4 Region
+              .input-label LANDKREIS
             .col-xs-8
-              = f.hidden_field 'district_id', class: 'hidden-district-input'
-              %input#district-input.big-input
+              = f.hidden_field :district_id, class: 'hidden-district-input'
+              %input#district-input.form-control{type: 'text'}
+          .row.inner-bottom-xs
+            .col-xs-4
+              .input-label JAHR
+            .col-xs-3
+              = f.select :year, options_for_select(2017..2040)
 
           .row.inner-xs
             .col-xs-12

@@ -131,7 +131,12 @@ jQuery(function() {
           '<a class="btn btn-default" onclick="jQuery(\'.loading-overlay\').show()" href=' + link + '>show scenario</a>'
         );
         jQuery.each(scenarios, function(i, s) {
-          box.find('.info').prepend('<b>' + s.year + '</b>: ' + s.population + ' Einwohner<br>');
+          if (s.name !== undefined) {
+            var name = ' (' + s.name + ')'
+          } else {
+            var name = ''
+          };
+          box.find('.info').prepend('<b>' + s.year + '</b>: ' + s.population + ' Einwohner' + name + '<br>');
         });
       } else {
         box.find('.info').html(

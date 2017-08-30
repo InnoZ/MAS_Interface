@@ -5,7 +5,7 @@ namespace :initial_queue do
     all_district_ids.each do |id|
       [2017, 2030].each do |year|
         unless Scenario.find_by(district_id: id, year: year)
-          ScenarioJob.set(queue: :low_priority).perform_later(id, year)
+          ScenarioJob.set(queue: :low_priority).perform_later(id, year, 'Seed')
         end
       end
     end

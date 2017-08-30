@@ -118,7 +118,7 @@ hr {
 
 //panels
 .panel-title {
-  background: $grey;
+  background: $lightgrey;
   padding: 10px 16px;
   font-size: 20px;
   text-transform: none;
@@ -181,4 +181,22 @@ hr {
 
 .nav-user-area {
   cursor: pointer;
+}
+
+.input-label {
+  font-weight: bold;
+  font-size: 16px;
+  color: $grey;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+}
+
+.awesomplete {
+  margin-bottom: 4px;
+  width: 100%;
+  ul {
+    z-index: 99999 !important;
+    font-size: 20px;
+  }
 }

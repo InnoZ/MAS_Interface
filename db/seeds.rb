@@ -21,9 +21,9 @@ end
 random_district_ids = DistrictsGermany.list.map { |d| d[1] }.sample(10)
 random_district_ids.each do |id|
   puts "enqueue scenario #{id} || 2017"
-  ScenarioJob.perform_later(id, 2017)
+  ScenarioJob.perform_later(id, 2017, 'Seed')
   puts "enqueue scenario #{id} || 2030"
-  ScenarioJob.perform_later(id, 2030)
+  ScenarioJob.perform_later(id, 2030, 'Seed')
 end
 
 User.create(
