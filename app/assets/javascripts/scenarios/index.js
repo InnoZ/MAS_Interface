@@ -131,7 +131,7 @@ jQuery(function() {
           '<a class="btn btn-default" onclick="jQuery(\'.loading-overlay\').show()" href=' + link + '>show scenario</a>'
         );
         jQuery.each(scenarios, function(i, s) {
-          if (s.name !== undefined) {
+          if (s.name !== null) {
             var name = ' (' + s.name + ')'
           } else {
             var name = ''
