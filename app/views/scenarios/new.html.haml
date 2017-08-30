@@ -1,14 +1,51 @@
 %section#new
   .container.inner-sm
     .row
-      .col-sm-4.col-sm-offset-4
-        = render 'layouts/flash'
-        = form_for @scenario do |f|
-          = f.hidden_field 'district_id', class: 'hidden-district-input'
-          %input#district-input.big-input
-          = f.select 'year', options_for_select(2017..2040), {}, {class: 'big-select'}
-          = f.button class: 'btn btn-default' do
-            %i.icon-cog-alt
+      .col-sm-6.col-sm-offset-3
+        %h1 Wie sieht ihr Scenario aus?
+        %p Elektromobilität, Autonomes Fahren und Shared Mobility - bestimmen Sie selbst, welche Parameter die Mobilität in Ihrer Region bestimmen sollen.
+
+
+  = form_for @scenario do |f|
+    .container.inner-xs
+      .row
+        .col-sm-8
+          .row
+            .col-xs-12.inner-bottom-xs
+              %h2 Neues Scenario
+              %hr
+          .row
+            = render 'layouts/flash'
+            .col-xs-4
+              %h4 Scenariotitel
+            .col-xs-8
+              = f.select 'year', options_for_select(2017..2040), {}, {class: 'big-select'}
+          .row.inner-xs
+            .col-xs-4
+              %h4 Region
+            .col-xs-8
+              = f.hidden_field 'district_id', class: 'hidden-district-input'
+              %input#district-input.big-input
+
+          .row.inner-xs
+            .col-xs-12
+              = image_tag 'scenarios/new/mock/1_Elektromobilitaet', width: '100%', style: 'opacity: 0.4;'
+
+          .row.inner-xs
+            .col-xs-12
+              = image_tag 'scenarios/new/mock/2_SharedMobility', width: '100%', style: 'opacity: 0.4;'
+
+          .row.inner-xs
+            .col-xs-12
+              = image_tag 'scenarios/new/mock/3_AutonomesFahren', width: '100%', style: 'opacity: 0.4;'
+
+        .col-sm-4.inner-xs
+          .light-bg{style: 'height: 1700px'}
+            = image_tag 'scenarios/new/mock/Infobox', {style: 'width: 100%; margin-top: 80px; padding: 10px;'}
+
+      .row.inner-xs
+        .col-sm-8
+          = f.button 'weiter', class: 'btn btn-default'
 
 :javascript
   window.districtsGermanyList = #{raw @districts_germany}
