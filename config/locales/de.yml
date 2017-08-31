@@ -12,28 +12,17 @@ de:
   traffic_performance: 'Verkehrsleistung'
   co2_emissions: 'CO2-Emissionen'
   to: 'bis'
-#  project: 'Projekt'
-#  challenge: 'Herausforderung'
-#  approach: 'Herangehensweise'
-#  results: 'Ergebnisse'
   contact_our_team: 'Kontaktieren Sie unser Mobility Consulting Team!'
-#  clients: 'Kunden'
-#  clients_text: 'Zu unseren Kunden gehören sowohl Industrieunternehmen als auch öffentliche, politische und wissenschaftliche Institutionen.'
   all: 'Alle'
-#  all_references: 'Alle Referenzen'
-#  references: 'Referenzen'
-#  source: 'Quelle'
-#  examples: 'Beispiele'
   language: 'Sprache'
-#  project_manager: 'Projektleiter'
+  innoz_short: 'InnoZ'
   innoz: 'Innovationszentrum für Mobilität und gesellschaftlichen Wandel (InnoZ) GmbH'
   innoz_address: 'EUREF-Campus 16, 10829 Berlin'
+  innoz_phone: '+49 (0)30 23 88 84 - 108'
 
   views:
     nav:
       about: 'Über uns'
-#      services: 'Services'
-#      references: 'Referenzen'
       scenarios: 'Szenarien'
       create: 'Simuliere'
       contact: 'Kontakt'
@@ -42,16 +31,15 @@ de:
       about_us: 'Über uns'
       contact_us: 'Kontaktieren Sie uns'
 
-    references:
-#      header: 'Referenzen'
-#      header_text: 'Unsere Referenzen sind gelungene Beispiele für die Einbindung von Daten in Entscheidungsprozesse. Datengestütze Beratung wird hier gelebt. Ob Großstadt oder ländlicher Raum, ob Unternehmen, Kommune oder Ministerium - die Referenzen des Moblitiy Consultings der InnoZ spiegeln die gesamte Vielfalt der Einsatzgebiete wieder. Measuring, Monitoring und Analysing werden als Dienste dabei ganz unterschiedlich kombiniert.'
-#      duration: 'Laufzeit:'
-#      client: 'Kunde/Auftraggeber:'
-#      location: 'Ort:'
-
     index:
       header: 'Ein Blick in die Zukunft der Mobilität'
       header_text: 'Wer heute erkennt, was morgen Realität sein wird, kann besser planen. Mit automatisierter Multiagentensimulation entstehen Zukunftsszenarien, die zeigen was sein wird - einfach, schnell und unkompliziert.'
+      challenges: 'Herausforderungen'
+      challenges_title: 'Den Wandel verstehen, nachhaltig planen'
+      challenges_text: 'Shared Mobility, Autonomoes Fahren und die Kopplung von Mobilität und Energie - Themen wie diese stellen Städte, Planer, und Unternehmen vor neue Herausforderungen. Nur wer versteht wie sich diese auswirken, kann informiert die richtigen Entscheidungen treffen und langfristige nachhaltige Mobilitätskonzepte für lebenswerte Städte schaffen.'
+      solutions: 'Unsere Lösungen'
+      solutions_title: 'Automatisierte Agentenbasierte Verkehrssimulation'
+      solutions_text: 'Mit MATSim steht ein Open-Source-Framework zur Erstellung großräumiger agentenbaiserter Verkehrsmodelle zur Verfügung. Wir nutzen diese Software, verknüpfen sie mit den Daten in unserer ständig wachsenden Mobilitätsdatenbank und automatisieren die Abläufe der Modellerstellung. So entstehen Szenarien zukünftiger Mobilität, die effektiv, flexibel und iterativ in die Planung eingebunden werden können.'
 
     scenarios:
       my_scenarios: 'Meine Szenarien'
@@ -59,15 +47,34 @@ de:
     simulate:
       select_area: 'Gebiet auswählen'
 
+    request:
+      request_access: 'Zugang anfragen'
+      access_coming_soon: 'Hier können Sie bald einen Zugang anfragen...'
+
+    login:
+      login_title: 'Login'
+
+    creator_modal:
+      title: 'Anmelden'
+      text_part1: 'Sie sind Partner im Projekt ENavi und haben'
+      text_part2: ' bereits Zugangsdaten erhalten?'
+      confirm: 'Ja, anmelden'
+      reject: 'Nein, Zugangsdaten anfragen'
+
+    creator:
+      title: 'MOBILITÄTSSIMMULATIONEN ON DEMAND'
+      text: 'Mit nur wenigen Klicks können Sie hier ein eigenes Zukunftsszenario für Ihren Landkreis zusammenstellen'
+      create_scenario: 'Szenario erstellen'
+
     about:
       header: 'Das Besondere an unseren Simulationen'
       header_text: 'Mobilitässimulationen on Demand - anpassbar für Szenarien der Verkehrswende'
       feature_1_title: 'Dynamische agentenbasierte Verkehrssimulation'
       feature_1_content: 'Simulieren Sie ganze Tage in nur wenigen Minuten'
-      feature_2_title: 'Individual und öffentlicher Verkehr'
+      feature_2_title: 'Individual- und öffentlicher Verkehr'
       feature_2_content: 'Motorisierter Individualverkehr und öffentlicher Personenverkehr können simuliert werden'
       feature_3_title: 'Unterstützt groß angelegte Szenarien'
-      feature_3_content: 'MATsim kann Millionen Agenten und sehr große sowie detaillierte Netzwerke simulieren'
+      feature_3_content: 'MATSim kann Millionen Agenten und sehr große sowie detaillierte Netzwerke simulieren'
       feature_4_title: 'Vielseitige Analysen und Simulationsoutput'
       feature_4_content: 'Vergleichen Sie Simulationsdaten einfach mit Daten aus der realen Welt'
       feature_5_title: 'Modularer Aufbau des Frameworks'
@@ -91,29 +98,11 @@ de:
         <li>> 25 Mio. Carsharingfahrten (station based)</li>
         <li>> 35.000 Ladestationen</li>
         <li>und vieles mehr...</li>
-#      modalyzer: 'modalyzer'
-#      modalyzer_text: 'Smartphone-basierte Erfassung von Wegedaten mit vollautomatischer Verkehrsmittelerkennung'
-#      modalyzer_link: 'http://modalyzer.com'
-#      mobitypen: 'Mobilitätstypen'
-#      mobitypen_text: 'Gemeinsam mit LSE Cities hat das InnoZ 2015 eine Studie zu „Neuen Mobilitätstypen im urbanen Verkehr“ durchgeführt. In vier Metropolregionen Deutschlands und London wurden je ca. 1000 Personen repräsentativ zu aktellen Mobilitätstrends, ihren Einstellungen und Verhalten befragt.'
-#      mobitypen_link: 'https://www.innoz.de/sites/default/files/new-urban-mobility-london-and-berlin.pdf'
 
     contact:
       contact_us: 'Kontaktieren Sie uns'
       contact_us_text: 'Möchten Sie mehr wissen? Wir freuen uns von Ihnen zu hören!'
-
-#    services:
-#      header: 'Services'
-#      header_text: 'Unser Angebot setzt sich aus den drei Servicebereichen Measuring, Monitoring und Analysing zusammen.'
-#      services_intro: 'In unserer Datenbank laufen große Mengen Daten unterschiedlichster Herkunft zusammen. Dabei handelt es sich sowohl um Ergebnisse von uns durchgeführter Messungen als auch um digitale Datenspuren aus dem Internet. Die permanente Aktualisierung und Speicherung dieser Daten garantiert konsistente und skalierbare Datengrundlagen für weitere Verarbeitungsschritte.'
-#      services_list: >
-#        <li>Erfassung und Erstauswertung von Mobilitätsstudien, Daten Dritter</li>
-#        <li>Erfassung und Erstauswertung digitaler Datenspuren für Shared Mobility</li>
-#        <li>Infrastrukturplanungen, z.B. Standorte für Ladestationen</li>
-#        <li>Geschäftsmodelle für neue Mobilitätsangebote (inkl. Simulationen)</li>
-#        <li>Verkehrsdisposition, u.a. für Sharing-Dienstleistungen</li>
-#        <li>Verkehrsplanung und -visualisierung, u.a. für autonomes Fahren und Carsharing</li>
-#        <li>Analysen, Modellierung & Verschneidung verschiedener Mobilitätsdaten</li>
+      details_header: 'Unsere Kontaktdaten'
 
     footer:
       part_of_innoz: 'Wir sind Teil des InnoZ.'

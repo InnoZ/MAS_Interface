@@ -12,28 +12,17 @@ en:
   traffic_performance: 'Traffic performance'
   co2_emissions: 'CO2 emissions'
   to: 'to'
-#  project: 'Project'
-#  challenge: 'Challenge'
-#  approach: 'Approach'
-#  results: 'Results'
   contact_our_team: 'Contact our Mobility Simulations Team!'
-#  clients: 'Customers'
-#  clients_text: 'Our customers include both industrial companies and public, political and scientific institutions.'
   all: 'All'
-#  all_references: 'All references'
-#  references: 'References'
-#  source: 'Source'
-#  examples: 'Examples'
   language: 'Language'
-#  project_manager: 'Project manager'
+  innoz_short: 'InnoZ'
   innoz: 'Innovation Centre for Mobility and Societal Change (InnoZ) GmbH'
   innoz_address: 'EUREF-Campus 16, 10829 Berlin'
+  innoz_phone: '+49 (0)30 23 88 84 - 108'
 
   views:
     nav:
-#      about: 'About'
-#      services: 'Services'
-#      references: 'References'
+      about: 'About us'
       scenarios: 'Scenarios'
       create: 'Simulate'
       contact: 'Contact'
@@ -43,14 +32,39 @@ en:
       contact_us: 'Contact us'
 
     index:
-      header: 'Ein Blick in die Zukunft der Mobilität'
-      header_text: 'Wer heute erkennt, was morgen Realität sein wird, kann besser planen. Mit automatisierter Multiagentensimulation entstehen Zukunftsszenarien, die zeigen was sein wird - einfach, schnell und unkompliziert.'
+      header: 'A glance at the future of mobility'
+      header_text: 'Those who can anticipate how tomorrow might look like are predestined for planning. With automated multi-agent simulations, various futures can be explored - simple, quick and uncomplicated.'
+      challenges: 'Challenges'
+      challenges_title: 'Understanding change, planing sustainability'
+      challenges_text: 'Shared mobility, autonomous driving and the combination of mobility and energy - topics like these challenge councils, planners and companies. Only those who can understand and estimate the effects will deliver the right decisions and create long-term sustainable mobility concepts for livable cities and towns.'
+      solutions: 'Our solutions'
+      solutions_title: 'Automated Agent-Based Transport Modelling'
+      solutions_text: 'With MATSim we use a powerful open source framework for the creation of large scale agent-based transport models. We combine this tool with or ever growing mobility data hub own automated model generation and calibration methods. By doing so we enable the creation of future mobility scenarios, which can be effectively, flexibly and iteratively integrated as part of you planning process.'
 
     scenarios:
       my_scenarios: 'My scenarios'
 
     simulate:
       select_area: 'select area'
+
+    request:
+      request_access: 'Request an access'
+      access_coming_soon: 'You can soon request an access here...'
+
+    login:
+      login_title: 'Login'
+
+    creator_modal:
+      title: 'Sign up'
+      text_part1: 'Are you partner in the ENavi Project and do you already have'
+      text_part2: ' your access information?'
+      confirm: 'Yes, sign up'
+      reject: 'No, request access information'
+
+    creator:
+      title: 'MOBILITY SIMULATIONS ON DEMAND'
+      text: 'With only a few clicks you can generate your own individualised scenario of future mobility'
+      create_scenario: 'Create scenario'
 
     about:
       header: 'What is special about our simulations?'
@@ -75,37 +89,19 @@ en:
       innoz_feature_3_title: 'Specialisation and Calibration of specific Models'
       innoz_feature_3_content: 'If a certain scenario raises your specific interest, we can offer you a more detailed variant to assess detailed business cases regarding certain areas, pricing, infrastructure needs or fleet sizing.'
       bottom_header: 'Demonstration of a traffic simulation with an autonomous RideSharing-Fleet'
-      video_title: 'Visualization of an autonomous RideSharing-Fleet in Cottbus'
+      video_title: 'Visualisation of an autonomous RideSharing-Fleet in Cottbus'
       datahub_text: 'Our database is continually expanded and updated to cover the most current status data from the changing world of mobility services. Consequently, our ability to analyse the mobility markets live is unique and helps us conduct short-, medium- and log-term forecasts as well as scenario predictions.'
       datahub_list: >
-        <li>> 100 mio. free floating carsharing movements</li>
-        <li>> 100 mio. bikesharing movements</li>
-        <li>> 25 mio. station-based carsharing movements</li>
+        <li>> 100m free floating carsharing movements</li>
+        <li>> 100m bikesharing movements</li>
+        <li>> 25m station-based carsharing movements</li>
         <li>> 35.000 charging facilities</li>
         <li>and more...</li>
-#      modalyzer: 'modalyzer'
-#      modalyzer_text: 'We provide a smartphone tracking technology used to detect trips and legs with a fully automated mode recognition. Projects can be displayed on the tools website and benefit from existing users and data and/or generate new input in an uncomplicated way.'
-#      modalyzer_link: 'http://modalyzer.com'
-#      mobitypen: 'Mobility Attitude Groups'
-#      mobitypen_text: 'Together with LSE Cities the InnoZ has conducted a study “Towards New Urban Mobility” in 2015. For four metropolitan areas in Germany as well as London approximately a 1000 interviewees were surveyed regarding their mobility attitudes.'
-#      mobitypen_link: 'https://www.innoz.de/sites/default/files/new-urban-mobility-london-and-berlin.pdf'
 
     contact:
       contact_us: 'Get in touch'
       contact_us_text: 'You want to know more? We would love to hear from you!'
-
-#    services:
-#      header: 'Services'
-#      header_text: 'Our portfolio includes services from three areas: measuring, monitoring and analytics.'
-#      services_intro: 'TEXT'
-#      services_list: >
-#        <li>Recording and reproduction of mobility surveys, third-party data</li>
-#        <li>Recording and basic analysis of digital traces of shared mobility</li>
-#        <li>Analysis, modeling and data-fusion of mobility data</li>
-#        <li>Planning of infrastructure e.g. electric charging facilities</li>
-#        <li>Appraisal of business models of innovative mobility services</li>
-#        <li>Supporting disposition of vehicles e.g. for shared mobility services</li>
-#        <li>Transport planning and visualization e.g. for autonomous driving and carsharing</li>
+      details_header: 'Our contact details'
 
     footer:
       part_of_innoz: 'We are part of InnoZ.'

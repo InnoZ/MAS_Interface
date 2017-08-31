@@ -3,7 +3,9 @@
     .row
       .col-md-7.col-sm-8.text-center
         %header
-          %h1 MOBILITÄTSSIMULATION ON DEMAND
-          %p Mit nur wenigen Klicks können Sie hier ein eigenes Zukunftsszenario für Ihren Landkreis zusammenstellen
+          %h1
+            = t('views.creator.title')
+          %p
+            = t('views.creator.text')
         %a.btn.btn-large{'data-toggle' => 'modal', 'data-target' => '#creator-modal'}
-          Szenario erstellen
+          = t('views.creator.create_scenario')
