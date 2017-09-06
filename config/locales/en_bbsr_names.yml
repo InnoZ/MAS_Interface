@@ -1,9 +1,9 @@
 en:
   bbsr_names:
-    '1': Hochverdichtete Agglomerationsräume
-    '2': Agglomerationsräume mit herausragenden Zentren
-    '3': Verstädterte Räume höherer Dichte
-    '4': Verstädterte Räume mittlerer Dichte mit großen Oberzentren
-    '5': Verstädterte Räume mittlerer Dichte ohne große Oberzentren
-    '6': Ländliche Räume höherer Dichte
-    '7': Ländliche Räume geringerer Dichte
+    '1': highly densified agglomeration areas
+    '2': agglomeration areas with destinct centres
+    '3': urbansied areas with high density
+    '4': urbansied areas with medium density and larger centres
+    '5': urbansied areas with medium density but without larger centres
+    '6': rural areas with higher density
+    '7': rural areas with lower density

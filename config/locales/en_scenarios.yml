@@ -7,15 +7,15 @@ en:
       population: 'Population'
       area: 'Area'
     comparison:
-      miv_vs_umweltverband: 'MIT vs. environmental traffic'
-      who_wins_and_who_looses: 'Who wins and who looses? And what does this mean for the carbon emission?'
+      miv_vs_umweltverband: 'Motorised idividual transport vs. ecological alternatives'
+      who_wins_and_who_looses: 'Who wins and who looses? And what does this mean for carbon emissions?'
     pie_charts:
-      how_are_modes_split: 'How are traffic modes split?'
+      how_are_modes_split: 'What is the modal split?'
     density_maps:
-      where_is_action: 'Where is happening a lot?'
+      where_is_action: 'Which areas are very active?'
     od_maps:
-      how_looks_traffic_flow: 'How looks the traffic flow within the district?'
+      how_looks_traffic_flow: 'How does the traffic flow look like within the district?'
       od_relations: 'Origin destination relations'
     line_charts:
-      when_are_modes_used: 'When are traffic modes used during the day?'
+      when_are_modes_used: 'When are traffic modes typically used during the day?'
       diurnal_curve: 'Diurnal curves'
