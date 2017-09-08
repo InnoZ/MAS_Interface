@@ -3,7 +3,8 @@
     .modal-content
       .modal-header
         %button.close{"data-dismiss" => "modal", :type => "button"} ×
-        %h4.modal-title Log in
+        %h4.modal-title
+          = t('views.login.login_title')
       = form_tag '/login' do
         .modal-body
           .col-xs-12

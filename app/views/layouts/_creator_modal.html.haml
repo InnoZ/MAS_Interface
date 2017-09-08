@@ -3,16 +3,18 @@
     .modal-content
       .modal-header
         %button.close{"data-dismiss" => "modal", :type => "button"} ×
-        %h4.modal-title Anmelden
+        %h4.modal-title
+          = t('views.creator_modal.title')
       = form_tag '/login' do
         .modal-body
           .col-xs-12.text-center
             %p
-              Sie sind Pertaner im Projekt ENavi und haben
-              %b bereits Zugangsdaten erhalten?
+              = t('views.creator_modal.text_part1')
+              %b
+                = t('views.creator_modal.text_part2')
           .col-xs-12
             .btn{'data-dismiss' => 'modal', 'data-toggle' => 'modal', 'data-target' => '#login-modal'}
-              Ja, anmelden
+              = t('views.creator_modal.confirm')
           .col-xs-12
             .btn.btn-white{'data-dismiss' => 'modal', 'data-toggle' => 'modal', 'data-target' => '#request-modal'}
-              Nein, Zugangsdaten anfragen
+              = t('views.creator_modal.reject')

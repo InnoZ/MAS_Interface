@@ -13,7 +13,8 @@
   .container.inner-top-sm.inner-bottom-xs
     .row
       .col-xs-12
-        %h1.text-center InnoZ Mobility Simulations
+        %h1.text-center
+          = t('innoz_short')+' '+t('service')
 
 %section#introduction
   .container.inner-xs
@@ -21,16 +22,22 @@
       .col-sm-6
         = image_tag 'pages/index/01', width: '100%'
       .col-sm-6
-        .pre-header HERAUSFORDERUNG
-        %h2 Den Wandel verstehen, nachhaltig planen
-        %p Shared Mobility, Autonomoes Fahren und die Kopplung von Mobilität und Energie - Themen wie diese stellen Städte, Planer, und Unternehmen vor neue Herausforderungen. Nur wer versteht wie sich diese auswirken, kann infomriert die richtigen Entscheidungen treffen und langfristige nachhaltige Mobilitätskonzepte für lebenswerte Städte schaffen.
+        .pre-header
+          = t('views.index.challenges')
+        %h2
+          = t('views.index.challenges_title')
+        %p
+          = t('views.index.challenges_text')
 
 %section#introduction
   .container.inner-sm
     .row
       .col-sm-6
-        .pre-header UNSERE LÖSUNG
-        %h2 Den Wandel verstehen, nachhaltig planen
-        %p Mit MATSim steht ein Open-Source-Framework zur Erstellung großräumiger agentenbaiserter Verkehrsmodelle zur Verfügung. Wir nutzen diese SOftware, verknüpfen sie mit den Daten in unserer ständig wachsenden Mobilitätsdatenbnak und automatisieren die Abläufe der Modellerstellung. So entstehen Szenarien zukünftiger Mobilität, die effektiv, flexibel und iterativ in die Planung eingebunden werden können.
+        .pre-header
+          = t('views.index.solutions')
+        %h2
+          = t('views.index.solutions_title')
+        %p
+          = t('views.index.solutions_text')
       .col-sm-6
         = image_tag 'pages/index/02', width: '100%'

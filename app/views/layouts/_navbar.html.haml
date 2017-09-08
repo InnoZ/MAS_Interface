@@ -32,4 +32,4 @@
                 = link_to 'logout', '/logout', class: 'logout'
               - else
                 %a.open-login-modal{'data-toggle' => 'modal', 'data-target' => '#login-modal'}
-                  login
+                  = t('views.login.login_title')
