@@ -1,9 +1,9 @@
 de:
   scenarios:
     index:
-      search_district: 'Landkreis suchen'
+      search_district: 'Kreis suchen'
     show:
-      change_district: 'Landkreis wechseln'
+      change_district: 'Kreis wechseln'
       population: 'Bevölkerung'
       area: 'Fläche'
     comparison:
@@ -14,7 +14,7 @@ de:
     density_maps:
       where_is_action: 'Wo ist besonders viel los?'
     od_maps:
-      how_looks_traffic_flow: 'Wie sehen die Verkehrsströme im Landkreis aus?'
+      how_looks_traffic_flow: 'Wie sehen die Verkehrsströme im Kreis aus?'
       od_relations: 'Start-Ziel-Beziehungen'
     line_charts:
       when_are_modes_used: 'Wann werden welche Verkehrsmittel im Tagesverlauf genutzt?'

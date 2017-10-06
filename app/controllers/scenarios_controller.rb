@@ -33,7 +33,7 @@ class ScenariosController < ApplicationController
   # rubocop:disable all
   def create
     unless scenario_params[:district_id].present?
-      flash[:danger] = 'Bitte Landkreis wählen'
+      flash[:danger] = 'Bitte Kreis wählen'
       redirect_back(fallback_location: root_path)
     else
       args = {
