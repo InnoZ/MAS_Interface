@@ -55,7 +55,19 @@
   .container.inner-xs
     = render 'od_maps'
 
+    #temp-toggle #
+    #temp
+      %b Scenario A:
+      = @scenario_a.modal_split
+      %b Scenario B:
+      = @scenario_b.modal_split
+
 :javascript
+  jQuery('#temp').hide();
+  jQuery('#temp-toggle').click(function() {
+    jQuery('#temp').show();
+  });
+
   window.boxplot = #{@scenario_a.boxplot}
   window.dataScenarioA = #{@scenario_a.json_all.to_json}
   window.odRelationsScenarioA = #{@scenario_a.od_relations}
