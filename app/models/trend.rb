@@ -11,7 +11,7 @@ class Trend
         car: difference_rel(
           JSON.parse(@scenario_b.modal_split),
           JSON.parse(@scenario_a.modal_split),
-          %w[car],
+          %w[car ride],
           'share'
         ),
         pt: difference_rel(
@@ -26,7 +26,7 @@ class Trend
         car: difference_abs(
           @scenario_b.traffic_performance,
           @scenario_a.traffic_performance,
-          %w[car],
+          %w[car ride],
           'traffic'
         ),
         pt: difference_abs(
@@ -41,7 +41,7 @@ class Trend
         car: difference_abs(
           @scenario_b.carbon_emission,
           @scenario_a.carbon_emission,
-          %w[car],
+          %w[car ride],
           'carbon'
         ),
         pt: difference_abs(
