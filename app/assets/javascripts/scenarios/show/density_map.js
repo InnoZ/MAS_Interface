@@ -9,7 +9,9 @@ jQuery(function() {
 
       map = L.mapbox.map(div, 'innoz-developer.mj43ge61', {
         zoomControl: false,
-        scrollWheelZoom: false
+        scrollWheelZoom: false,
+        maxZoom: 12,
+        minZoom: 9,
       });
 
       // place zoom control to topright
