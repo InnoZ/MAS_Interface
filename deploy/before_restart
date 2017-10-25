@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+oldrev, newrev = ARGV
+
+def run(cmd)
+  exit($CHILD_STATUS.exitstatus) unless system "umask 002 && #{cmd}"
+end
+
+RAILS_ENV   = ENV['RAILS_ENV'] || 'production'
+
+bundler_args = ['--deployment']
+BUNDLE_WITHOUT = ENV['BUNDLE_WITHOUT'] || 'development:test'
+bundler_args << '--without' << BUNDLE_WITHOUT unless BUNDLE_WITHOUT.empty?
+
+# update gem bundle
+run "bundle install #{bundler_args.join(' ')}"
+
+if File.file? 'Rakefile'
+  num_migrations = `git diff #{oldrev} #{newrev} --diff-filter=A --name-only -z db/migrate`.split("\0").size
+  if num_migrations > 0
+    run "su apprunner -c \"bundle exec rake db:migrate RAILS_ENV=#{RAILS_ENV}\""
+  end
+
+  # precompile assets
+  changed_assets = `git diff #{oldrev} #{newrev} --name-only -z app/assets`.split("\0")
+  if changed_assets.size > 0
+    run "bundle exec rake assets:precompile RAILS_ENV=#{RAILS_ENV}"
+  end
+end
+
+# clear cached assets (unversioned/ignored files)
+run "git clean -x -f -- public/stylesheets public/javascripts"
+
+# clean unversioned files from vendor/plugins (e.g. old submodules)
+run "git clean -d -f -- vendor/plugins"

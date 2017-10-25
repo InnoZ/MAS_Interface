@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Reloading unicorn"
+systemctl reload unicorn
