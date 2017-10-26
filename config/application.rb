@@ -15,5 +15,12 @@ module InnozRails
     config.active_job.queue_adapter = :sidekiq
 
     config.eager_load_paths << "#{Rails.root}/lib"
+
+    config.lograge.enabled = true
+    config.lograge.custom_options = lambda do |event|
+      {
+        time: event.time.utc.iso8601,
+      }
+    end
   end
 end
