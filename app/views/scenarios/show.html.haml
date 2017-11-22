@@ -55,13 +55,6 @@
   .container.inner-xs
     = render 'od_maps'
 
-    #temp-toggle #
-    #temp
-      %b Scenario A:
-      = @scenario_a.modal_split
-      %b Scenario B:
-      = @scenario_b.modal_split
-
 :javascript
   jQuery('#temp').hide();
   jQuery('#temp-toggle').click(function() {

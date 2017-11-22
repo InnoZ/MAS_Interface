@@ -1,0 +1,63 @@
+#demo-touch {
+  background: black;
+  .leaflet-control-zoom { display: none; }
+  .demo-button-container {
+    width: 1000px;
+    margin: 0 auto;
+  }
+}
+
+#demo-monitor {
+  height: 100vh;
+
+  .leaflet-container {
+    background: lightgray;
+  }
+
+  #mode-name {
+    position: absolute;
+    z-index: 999;
+    top: 60px;
+    left: 50px;
+    font-size: 50px;
+    text-transform: uppercase;
+  }
+
+  #feature-starts {
+    position: absolute;
+    z-index: 999;
+    top: 80px;
+    right: 50px;
+    font-size: 30px;
+  }
+
+
+  .mapbox-info-toggle {
+    display: none;
+  }
+
+  #demo-monitor-map {
+    height: 100vh;
+    width: 100vw;
+    margin: 0 auto;
+  }
+
+  .demo-overlay-container {
+    position: absolute;
+    opacity: 0.7;
+    z-index: 99;
+  }
+
+  .demo-hexagon-overlay {
+    float: left;
+    width: 100vh;
+    height: 100vh;
+  }
+
+  .demo-square-overlay {
+    float: left;
+    background-color: black;
+    width: calc((100vw - 100vh) / 2);
+    height: 100vh;
+  }
+}

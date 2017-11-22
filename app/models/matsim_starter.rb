@@ -22,6 +22,7 @@ class MatsimStarter
     if rails_env == 'production'
       java_class = 'Main'
     else
+      # simulate processing delay
       sleep(10) if rails_env == 'development'
       java_class = 'Preto'
     end
