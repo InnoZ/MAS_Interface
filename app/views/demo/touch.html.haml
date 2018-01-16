@@ -1,0 +1,17 @@
+#demo-touch
+  .row
+    .col-sm-12.mode-selector-container
+      .demo-button-container
+
+        - [["car", "#f2b50c"], ["ride", "#f4c85b"], ["carsharing", "#db8012"], ["pt", "#c94380"], ["bike", "#50a0b5"], ["walk", "#3db783"], ["other", "#bdb8b3"]].each do |mode_info|
+          - mode_color = mode_info[1]
+          - mode = mode_info[0]
+          .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
+
+  .row
+    #log
+    #od-map
+
+:javascript
+  window.data = #{@data_demo_scenario.to_json}
+  window.odRelations = #{@od_relations_demo_scenario.to_json}

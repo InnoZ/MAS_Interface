@@ -74,6 +74,7 @@ jQuery(function() {
     };
 
     mapA.on('moveend', function() { mapB.fitBounds(mapA.getBounds()) });
-    mapB.on('moveend', function() { mapA.fitBounds(mapB.getBounds()) });
+    // temporarily disable map b for one-scenario cases
+    // mapB.on('moveend', function() { mapA.fitBounds(mapB.getBounds()) });
   });
 });

@@ -19,5 +19,11 @@ Rails.application.routes.draw do
 
     post '/login', to: 'sessions#create'
     get '/logout', to: 'sessions#destroy'
+
+    get 'demo_touch', to: 'demo#touch', as: :demo_touch
+    get 'demo_monitor', to: 'demo#monitor', as: :demo_monitor
+    post 'activate_polygon', to: 'demo#activate_polygon'
+
+    mount ActionCable.server => '/cable'
   end
 end

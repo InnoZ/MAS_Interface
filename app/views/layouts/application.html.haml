@@ -14,13 +14,18 @@
     %link{href: '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic', rel: 'stylesheet'}/
     = csrf_meta_tags
     = favicon_link_tag 'favicon_1.png'
+    = action_cable_meta_tag
   %body
-    = render 'layouts/navbar'
+    - unless controller_name.include?('demo')
+      = render 'layouts/navbar'
+
     %main
       = yield
       .loading-overlay
         = image_tag 'cogs'
-    = render 'layouts/footer'
+
+    - unless controller_name.include?('demo')
+      = render 'layouts/footer'
 
     = render 'layouts/login_modal'
     = render 'layouts/creator_modal'
