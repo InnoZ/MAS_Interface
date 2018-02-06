@@ -2,8 +2,8 @@ jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
     window.map = L.map('demo-monitor-map', {
-/*      zoomControl: false,
-      scrollWheelZoom: false,*/
+      zoomControl: false,
+      scrollWheelZoom: false,
     });
     baselayer = L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -28,6 +28,7 @@ jQuery(function() {
     district.addTo(map);
 
     // ActionCable Websocket
+    var starts = null;
     App.demoState = App.cable.subscriptions.create('DemoChannel', {
       connected: function() {
         console.log('Websocket connected');
@@ -39,6 +40,7 @@ jQuery(function() {
 
         if (response.active_polygon == '') {
           jQuery('#feature-starts').hide();
+          if ( starts ) { map.removeLayer(starts) };
           zoomToOsna();
           console.log('no polygon clicked yet')
         } else {
@@ -47,10 +49,13 @@ jQuery(function() {
           var feature = featureById[parseInt(response.active_polygon.id)];
 
           var startPoints = feature.feature.properties.start_points;
+          if ( starts ) { map.removeLayer(starts) };
+          starts = L.featureGroup();
           jQuery.each(startPoints, function(index, elem) {
-            L.circle([elem[1], elem[0]], 3, {color: color, fill: true, fillOpacity: 1, fillColor: color}).addTo(map);
+            start = L.circle([elem[1], elem[0]], 3, {color: color, fill: true, fillOpacity: 1, fillColor: color})
+            start.addTo(starts);
           });
-
+          starts.addTo(map);
           map.fitBounds(feature.getBounds());
         };
       }
