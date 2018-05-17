@@ -9,6 +9,5 @@ feature 'Create Scenario', js: true do
     login
     find('a', text: 'SCENARIO CREATOR').trigger('click')
     expect(page).to have_content('2017')
-    expect(page).to have_css('.icon-cog-alt')
   end
 end

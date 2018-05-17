@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Scenario Explorer', js: true do
   before do
     district_id = DistrictsGermany.feature_by_name('Köln')['properties']['id']
-    MatsimStarter.new(district_id, 2017)
+    MatsimStarter.new(district_id, 2017, 'Seed')
     scenario = Scenario.find_by(district_id: district_id, year: 2017)
     scenario.calculate_od_relations_and_modal_split
     visit 'scenarios'
