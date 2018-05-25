@@ -12,17 +12,10 @@
     = image_tag 'icon_umweltverbund', height: 50
     = "#{@scenario_a.year} #{t('to')} #{@scenario_b.year}"
 
-- @trend.each do |feature, values|
+- ['modal_split', 'traffic_performance', 'co2_emissions'].each do |feature|
   .row
     .col-xs-4.cell
       = t feature.to_s
-    - [:car, :pt].each do |mode|
+    - ['car', 'pt'].each do |mode|
       .col-xs-4.cell.white-bottom-border.text-center
-        %p
-          - if values[mode] > 0
-            %i.icon-up
-          - elsif values[mode] < 0
-            %i.icon-down
-          - else
-            %i.icon-record
-          = "#{values[mode].abs} #{values[:unit]}"
+        %p.comparision-value{feature: feature, mode: mode}

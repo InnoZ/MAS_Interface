@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :scenarios, except: %i[show new]
     get 'show/:district(/:year_a)(/:year_b)', to: 'scenarios#show', as: :show_district
     get 'scenarios/new', to: 'scenarios#new', as: :new_scenario, constraints: UserConstraint.new
+    get 'scenario_data', to: 'scenarios#scenario_data'
+    get 'scenario_comparison_data', to: 'scenarios#scenario_comparison_data'
 
     post '/login', to: 'sessions#create'
     get '/logout', to: 'sessions#destroy'

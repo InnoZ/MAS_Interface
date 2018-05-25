@@ -56,18 +56,13 @@
     = render 'od_maps'
 
 :javascript
-  jQuery('#temp').hide();
-  jQuery('#temp-toggle').click(function() {
-    jQuery('#temp').show();
-  });
-
-  window.boxplot = #{@scenario_a.boxplot}
-  window.dataScenarioA = #{@scenario_a.json_all.to_json}
+  window.districtGeometry = #{@scenario_a.district_geometry.to_json}
+  window.districtIdScenarioA = '#{@scenario_a.district_id}'
+  window.yearScenarioA = #{@scenario_a.year}
   window.odRelationsScenarioA = #{@scenario_a.od_relations}
-  window.modalSplitA = #{@scenario_a.modal_split}
 
 - if @scenario_b
   :javascript
-    window.dataScenarioB = #{@scenario_b.json_all.to_json}
+    window.districtIdScenarioB = '#{@scenario_b.district_id}'
+    window.yearScenarioB = #{@scenario_b.year}
     window.odRelationsScenarioB = #{@scenario_b.od_relations}
-    window.modalSplitB = #{@scenario_b.modal_split}

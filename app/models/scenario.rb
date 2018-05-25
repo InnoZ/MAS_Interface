@@ -30,14 +30,14 @@ class Scenario < ApplicationRecord
     }
   end
 
-  def modal_split_json
+  def modal_split
     available_modes.map do |mode|
       {
         'mode' => mode,
         'color' => mode_color(mode),
         'share' => plans.where(mode: mode).count,
       }
-    end.to_json
+    end
   end
 
   def full_name
@@ -66,6 +66,7 @@ class Scenario < ApplicationRecord
       'traffic_performance' => traffic_performance,
       'diurnal_json' => diurnal_json,
       'carbon_emission' => carbon_emission,
+      'modal_split' => modal_split,
       'mode_colors' => mode_colors,
     }
   end

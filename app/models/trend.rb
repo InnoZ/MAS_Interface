@@ -9,14 +9,14 @@ class Trend
     {
       modal_split: {
         car: difference_rel(
-          JSON.parse(@scenario_b.modal_split),
-          JSON.parse(@scenario_a.modal_split),
+          @scenario_b.modal_split,
+          @scenario_a.modal_split,
           %w[car ride],
           'share'
         ),
         pt: difference_rel(
-          JSON.parse(@scenario_b.modal_split),
-          JSON.parse(@scenario_a.modal_split),
+          @scenario_b.modal_split,
+          @scenario_a.modal_split,
           %w[pt walk bike],
           'share'
         ),

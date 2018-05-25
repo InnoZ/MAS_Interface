@@ -17,12 +17,22 @@ class ScenariosController < ApplicationController
       if params[:year_b].present?
         @scenario_b = @scenarios.find_by(year: params[:year_b].to_i)
       end
-      if @scenario_a && @scenario_b
-        @trend = Trend.new(@scenario_a, @scenario_b).json
-      end
     else
       redirect_to :root
     end
+  end
+
+  def scenario_comparison_data
+    @scenario_a = Scenario.find_by(district_id: params[:district_id], year: params[:year_a].to_i)
+    @scenario_b = Scenario.find_by(district_id: params[:district_id], year: params[:year_b].to_i)
+
+    trend = Trend.new(@scenario_a, @scenario_b).json
+    render json: trend, status: 200
+  end
+
+  def scenario_data
+    scenario = Scenario.find_by(district_id: params[:district_id], year: params[:year].to_i)
+    render json: scenario.json_all.to_json, status: 200
   end
 
   def new
@@ -63,6 +73,6 @@ class ScenariosController < ApplicationController
   end
 
   def scenario_params
-    params.require(:scenario).permit(:district_id, :year, :name)
+    params.require(:scenario).permit(:district_id, :year, :year_a, :year_b, :name)
   end
 end

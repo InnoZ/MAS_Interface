@@ -10,7 +10,10 @@ jQuery(function() {
   }).resize();
 
   jQuery('#district-geometry').each(function() {
-    staticDistrictMap('district-geometry', window.dataScenarioA.district_geometry, 2, {fillOpacity: 0, opacity: 0}, true);
+    staticDistrictMap('district-geometry', window.districtGeometry, 2, {
+      fillOpacity: 0,
+      opacity: 0
+    }, true);
   });
 
   var drawTooltip = function(color, key, value) {
@@ -22,8 +25,12 @@ jQuery(function() {
 
   var makePieChart = function(div, data, attribute) {
     var chart = nv.models.pieChart()
-      .x(function(d) { return d.mode })
-      .y(function(d) { return d[attribute] })
+      .x(function(d) {
+        return d.mode
+      })
+      .y(function(d) {
+        return d[attribute]
+      })
       .showLabels(true)
       .labelType("percent")
       .showLegend(false)
@@ -49,8 +56,12 @@ jQuery(function() {
   var makeDiurnalCurve = function(div, data) {
     nv.addGraph(function() {
       var chart = nv.models.lineChart()
-        .x(function(d) { return d[0]; })
-        .y(function(d) { return d[1]; })
+        .x(function(d) {
+          return d[0];
+        })
+        .y(function(d) {
+          return d[1];
+        })
         .showLegend(false);
 
       chart.yAxis.axisLabel(I18n.count);
@@ -75,14 +86,51 @@ jQuery(function() {
   };
 
   jQuery(['a', 'b']).each(function(i, ab) {
-    var windowVariableName = 'dataScenario' + ab.toUpperCase();
-    var d = window[windowVariableName];
-    if (typeof d !== 'undefined') {
-      makePieChart('#modal-split-chart-' + ab, window['modalSplit' + ab.toUpperCase()], 'share');
-      makePieChart('#traffic-performance-chart-' + ab, d.traffic_performance, 'traffic');
-      makePieChart('#carbon-emission-chart-' + ab, d.carbon_emission, 'carbon');
-      makeDiurnalCurve('#diurnal-curve-chart-' + ab, d.diurnal_json)
+    var year = window['yearScenario' + ab.toUpperCase()];
+    var districtId = window['districtIdScenario' + ab.toUpperCase()];
+
+    if (typeof year !== 'undefined') {
+      $.ajax({
+        data: {
+          year: year,
+          district_id: districtId
+        },
+        url: "/scenario_data",
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(data) {
+          makePieChart('#modal-split-chart-' + ab, data.modal_split, 'share');
+          makePieChart('#traffic-performance-chart-' + ab, data.traffic_performance, 'traffic');
+          makePieChart('#carbon-emission-chart-' + ab, data.carbon_emission, 'carbon');
+          makeDiurnalCurve('#diurnal-curve-chart-' + ab, data.diurnal_json)
+          makeDensityMap('density-map-' + ab, window['odRelationsScenario' + ab.toUpperCase()], data);
+          makeODMap('od-map-' + ab, window['odRelationsScenario' + ab.toUpperCase()], data);
+        }
+      });
     };
+  });
+
+  var drawComparisonValues = function(data) {
+    $.each(data, function(feature, values) {
+      $.each(values, function(mode, value) {
+        $('.comparision-value[feature=' + feature + '][mode=' + mode + ']').text((value > 0 ? '+' : '') + value + ' ' + values.unit)
+      })
+    });
+  };
+
+
+  $.ajax({
+    data: {
+      year_a: window['yearScenarioA'],
+      year_b: window['yearScenarioB'],
+      district_id: window['districtIdScenarioA']
+    },
+    url: "/scenario_comparison_data",
+    type: 'GET',
+    dataType: 'json', // added data type
+    success: function(data) {
+      drawComparisonValues(data)
+    }
   });
 
   // jQuery('#boxplot-chart').each(function() {
