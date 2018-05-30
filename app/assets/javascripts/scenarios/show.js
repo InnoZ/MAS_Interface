@@ -85,7 +85,9 @@ jQuery(function() {
     });
   };
 
+  $('#pie-charts').find('.panel-body').append("<div class='loading'>loading...</div>")
   jQuery(['a', 'b']).each(function(i, ab) {
+
     var year = window['yearScenario' + ab.toUpperCase()];
     var districtId = window['districtIdScenario' + ab.toUpperCase()];
 
@@ -99,6 +101,7 @@ jQuery(function() {
         type: 'GET',
         dataType: 'json', // added data type
         success: function(data) {
+          jQuery('#pie-charts').find('.loading').remove();
           makePieChart('#modal-split-chart-' + ab, data.modal_split, 'share');
           makePieChart('#traffic-performance-chart-' + ab, data.traffic_performance, 'traffic');
           makePieChart('#carbon-emission-chart-' + ab, data.carbon_emission, 'carbon');
@@ -118,7 +121,7 @@ jQuery(function() {
     });
   };
 
-
+  $('#comparison').find('p').append("<div class='loading'>loading...</div>")
   $.ajax({
     data: {
       year_a: window['yearScenarioA'],
@@ -129,6 +132,7 @@ jQuery(function() {
     type: 'GET',
     dataType: 'json', // added data type
     success: function(data) {
+      $('#comparison').find('.loading').remove();
       drawComparisonValues(data)
     }
   });
