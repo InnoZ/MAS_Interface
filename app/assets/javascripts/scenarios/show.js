@@ -85,7 +85,8 @@ jQuery(function() {
     });
   };
 
-  $('#pie-charts').find('.panel-body').append("<div class='loading'>loading...</div>")
+  $('#pie-charts, #line-charts').find('.panel-body').append("<div class='loading'>loading...</div>");
+  $('#density-map-section, #od-map-section').find('.container').append("<div class='loading'>loading...</div>");
   jQuery(['a', 'b']).each(function(i, ab) {
 
     var year = window['yearScenario' + ab.toUpperCase()];
@@ -105,8 +106,11 @@ jQuery(function() {
           makePieChart('#modal-split-chart-' + ab, data.modal_split, 'share');
           makePieChart('#traffic-performance-chart-' + ab, data.traffic_performance, 'traffic');
           makePieChart('#carbon-emission-chart-' + ab, data.carbon_emission, 'carbon');
+          jQuery('#line-charts').find('.loading').remove();
           makeDiurnalCurve('#diurnal-curve-chart-' + ab, data.diurnal_json)
+          jQuery('#density-map-section').find('.loading').remove();
           makeDensityMap('density-map-' + ab, window['odRelationsScenario' + ab.toUpperCase()], data);
+          jQuery('#od-map-section').find('.loading').remove();
           makeODMap('od-map-' + ab, window['odRelationsScenario' + ab.toUpperCase()], data);
         }
       });
