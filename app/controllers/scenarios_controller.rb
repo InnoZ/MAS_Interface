@@ -9,14 +9,9 @@ class ScenariosController < ApplicationController
   def show
     if params[:district] && Scenario.find_by(district_id: params[:district])
       @scenarios = Scenario.where(district_id: params[:district]).order(:year)
-      @scenario_a = @scenarios.first
-      @scenario_b = @scenarios.last unless @scenarios.first == @scenarios.last
-      if params[:year_a].present?
-        @scenario_a = @scenarios.find_by(year: params[:year_a].to_i)
-      end
-      if params[:year_b].present?
-        @scenario_b = @scenarios.find_by(year: params[:year_b].to_i)
-      end
+      @scenario_a = params[:year_a].present? ? @scenarios.find_by(year: params[:year_a].to_i) : @scenarios.first
+      @scenario_b = params[:year_b].present? ? @scenarios.find_by(year: params[:year_b].to_i) : @scenarios.last
+      @scenario_b = nil if @scenario_a == @scenario_b
     else
       redirect_to :root
     end
