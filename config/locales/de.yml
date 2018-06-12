@@ -1,6 +1,6 @@
 de:
   locale_name: 'deutsch'
-  district: 'Landkreis'
+  district: 'Kreis'
   ways: 'Wege'
   service: 'Mobility Simulations'
   learn_more: 'Mehr erfahren'
@@ -63,7 +63,7 @@ de:
 
     creator:
       title: 'MOBILITÄTSSIMMULATIONEN ON DEMAND'
-      text: 'Mit nur wenigen Klicks können Sie hier ein eigenes Zukunftsszenario für Ihren Landkreis zusammenstellen'
+      text: 'Mit nur wenigen Klicks können Sie hier ein eigenes Zukunftsszenario für Ihren Kreis zusammenstellen'
       create_scenario: 'Szenario erstellen'
 
     about:
@@ -82,8 +82,8 @@ de:
       feature_6_title: 'Konstante und aktive Weiterentwicklung'
       feature_6_content: 'Die internationale Community entwickelt das Basisprogramm stetig weiter'
       innoz_competency_title: 'Was das InnoZ bietet'
-      innoz_feature_1_title: 'Basismodell auf Landkreisebene'
-      innoz_feature_1_content: 'Wir bieten unseren Kunden ein rudimentäres Basismodell für jeden deutschen Landkreis an, geeignet um eine erste Einschätzung von potentiellen Märkten und Strukturen zu liefern'
+      innoz_feature_1_title: 'Basismodell auf Kreisebene'
+      innoz_feature_1_content: 'Wir bieten unseren Kunden ein rudimentäres Basismodell für jeden deutschen Landkreis bzw. jede kreifreie Stadt an, geeignet um eine erste Einschätzung von potentiellen Märkten und Strukturen zu liefern'
       innoz_feature_2_title: 'Unterstützung bei der Entscheidungsfindung'
       innoz_feature_2_content: 'Auf Grundlage des Basismodells beraten wir unsere Kunden bei investiven Vorhaben im Mobilitätssegment, um wichtige In or Out Entscheidungen treffen zu können'
       innoz_feature_3_title: 'Präzisierung und Kalibrierung des Modells'
