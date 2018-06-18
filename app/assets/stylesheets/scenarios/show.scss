@@ -167,3 +167,14 @@
     height: 350px;
   }
 }
+
+.modification-slider {
+  margin: 17px;
+  .ui-slider {
+    height: 20px;
+    .ui-slider-handle {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

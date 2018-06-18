@@ -12,8 +12,6 @@
           .chart-legend-icon{style: "background: #{mode_color}"}
           = t("mode_names.#{mode}").upcase
 
-    %input#motorized-share-slider
-
 - [@scenario_a, @scenario_b].each_with_index do |scenario, index|
   - index == 0 ? ab = 'a' : ab = 'b'
   - if scenario
@@ -45,3 +43,17 @@
               .label.label-info= scenario.year
           .panel-body
             %svg.box-chart{id: 'carbon-emission-chart-' + ab}
+
+.row
+  .col-xs-12
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Modifications
+        .panel-body
+          .row.modification-slider
+            .col-xs-4 Anteil MIV
+            #motorized-share-slider.col-xs-8
+          .row.modification-slider
+            .col-xs-4 CO2-Verbrauch Autos
+            #car-carbon-slider.col-xs-8

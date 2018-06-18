@@ -169,6 +169,10 @@ hr {
 
 .loading {
   animation: blinker 1s linear infinite;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
 }
 
 @keyframes blinker {

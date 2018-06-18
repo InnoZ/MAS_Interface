@@ -30,26 +30,54 @@ class Scenario < ApplicationRecord
     }
   end
 
-  def json_all(motorized_share_factor: 1)
+  def json_all(modifiers:)
     {
       'district_geometry' => district_geometry,
-      'traffic_performance' => traffic_performance(motorized_share_factor: motorized_share_factor),
+      'traffic_performance' => traffic_performance(modifiers: modifiers),
       'diurnal_json' => diurnal_json,
-      'carbon_emission' => carbon_emission(motorized_share_factor: motorized_share_factor),
-      'modal_split' => modal_split(motorized_share_factor: motorized_share_factor),
+      'carbon_emission' => carbon_emission(modifiers: modifiers),
+      'modal_split' => modal_split(modifiers: modifiers),
       'mode_colors' => mode_colors,
     }
   end
 
-  def modal_split(motorized_share_factor: 1)
+  def modal_split(modifiers: nil)
     available_modes.map do |mode|
-      factor = %w[car ride carsharing].include?(mode) ? motorized_share_factor.to_f : 1
+      factor = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:motorized_share)) : 1
       {
         'mode' => mode,
         'color' => mode_color(mode),
         'share' => plans.where(mode: mode).count * factor,
       }
     end
+  end
+
+  def traffic_performance(modifiers: nil)
+    mode_order(person_km).map do |mode, distance|
+      factor = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:motorized_share)) : 1
+      {
+        'mode' => mode,
+        'color' => mode_color(mode),
+        'traffic' => distance.to_i * factor,
+      }
+    end
+  end
+
+  def carbon_emission(modifiers: nil)
+    mode_order(carbon_emissions).map do |mode, carbon_emission|
+      factor1 = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:motorized_share)) : 1
+      factor2 = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:car_carbon)) : 1
+      {
+        'mode' => mode,
+        'color' => mode_color(mode),
+        'carbon' => carbon_emission.to_i * factor1 * factor2,
+      }
+    end
+  end
+
+  def factorize(value)
+    return 1 if !value || value.to_f == 0
+    value.to_f > 0 ? (value.to_f) : (1 / value.to_f.abs)
   end
 
   def full_name
@@ -70,28 +98,6 @@ class Scenario < ApplicationRecord
       DB["SELECT ST_Area(ST_GeomFromGeoJSON('#{district}')::geography);"].first[:st_area] /
       1_000_000
     ).round(2)
-  end
-
-  def traffic_performance(motorized_share_factor: 1)
-    mode_order(person_km).map do |mode, distance|
-      factor = %w[car ride carsharing].include?(mode) ? motorized_share_factor.to_f : 1
-      {
-        'mode' => mode,
-        'color' => mode_color(mode),
-        'traffic' => distance.to_i * factor,
-      }
-    end
-  end
-
-  def carbon_emission(motorized_share_factor: 1)
-    mode_order(carbon_emissions).map do |mode, carbon_emission|
-      factor = %w[car ride carsharing].include?(mode) ? motorized_share_factor.to_f : 1
-      {
-        'mode' => mode,
-        'color' => mode_color(mode),
-        'carbon' => carbon_emission.to_i * factor,
-      }
-    end
   end
 
   def diurnal_json
