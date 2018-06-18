@@ -34,6 +34,8 @@ jQuery(function() {
       drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
     });
 
+    chart.tooltip.enabled(false);
+
     nv.addGraph(function() {
       d3.select(div)
         .datum(data)

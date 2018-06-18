@@ -15,7 +15,7 @@
             = @scenario_a.district_name.upcase
           .info
             %h4= "#{t('.population')}: #{@scenario_a.population}"
-            %h4= "#{t('.area')} #{@scenario_a.district_area}"
+            %h4= "#{t('.area')}: ~#{@scenario_a.district_area} km2"
 
 - if @scenarios.length > 1
   %section#compare-form

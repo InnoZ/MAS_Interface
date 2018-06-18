@@ -13,7 +13,12 @@
   .col-xs-6
     .legend
       .row
-        .col-xs-12
+        .col-xs-12r
+          .panel.panel-default
+            .panel-heading
+              %h4.panel-title
+                %span
+                .label.label-info= @scenario_a.year
           .total-count
           .current-count-bar-container
             .legend-label= t 'count' + ':'
@@ -26,6 +31,11 @@
     .legend
       .row
         .col-xs-12
+          .panel.panel-default
+            .panel-heading
+              %h4.panel-title.light-panel-title
+                %span
+                .label.label-info= @scenario_b.year
           .total-count
           .current-count-bar-container
             .legend-label= t 'count' + ':'
