@@ -30,12 +30,24 @@ class Scenario < ApplicationRecord
     }
   end
 
-  def modal_split
+  def json_all(motorized_share_factor: 1)
+    {
+      'district_geometry' => district_geometry,
+      'traffic_performance' => traffic_performance(motorized_share_factor: motorized_share_factor),
+      'diurnal_json' => diurnal_json,
+      'carbon_emission' => carbon_emission(motorized_share_factor: motorized_share_factor),
+      'modal_split' => modal_split(motorized_share_factor: motorized_share_factor),
+      'mode_colors' => mode_colors,
+    }
+  end
+
+  def modal_split(motorized_share_factor: 1)
     available_modes.map do |mode|
+      factor = %w[car ride carsharing].include?(mode) ? motorized_share_factor.to_f : 1
       {
         'mode' => mode,
         'color' => mode_color(mode),
-        'share' => plans.where(mode: mode).count,
+        'share' => plans.where(mode: mode).count * factor,
       }
     end
   end
@@ -60,33 +72,24 @@ class Scenario < ApplicationRecord
     ).round(2)
   end
 
-  def json_all
-    {
-      'district_geometry' => district_geometry,
-      'traffic_performance' => traffic_performance,
-      'diurnal_json' => diurnal_json,
-      'carbon_emission' => carbon_emission,
-      'modal_split' => modal_split,
-      'mode_colors' => mode_colors,
-    }
-  end
-
-  def traffic_performance
+  def traffic_performance(motorized_share_factor: 1)
     mode_order(person_km).map do |mode, distance|
+      factor = %w[car ride carsharing].include?(mode) ? motorized_share_factor.to_f : 1
       {
         'mode' => mode,
         'color' => mode_color(mode),
-        'traffic' => distance.to_i,
+        'traffic' => distance.to_i * factor,
       }
     end
   end
 
-  def carbon_emission
+  def carbon_emission(motorized_share_factor: 1)
     mode_order(carbon_emissions).map do |mode, carbon_emission|
+      factor = %w[car ride carsharing].include?(mode) ? motorized_share_factor.to_f : 1
       {
         'mode' => mode,
         'color' => mode_color(mode),
-        'carbon' => carbon_emission.to_i,
+        'carbon' => carbon_emission.to_i * factor,
       }
     end
   end

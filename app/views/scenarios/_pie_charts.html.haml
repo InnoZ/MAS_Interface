@@ -12,6 +12,8 @@
           .chart-legend-icon{style: "background: #{mode_color}"}
           = t("mode_names.#{mode}").upcase
 
+    %input#motorized-share-slider
+
 - [@scenario_a, @scenario_b].each_with_index do |scenario, index|
   - index == 0 ? ab = 'a' : ab = 'b'
   - if scenario

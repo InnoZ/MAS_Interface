@@ -27,7 +27,7 @@ class ScenariosController < ApplicationController
 
   def scenario_data
     scenario = Scenario.find_by(district_id: params[:district_id], year: params[:year].to_i)
-    render json: scenario.json_all.to_json, status: 200
+    render json: scenario.json_all(motorized_share_factor: params[:motorized_share_factor]).to_json, status: 200
   end
 
   def new
@@ -68,6 +68,6 @@ class ScenariosController < ApplicationController
   end
 
   def scenario_params
-    params.require(:scenario).permit(:district_id, :year, :year_a, :year_b, :name)
+    params.require(:scenario).permit(:district_id, :year, :year_a, :year_b, :name, :motorized_share_factor)
   end
 end
