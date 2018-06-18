@@ -1,7 +1,8 @@
 class MatsimStarter
   OUTPUT_PATH = Rails.root.join('public', 'matsim', 'output')
-  JAVA_PATH = Rails.root.join('lib', 'matsim', 'java', 'innoz-toolbox-0.1-SNAPSHOT-2017-08-07.jar')
+  JAVA_PATH = Rails.root.join('lib', 'matsim', 'java', 'innoz-toolbox-0.1-SNAPSHOT-2017-08-17.jar')
   LOG_PATH = Rails.root.join('log', 'matsim')
+  CALIBRATION_CLASS = 'ModalSplitCalibrationModule'
 
   def initialize(district_id, year, name, folder = OUTPUT_PATH, rails_env = Rails.env)
     @district_id = district_id
@@ -27,6 +28,9 @@ class MatsimStarter
       java_class = 'Preto'
     end
     Kernel.system("java -mx4g -cp #{JAVA_PATH} com.innoz.toolbox.run.#{java_class} #{district_id} #{year} #{folder} #{rails_env} #{LOG_PATH} >/dev/null 2>&1")
+    if rails_env == 'production'
+      Kernel.system("java -mx4g -cp #{JAVA_PATH} com.innoz.toolbox.run.calibration.#{CALIBRATION_CLASS} #{folder}/#{district_id}_#{year}/config.xml.gz >/dev/null 2>&1")
+    end
     @scenario = Scenario.find_by(year: year, district_id: district_id)
   end
 
