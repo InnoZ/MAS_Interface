@@ -38,7 +38,7 @@ jQuery(function() {
       .donutRatio(0.35)
 
     chart.tooltip.contentGenerator(function(obj) {
-      drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
+      return drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
     });
 
     chart.tooltip.enabled(false);
