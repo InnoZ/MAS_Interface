@@ -10,7 +10,6 @@ class Scenario < ApplicationRecord
       GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run
     end
     update_attribute(:od_relations, od_relations_json)
-    update_attribute(:modal_split, modal_split_json)
   end
 
   def od_relations_json
