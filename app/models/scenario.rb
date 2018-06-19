@@ -41,12 +41,13 @@ class Scenario < ApplicationRecord
   end
 
   def modal_split(modifiers: nil)
-    available_modes.map do |mode|
+    counts = plans.group(:mode).count
+    counts.map do |mode, count|
       factor = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:motorized_share)) : 1
       {
         'mode' => mode,
         'color' => mode_color(mode),
-        'share' => plans.where(mode: mode).count * factor,
+        'share' => count * factor,
       }
     end
   end
