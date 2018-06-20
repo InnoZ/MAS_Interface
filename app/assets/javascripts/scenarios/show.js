@@ -43,7 +43,7 @@ jQuery(function() {
         return drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
       });
 
-      chart.tooltip.enabled(false);
+      chart.tooltip.enabled(true);
 
       nv.addGraph(function() {
         d3.select(div)
@@ -53,6 +53,8 @@ jQuery(function() {
         nv.utils.windowResize(chart.update);
         return chart;
       });
+
+      jQuery(div).closest('.panel-body').find('.loading').hide();
     };
 
     var makeDiurnalCurve = function(div, data) {
@@ -85,6 +87,8 @@ jQuery(function() {
         nv.utils.windowResize(chart.update);
         return chart;
       });
+
+      jQuery(div).closest('.panel-body').find('.loading').hide();
     };
 
     jQuery(['a', 'b']).each(function(i, ab) {
@@ -125,8 +129,22 @@ jQuery(function() {
     });
 
     function getChartData(year, districtId, ab, modifiers) {
-      jQuery('#pie-charts').find('.loading').remove();
-      $('#pie-charts, #line-charts').find('.panel-body').append("<div class='loading'>loading...</div>");
+      var modalSplitDiv = '#modal-split-chart-' + ab;
+      jQuery(modalSplitDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
+      var trafficPerformanceDiv = '#traffic-performance-chart-' + ab;
+      jQuery(trafficPerformanceDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
+      var carbonEmissionDiv = '#carbon-emission-chart-' + ab;
+      jQuery(carbonEmissionDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
+      var diurnalCurveDiv = '#diurnal-curve-chart-' + ab;
+
+      if (typeof window['map_' + ab] == "undefined") {
+        jQuery(diurnalCurveDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
+        var densityMapDiv = '#density-map-' + ab;
+        jQuery(densityMapDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
+        var odMapDiv = '#od-map-' + ab;
+        jQuery(odMapDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
+      }
+
       $.ajax({
         data: {
           year: year,
@@ -137,16 +155,14 @@ jQuery(function() {
         type: 'GET',
         dataType: 'json', // added data type
         success: function(data) {
-          jQuery('#pie-charts').find('.loading').remove();
-          makePieChart('#modal-split-chart-' + ab, data.modal_split, 'share');
-          makePieChart('#traffic-performance-chart-' + ab, data.traffic_performance, 'traffic');
-          makePieChart('#carbon-emission-chart-' + ab, data.carbon_emission, 'carbon');
-          jQuery('#line-charts').find('.loading').remove();
-          makeDiurnalCurve('#diurnal-curve-chart-' + ab, data.diurnal_json)
-          jQuery('#density-map-section').find('.loading').remove();
-          makeDensityMap('density-map-' + ab, data.od_relations, data);
-          jQuery('#od-map-section').find('.loading').remove();
-          makeODMap('od-map-' + ab, data.od_relations, data);
+          makePieChart(modalSplitDiv, data.modal_split, 'share');
+          makePieChart(trafficPerformanceDiv, data.traffic_performance, 'traffic');
+          makePieChart(carbonEmissionDiv, data.carbon_emission, 'carbon');
+          if (typeof window['map_' + ab] == "undefined") {
+            makeDiurnalCurve(diurnalCurveDiv, data.diurnal_json)
+            makeDensityMap(densityMapDiv, data.od_relations, data);
+            makeODMap(odMapDiv, data.od_relations, data);
+          }
         }
       });
     };

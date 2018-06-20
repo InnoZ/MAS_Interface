@@ -1,11 +1,11 @@
 var makeDensityMap = function(div, odRelations, data) {
   var map, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
 
-  var legend = jQuery('#' + div).prev('.legend');
+  var legend = jQuery(div).prev('.legend');
 
   L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
 
-  map = L.mapbox.map(div, 'innoz-developer.mj43ge61', {
+  map = L.mapbox.map(div.substring(1), 'innoz-developer.mj43ge61', {
     zoomControl: false,
     scrollWheelZoom: false
   });
@@ -73,9 +73,11 @@ var makeDensityMap = function(div, odRelations, data) {
   jQuery('.density-mode-selector').last().click();
 
   // make maps accessable seperately from outside
-  if (div == 'density-map-a') {
-    mapA = map;
+  if (div == '#density-map-a') {
+    window['map_a'] = map;
   } else {
-    mapB = map;
+    window['map_b'] = map;
   };
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
 };

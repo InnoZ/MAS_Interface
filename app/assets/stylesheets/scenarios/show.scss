@@ -175,6 +175,10 @@
     .ui-slider-handle {
       width: 30px;
       height: 30px;
+      &.ui-state-active {
+        background: lightgrey;
+        border: grey;
+      }
     }
   }
 }

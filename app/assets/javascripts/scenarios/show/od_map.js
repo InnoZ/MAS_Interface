@@ -1,11 +1,11 @@
 var makeODMap = function(div, odRelations, data) {
   var map, modeMaxCount, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
 
-  var legend = jQuery('#' + div).prev('.legend');
+  var legend = jQuery(div).prev('.legend');
 
   var resizeMap = function() {
     var mapHeight = jQuery(window).height() - jQuery('header').height() - 100;
-    jQuery('#' + div).height(mapHeight);
+    jQuery(div).height(mapHeight);
   };
   resizeMap();
   jQuery(window).resize(function() {
@@ -24,7 +24,7 @@ var makeODMap = function(div, odRelations, data) {
 
   L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
 
-  map = L.mapbox.map(div, 'innoz-developer.mj43ge61', {
+  map = L.mapbox.map(div.substring(1), 'innoz-developer.mj43ge61', {
     zoomControl: false,
     scrollWheelZoom: false
   });
@@ -156,4 +156,6 @@ var makeODMap = function(div, odRelations, data) {
   });
 
   jQuery('.od-mode-selector').last().click();
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
 };
