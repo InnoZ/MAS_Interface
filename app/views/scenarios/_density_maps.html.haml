@@ -11,36 +11,43 @@
       .color-button.density-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
 
   .col-xs-6
-    .legend
-      .row
-        .col-xs-12r
-          .panel.panel-default
-            .panel-heading
-              %h4.panel-title
-                %span
-                .label.label-info= @scenario_a.year
-          .total-count
-          .current-count-bar-container
-            .legend-label= t 'count' + ':'
-            .legend-label.legend-zero 0
-            .current-count-bar
-            .legend-label.current-count
-    #density-map-a
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %span
+            %i.icon-address
+            = t '.departures'
+            .label.label-info= @scenario_b.year
+        .panel-body
+          .legend
+            .row
+              .col-xs-12
+                .total-count
+                .current-count-bar-container
+                  .legend-label= t 'count' + ':'
+                  .legend-label.legend-zero 0
+                  .current-count-bar
+                  .legend-label.current-count
+          #density-map-a
 
-- if @scenario_b
-  .col-xs-6
-    .legend
-      .row
-        .col-xs-12
-          .panel.panel-default
-            .panel-heading
-              %h4.panel-title.light-panel-title
-                %span
-                .label.label-info= @scenario_b.year
-          .total-count
-          .current-count-bar-container
-            .legend-label= t 'count' + ':'
-            .legend-label.legend-zero 0
-            .current-count-bar
-            .legend-label.current-count
-    #density-map-b
+
+  - if @scenario_b
+    .col-xs-6
+      .panel.panel-default
+        .panel-heading
+          %h4.panel-title.light-panel-title
+            %span
+              %i.icon-address
+              = t '.departures'
+              .label.label-info= @scenario_b.year
+          .panel-body
+            .legend
+              .row
+                .col-xs-12
+                  .total-count
+                  .current-count-bar-container
+                    .legend-label= t 'count' + ':'
+                    .legend-label.legend-zero 0
+                    .current-count-bar
+                    .legend-label.current-count
+            #density-map-b
