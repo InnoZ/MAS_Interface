@@ -130,7 +130,7 @@ class Scenario < ApplicationRecord
   end
 
   def available_modes
-    %w[car ride carsharing pt bike walk]
+    plans.select(:mode).group(:mode).map(&:mode).sort_by { |element| mode_priority(element) }
   end
 
   def seed_text
