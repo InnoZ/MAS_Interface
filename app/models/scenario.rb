@@ -37,6 +37,7 @@ class Scenario < ApplicationRecord
       'carbon_emission' => carbon_emission(modifiers: modifiers),
       'modal_split' => modal_split(modifiers: modifiers),
       'mode_colors' => mode_colors,
+      'od_relations' => JSON.parse(od_relations),
     }
   end
 
@@ -129,7 +130,7 @@ class Scenario < ApplicationRecord
   end
 
   def available_modes
-    plans.pluck(:mode).uniq.sort_by { |element| mode_priority(element) }
+    %w[car ride carsharing pt bike walk]
   end
 
   def seed_text

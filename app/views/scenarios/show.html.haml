@@ -59,10 +59,8 @@
   window.districtGeometry = #{@scenario_a.district_geometry.to_json}
   window.districtIdScenarioA = '#{@scenario_a.district_id}'
   window.yearScenarioA = #{@scenario_a.year}
-  window.odRelationsScenarioA = #{@scenario_a.od_relations}
 
 - if @scenario_b
   :javascript
     window.districtIdScenarioB = '#{@scenario_b.district_id}'
     window.yearScenarioB = #{@scenario_b.year}
-    window.odRelationsScenarioB = #{@scenario_b.od_relations}

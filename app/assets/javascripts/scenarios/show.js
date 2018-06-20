@@ -91,8 +91,10 @@ jQuery(function() {
     var districtId = window['districtIdScenario' + ab.toUpperCase()];
 
     if (typeof year !== 'undefined') {
-      getChartData(year, districtId, ab, {motorized_share: 1, car_carbon: 1});
-      getMapData(year, districtId, ab);
+      getChartData(year, districtId, ab, {
+        motorized_share: 1,
+        car_carbon: 1
+      });
     };
   });
 
@@ -139,26 +141,10 @@ jQuery(function() {
         makePieChart('#carbon-emission-chart-' + ab, data.carbon_emission, 'carbon');
         jQuery('#line-charts').find('.loading').remove();
         makeDiurnalCurve('#diurnal-curve-chart-' + ab, data.diurnal_json)
-      }
-    });
-  };
-
-  function getMapData(year, districtId, ab) {
-    jQuery('#density-map-section').find('.loading').remove();
-    $('#density-map-section, #od-map-section').find('.container').append("<div class='loading'>loading...</div>");
-    $.ajax({
-      data: {
-        year: year,
-        district_id: districtId
-      },
-      url: "/scenario_data",
-      type: 'GET',
-      dataType: 'json', // added data type
-      success: function(data) {
         jQuery('#density-map-section').find('.loading').remove();
-        makeDensityMap('density-map-' + ab, window['odRelationsScenario' + ab.toUpperCase()], data);
+        makeDensityMap('density-map-' + ab, data.od_relations, data);
         jQuery('#od-map-section').find('.loading').remove();
-        makeODMap('od-map-' + ab, window['odRelationsScenario' + ab.toUpperCase()], data);
+        makeODMap('od-map-' + ab, data.od_relations, data);
       }
     });
   };
@@ -167,13 +153,16 @@ jQuery(function() {
   $("#motorized-share-slider").slider({
     min: -100,
     max: 100,
-    slide: function( event, ui ) {
+    slide: function(event, ui) {
       clearTimeout(timer);
       var year = window['yearScenarioB'];
       var districtId = window['districtIdScenarioB'];
       timer = setTimeout(function() {
         var carCarbon = $("#car-carbon-slider").slider("value");
-        getChartData(year, districtId, 'b', {motorized_share: ui.value / 10, car_carbon: carCarbon / 10})
+        getChartData(year, districtId, 'b', {
+          motorized_share: ui.value / 10,
+          car_carbon: carCarbon / 10
+        })
       }, 500);
     }
   });
@@ -181,13 +170,16 @@ jQuery(function() {
   $("#car-carbon-slider").slider({
     min: -100,
     max: 100,
-    slide: function( event, ui ) {
+    slide: function(event, ui) {
       clearTimeout(timer);
       var year = window['yearScenarioB'];
       var districtId = window['districtIdScenarioB'];
       timer = setTimeout(function() {
         var motorizedShare = $("#motorized-share-slider").slider("value");
-        getChartData(year, districtId, 'b', {motorized_share: motorizedShare / 10, car_carbon: ui.value / 10})
+        getChartData(year, districtId, 'b', {
+          motorized_share: motorizedShare / 10,
+          car_carbon: ui.value / 10
+        })
       }, 500);
     }
   });
