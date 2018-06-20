@@ -1,8 +1,7 @@
 class ScenariosController < ApplicationController
   def index
     @districts_germany = DistrictsGermany.all.to_json
-    @scenarios = Scenario.all
-    @available_districts = @scenarios.map(&:scenario_map_infos).to_json
+    @available_districts = Scenario.map_meta_data
   end
 
   # rubocop:disable all

@@ -5,6 +5,10 @@ class Scenario < ApplicationRecord
 
   default_scope { order(year: :asc) }
 
+  def self.map_meta_data
+    all.select(:district_id, :name, :year, :population).to_json
+  end
+
   def calculate_od_relations_and_modal_split
     unless Grid.find_by(district_id: district_id, side_length: Grid.default_side_length)
       GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run
@@ -18,15 +22,6 @@ class Scenario < ApplicationRecord
       hash[mode] = Destinations.new(district_id, year, mode).feature_collection
     end
     hash.to_json
-  end
-
-  def scenario_map_infos
-    {
-      district_id: district_id,
-      name: name,
-      year: year,
-      population: population,
-    }
   end
 
   def json_all(modifiers:)

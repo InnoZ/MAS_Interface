@@ -1,59 +1,60 @@
-%section#hero
-  .container-full
-    .row
-      .col-xs-12
-        #district-geometry
-          .blue-haze
-        .overlay
-          = link_to scenarios_path do
-            .btn.btn-default
-              %i.icon-left-1
-              = t '.change_district'
-          .district-name.landkreis
-            = t('district').upcase
-          .district-name
-            = @scenario_a.district_name.upcase
-          .info
-            %h4= "#{t('.population')}: #{@scenario_a.population}"
-            %h4= "#{t('.area')}: ~#{@scenario_a.district_area} km2"
-
-- if @scenarios.length > 1
-  %section#compare-form
-    .container.inner-sm
+#scenario-show
+  %section#hero
+    .container-full
       .row
         .col-xs-12
-          = render 'layouts/flash'
-        .col-xs-12.text-center
-        = form_tag '/show/' + params[:district], method: :get do
-          .col-sm-4
-            = select_tag 'year_a', options_from_collection_for_select(@scenarios - [@scenario_b], :year, :full_name, @scenario_a&.year), {class: 'big-select'}
-          .col-sm-1.text-center
-            .and= t 'and'
-          .col-sm-4
-            = select_tag 'year_b', options_from_collection_for_select(@scenarios - [@scenario_a], :year, :full_name, @scenario_b&.year), {class: 'big-select'}
-          .col-sm-2.col-sm-offset-1
-            = submit_tag 'Okay', name: nil, class: 'btn btn-default'
+          #district-geometry
+            .blue-haze
+          .overlay
+            = link_to scenarios_path do
+              .btn.btn-default
+                %i.icon-left-1
+                = t '.change_district'
+            .district-name.landkreis
+              = t('district').upcase
+            .district-name
+              = @scenario_a.district_name.upcase
+            .info
+              %h4= "#{t('.population')}: #{@scenario_a.population}"
+              %h4= "#{t('.area')}: ~#{@scenario_a.district_area} km2"
 
-%section#pie-charts.light-bg
-  .container.inner-sm
-    = render 'pie_charts'
+  - if @scenarios.length > 1
+    %section#compare-form
+      .container.inner-sm
+        .row
+          .col-xs-12
+            = render 'layouts/flash'
+          .col-xs-12.text-center
+          = form_tag '/show/' + params[:district], method: :get do
+            .col-sm-4
+              = select_tag 'year_a', options_from_collection_for_select(@scenarios - [@scenario_b], :year, :full_name, @scenario_a&.year), {class: 'big-select'}
+            .col-sm-1.text-center
+              .and= t 'and'
+            .col-sm-4
+              = select_tag 'year_b', options_from_collection_for_select(@scenarios - [@scenario_a], :year, :full_name, @scenario_b&.year), {class: 'big-select'}
+            .col-sm-2.col-sm-offset-1
+              = submit_tag 'Okay', name: nil, class: 'btn btn-default'
 
-- if @scenario_b
-  %section#comparison.blue-bg
-    .container.inner
-      = render 'comparison'
+  %section#pie-charts.light-bg
+    .container.inner-sm
+      = render 'pie_charts'
 
-%section#line-charts.light-bg
-  .container.inner-sm
-    = render 'line_charts'
+  - if @scenario_b
+    %section#comparison.blue-bg
+      .container.inner
+        = render 'comparison'
 
-%section#density-map-section.light-bg
-  .container.inner-xs
-    = render 'density_maps'
+  %section#line-charts.light-bg
+    .container.inner-sm
+      = render 'line_charts'
 
-%section#od-map-section.light-bg
-  .container.inner-xs
-    = render 'od_maps'
+  %section#density-map-section.light-bg
+    .container.inner-xs
+      = render 'density_maps'
+
+  %section#od-map-section.light-bg
+    .container.inner-xs
+      = render 'od_maps'
 
 :javascript
   window.districtGeometry = #{@scenario_a.district_geometry.to_json}
