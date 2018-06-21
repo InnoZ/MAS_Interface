@@ -72,6 +72,8 @@ class Scenario < ApplicationRecord
   end
 
   def factorize(value)
+    # slider delivers float values within a range.
+    # This function transforms negative values to dividers (e.g. -3 => 1/3)
     return 1 if !value || value.to_f == 0
     value.to_f > 0 ? (value.to_f) : (1 / value.to_f.abs)
   end
@@ -126,7 +128,7 @@ class Scenario < ApplicationRecord
 
   def available_modes
     # get available modes from pre-processed data
-    carbon_emissions.map{ |o| o.first }
+    carbon_emissions.map(&:first)
   end
 
   def seed_text

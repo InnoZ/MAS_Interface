@@ -16,7 +16,7 @@
   - index == 0 ? ab = 'a' : ab = 'b'
   - if scenario
     .row
-      .col-sm-4
+      .col-sm-3
         .panel.panel-default
           .panel-heading
             .panel-title{class: ('light-panel-title' if ab == 'b')}
@@ -25,7 +25,7 @@
               .label.label-info= scenario.year
           .panel-body
             %svg.box-chart{id: 'modal-split-chart-' + ab}
-      .col-sm-4
+      .col-sm-3
         .panel.panel-default
           .panel-heading
             .panel-title{class: ('light-panel-title' if ab == 'b')}
@@ -34,7 +34,7 @@
               .label.label-info= scenario.year
           .panel-body
             %svg.box-chart{id: 'traffic-performance-chart-' + ab}
-      .col-sm-4
+      .col-sm-3
         .panel.panel-default
           .panel-heading
             .panel-title{class: ('light-panel-title' if ab == 'b')}
@@ -43,6 +43,16 @@
               .label.label-info= scenario.year
           .panel-body
             %svg.box-chart{id: 'carbon-emission-chart-' + ab}
+
+      .col-sm-3
+        .panel.panel-default
+          .panel-heading
+            .panel-title{class: ('light-panel-title' if ab == 'b')}
+              %i.icon-leaf-1
+              = t 'co2_emissions'
+              .label.label-info= scenario.year
+          .panel-body
+            %svg.bar-chart{id: 'carbon-emission-absolute-chart-' + ab}
 
 .row
   .col-xs-12

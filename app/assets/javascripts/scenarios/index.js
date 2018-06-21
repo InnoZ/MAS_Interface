@@ -1,9 +1,9 @@
 jQuery(function() {
   jQuery('#map-germany').each(function() {
-    var findScenarioById = function(district_id){
-        return jQuery.grep(window.availableDistricts, function(n, i){
-          return n.district_id == district_id;
-        });
+    var findScenarioById = function(district_id) {
+      return jQuery.grep(window.availableDistricts, function(n, i) {
+        return n.district_id == district_id;
+      });
     };
 
     var resizeMap = function() {
@@ -13,10 +13,17 @@ jQuery(function() {
     resizeMap();
     jQuery(window).resize(function() {
       // delay for browser minimizing/maximizing
-      setTimeout(function() { resizeMap(); map.invalidateSize(); }, 100);
+      setTimeout(function() {
+        resizeMap();
+        map.invalidateSize();
+      }, 100);
     });
-    jQuery('.navbar-collapse').on('shown.bs.collapse', function() { resizeMap(); });
-    jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
+    jQuery('.navbar-collapse').on('shown.bs.collapse', function() {
+      resizeMap();
+    });
+    jQuery('.navbar-collapse').on('hidden.bs.collapse', function() {
+      resizeMap();
+    });
 
     L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
 
@@ -42,7 +49,9 @@ jQuery(function() {
     // Function for removing highlight
     function removeHighlight() {
       if (highlightedLayer !== null) {
-        highlightedLayer.setStyle({'weight': 0.2});
+        highlightedLayer.setStyle({
+          'weight': 0.2
+        });
         highlightedLayer = null;
       }
     }
@@ -72,21 +81,24 @@ jQuery(function() {
     };
 
     var featureById = {};
-    var onEachFeature = function (feature, layer) {
+    var onEachFeature = function(feature, layer) {
       var id = feature.properties.id;
 
       // Keep track of highlighted marker
-      if (id) { featureById[id] = layer };
+      if (id) {
+        featureById[id] = layer
+      };
 
-      if ( findScenarioById(id).length > 2 ) {
+      if (findScenarioById(id).length > 2) {
         layer.setStyle(highlightedStyle);
-      } else if ( findScenarioById(id).length > 0 ) {
+      } else if (findScenarioById(id).length > 0) {
         layer.setStyle(defaultStyle);
       } else {
         layer.setStyle(zeroStyle);
       };
 
       var name = feature.properties.name;
+
       function onclick(e) {
         var id = feature.properties.id;
         highlightLayer(id, false);
@@ -94,7 +106,9 @@ jQuery(function() {
       layer.on('click', onclick);
     };
 
-    var districts = L.geoJson(window.districtsGermanyGeo, { onEachFeature: onEachFeature });
+    var districts = L.geoJson(window.districtsGermanyGeo, {
+      onEachFeature: onEachFeature
+    });
     districts.addTo(map);
 
     var startPositions = [
@@ -102,7 +116,7 @@ jQuery(function() {
       [52.80608223985886, 10.52490234375],
       [50.48547354578499, 9.3548583984375],
     ];
-    var randomPosition = startPositions[Math.floor(Math.random()*startPositions.length)];
+    var randomPosition = startPositions[Math.floor(Math.random() * startPositions.length)];
     map.setView(randomPosition, 8);
 
     jQuery('.scenario-selection-form')
@@ -119,16 +133,20 @@ jQuery(function() {
       var scenarios = findScenarioById(id)
       removeHighlight();
       highlightedLayer = featureById[id];
-      highlightedLayer.setStyle({'weight': 3});
+      highlightedLayer.setStyle({
+        'weight': 3
+      });
       jQuery('#district-input').val('');
-      if (zoomTo) { map.fitBounds(highlightedLayer.getBounds()) };
+      if (zoomTo) {
+        map.fitBounds(highlightedLayer.getBounds())
+      };
       var box = jQuery('.district-info-box');
       box.fadeIn();
       box.find('.header').html("<i class='icon-location-1'></i>" + highlightedLayer.feature.properties.name);
-      if ( scenarios.length > 0 ) {
+      if (scenarios.length > 0) {
         var link = 'show/' + id;
         box.find('.info').html(
-          '<a class="btn btn-default" onclick="jQuery(\'.loading-overlay\').show()" href=' + link + '>show scenario</a>'
+          '<a class="btn btn-default" href=' + link + '>show scenario</a>'
         );
         jQuery.each(scenarios, function(i, s) {
           if (s.name !== null) {

@@ -69,13 +69,28 @@
 }
 
 #line-charts, #pie-charts {
+  .col-sm-3 {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  .panel-title {
+    padding: 10px;
+  }
+
   .nvd3.nv-pie text {
     fill: white !important;
-    font-size: 16px;
+    font-size: 12px;
   }
   .box-chart {
-    height: 20vw;
-    min-height: 300px;
+    height: 14vw;
+    min-height: 200px;
+  }
+  .bar-chart {
+    height: 14vw;
+    min-height: 200px;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
   }
   .line-chart {
     padding: 15px;
@@ -101,6 +116,10 @@
       width: 25px;
       height: 25px;
     }
+  }
+
+  .nvd3 rect[height="1"] {
+    display: none !important;
   }
 }
 

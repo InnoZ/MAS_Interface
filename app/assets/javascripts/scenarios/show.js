@@ -57,6 +57,43 @@ jQuery(function() {
       jQuery(div).closest('.panel-body').find('.loading').hide();
     };
 
+    var makeBarChart = function(div, data, attribute) {
+      var filteredData = jQuery.grep(data, function(obj, i) {
+        return (obj[attribute] > 0);
+      });
+
+      var formattedData = [{
+        key: 'carbon emissions',
+        values: filteredData
+      }];
+
+      nv.addGraph(function() {
+        var chart = nv.models.discreteBarChart()
+          .x(function(d) {
+            return d.mode
+          })
+          .y(function(d) {
+            return d[attribute]
+          })
+          .showXAxis(false);
+
+        chart.tooltip.contentGenerator(function(obj) {
+          return drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
+        });
+
+        d3.select(div)
+          .datum(formattedData)
+          .call(chart);
+
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+      });
+
+
+      jQuery(div).closest('.panel-body').find('.loading').hide();
+    };
+
     var makeDiurnalCurve = function(div, data) {
       nv.addGraph(function() {
         var chart = nv.models.lineChart()
@@ -135,6 +172,8 @@ jQuery(function() {
       jQuery(trafficPerformanceDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
       var carbonEmissionDiv = '#carbon-emission-chart-' + ab;
       jQuery(carbonEmissionDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
+      var carbonEmissionAbsDiv = '#carbon-emission-absolute-chart-' + ab;
+      jQuery(carbonEmissionAbsDiv).closest('.panel-body').append("<div class='loading'>loading...</div>");
       var diurnalCurveDiv = '#diurnal-curve-chart-' + ab;
 
       if (typeof window['map_' + ab] == "undefined") {
@@ -158,6 +197,7 @@ jQuery(function() {
           makePieChart(modalSplitDiv, data.modal_split, 'share');
           makePieChart(trafficPerformanceDiv, data.traffic_performance, 'traffic');
           makePieChart(carbonEmissionDiv, data.carbon_emission, 'carbon');
+          makeBarChart(carbonEmissionAbsDiv, data.carbon_emission, 'carbon');
           if (typeof window['map_' + ab] == "undefined") {
             makeDiurnalCurve(diurnalCurveDiv, data.diurnal_json)
             makeDensityMap(densityMapDiv, data.od_relations, data);
