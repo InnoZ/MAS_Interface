@@ -125,7 +125,7 @@ class Scenario < ApplicationRecord
   end
 
   def available_modes
-    plans.select(:mode).group(:mode).map(&:mode).sort_by { |element| mode_priority(element) }
+    modal_split.map{ |o| o.fetch('mode') }
   end
 
   def seed_text
