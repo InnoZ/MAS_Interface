@@ -125,7 +125,8 @@ class Scenario < ApplicationRecord
   end
 
   def available_modes
-    modal_split.map{ |o| o.fetch('mode') }
+    # get available modes from pre-processed data
+    carbon_emissions.map{ |o| o.first }
   end
 
   def seed_text
