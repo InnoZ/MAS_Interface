@@ -13,6 +13,7 @@ de:
       how_are_modes_split: 'Wie ist das Verkehrsaufkommen auf Verkehrsmittel aufgeteilt?'
     density_maps:
       where_is_action: 'Wo ist besonders viel los?'
+      departures: 'Abfahrten'
     od_maps:
       how_looks_traffic_flow: 'Wie sehen die Verkehrsströme im Landkreis aus?'
       od_relations: 'Start-Ziel-Beziehungen'

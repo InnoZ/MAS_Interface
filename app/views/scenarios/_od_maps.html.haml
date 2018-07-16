@@ -11,16 +11,33 @@
       .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
 
   .col-xs-12
-    #accordion.panel-group
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %span
+            %i.icon-address
+            = t '.od_relations'
+            .label.label-info= @scenario_a.year
+        .panel-body
+          .legend
+            .row
+              .col-xs-12
+                .total-count
+                .current-count-bar-container
+                  .legend-label= t 'count' + ':'
+                  .legend-label.legend-zero 0
+                  .current-count-bar
+                  .legend-label.current-count
+          #od-map-a
+
+    - if @scenario_b
       .panel.panel-default
         .panel-heading
-          %h4.panel-title
-            %a.panel-toggle{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#content1"}
-              %span
-                %i.icon-address
-                = t '.od_relations'
-                .label.label-info= @scenario_a.year
-        #content1.panel-collapse.collapse.in
+          %h4.panel-title.light-panel-title
+            %span
+              %i.icon-address
+              = t '.od_relations'
+              .label.label-info= @scenario_b.year
           .panel-body
             .legend
               .row
@@ -31,27 +48,4 @@
                     .legend-label.legend-zero 0
                     .current-count-bar
                     .legend-label.current-count
-            #od-map-a
-
-      - if @scenario_b
-        .panel.panel-default
-          .panel-heading
-            %h4.panel-title.light-panel-title
-              %a.panel-toggle.collapsed{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#content2"}
-                %span
-                  %i.icon-address
-                  = t '.od_relations'
-                  .label.label-info= @scenario_b.year
-
-          #content2.panel-collapse.collapse
-            .panel-body
-              .legend
-                .row
-                  .col-xs-12
-                    .total-count
-                    .current-count-bar-container
-                      .legend-label= t 'count' + ':'
-                      .legend-label.legend-zero 0
-                      .current-count-bar
-                      .legend-label.current-count
-              #od-map-b
+            #od-map-b

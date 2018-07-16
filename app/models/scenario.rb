@@ -5,12 +5,15 @@ class Scenario < ApplicationRecord
 
   default_scope { order(year: :asc) }
 
+  def self.map_meta_data
+    all.select(:district_id, :name, :year, :population).to_json
+  end
+
   def calculate_od_relations_and_modal_split
     unless Grid.find_by(district_id: district_id, side_length: Grid.default_side_length)
       GridFill.new(district_id: district_id, side_length: Grid.default_side_length).run
     end
     update_attribute(:od_relations, od_relations_json)
-    update_attribute(:modal_split, modal_split_json)
   end
 
   def od_relations_json
@@ -21,23 +24,58 @@ class Scenario < ApplicationRecord
     hash.to_json
   end
 
-  def scenario_map_infos
+  def json_all(modifiers:)
     {
-      district_id: district_id,
-      name: name,
-      year: year,
-      population: population,
+      'district_geometry' => district_geometry,
+      'traffic_performance' => traffic_performance(modifiers: modifiers),
+      'diurnal_json' => diurnal_json,
+      'carbon_emission' => carbon_emission(modifiers: modifiers),
+      'modal_split' => modal_split(modifiers: modifiers),
+      'mode_colors' => mode_colors,
+      'od_relations' => JSON.parse(od_relations),
     }
   end
 
-  def modal_split_json
-    available_modes.map do |mode|
+  def modal_split(modifiers: nil)
+    counts = plans.group(:mode).count
+    counts.map do |mode, count|
+      factor = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:motorized_share)) : 1
       {
         'mode' => mode,
         'color' => mode_color(mode),
-        'share' => plans.where(mode: mode).count,
+        'share' => count * factor,
       }
-    end.to_json
+    end
+  end
+
+  def traffic_performance(modifiers: nil)
+    mode_order(person_km).map do |mode, distance|
+      factor = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:motorized_share)) : 1
+      {
+        'mode' => mode,
+        'color' => mode_color(mode),
+        'traffic' => distance.to_i * factor,
+      }
+    end
+  end
+
+  def carbon_emission(modifiers: nil)
+    mode_order(carbon_emissions).map do |mode, carbon_emission|
+      factor1 = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:motorized_share)) : 1
+      factor2 = %w[car ride carsharing].include?(mode) ? factorize(modifiers&.fetch(:car_carbon)) : 1
+      {
+        'mode' => mode,
+        'color' => mode_color(mode),
+        'carbon' => carbon_emission.to_i * factor1 * factor2,
+      }
+    end
+  end
+
+  def factorize(value)
+    # slider delivers float values within a range.
+    # This function transforms negative values to dividers (e.g. -3 => 1/3)
+    return 1 if !value || value.to_f == 0
+    value.to_f > 0 ? (value.to_f) : (1 / value.to_f.abs)
   end
 
   def full_name
@@ -58,36 +96,6 @@ class Scenario < ApplicationRecord
       DB["SELECT ST_Area(ST_GeomFromGeoJSON('#{district}')::geography);"].first[:st_area] /
       1_000_000
     ).round(2)
-  end
-
-  def json_all
-    {
-      'district_geometry' => district_geometry,
-      'traffic_performance' => traffic_performance,
-      'diurnal_json' => diurnal_json,
-      'carbon_emission' => carbon_emission,
-      'mode_colors' => mode_colors,
-    }
-  end
-
-  def traffic_performance
-    mode_order(person_km).map do |mode, distance|
-      {
-        'mode' => mode,
-        'color' => mode_color(mode),
-        'traffic' => distance.to_i,
-      }
-    end
-  end
-
-  def carbon_emission
-    mode_order(carbon_emissions).map do |mode, carbon_emission|
-      {
-        'mode' => mode,
-        'color' => mode_color(mode),
-        'carbon' => carbon_emission.to_i,
-      }
-    end
   end
 
   def diurnal_json
@@ -119,7 +127,8 @@ class Scenario < ApplicationRecord
   end
 
   def available_modes
-    plans.pluck(:mode).uniq.sort_by { |element| mode_priority(element) }
+    # get available modes from pre-processed data
+    carbon_emissions.map(&:first)
   end
 
   def seed_text

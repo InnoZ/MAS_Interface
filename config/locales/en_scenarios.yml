@@ -13,6 +13,7 @@ en:
       how_are_modes_split: 'What is the modal split?'
     density_maps:
       where_is_action: 'Which areas are very active?'
+      departures: 'Departures'
     od_maps:
       how_looks_traffic_flow: 'How does the traffic flow look like within the district?'
       od_relations: 'Origin destination relations'
