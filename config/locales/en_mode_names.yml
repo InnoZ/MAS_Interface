@@ -1,5 +1,6 @@
 en:
   mode_names:
+    all: All
     bike: Bike
     car: Car
     carsharing: Carsharing

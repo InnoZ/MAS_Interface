@@ -18,13 +18,14 @@ class Scenario < ApplicationRecord
 
   def od_relations_json
     hash = {}
+    hash['all'] = Destinations.new(district_id, year, nil).feature_collection
     available_modes.each do |mode|
       hash[mode] = Destinations.new(district_id, year, mode).feature_collection
     end
     hash.to_json
   end
 
-  def json_all(modifiers:)
+  def json_all(modifiers: nil)
     {
       'district_geometry' => district_geometry,
       'traffic_performance' => traffic_performance(modifiers: modifiers),
@@ -146,13 +147,14 @@ class Scenario < ApplicationRecord
 
   def mode_colors
     {
-      'bike' => '#50a0b5',
+      'all' => '#E1E1E1',
       'car' => '#f2b50c',
-      'carsharing' => '#db8012',
       'ride' => '#f4c85b',
-      'other' => '#bdb8b3',
-      'walk' => '#3db783',
+      'carsharing' => '#db8012',
       'pt' => '#c94380',
+      'bike' => '#50a0b5',
+      'walk' => '#3db783',
+      'other' => '#bdb8b3',
     }
   end
 

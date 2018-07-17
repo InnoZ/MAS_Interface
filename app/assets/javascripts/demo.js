@@ -7,8 +7,8 @@ jQuery(function() {
     });
     baselayer = L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-    });
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+      });
     map.addLayer(baselayer);
 
     var zoomToOsna = function() {
@@ -24,7 +24,10 @@ jQuery(function() {
         featureById[feature.id] = layer;
       }
     });
-    district.setStyle({ fillOpacity: 0, stroke: false });
+    district.setStyle({
+      fillOpacity: 0,
+      stroke: false
+    });
     district.addTo(map);
 
     // ActionCable Websocket
@@ -40,7 +43,9 @@ jQuery(function() {
 
         if (response.active_polygon == '') {
           jQuery('#feature-starts').hide();
-          if ( starts ) { map.removeLayer(starts) };
+          if (starts) {
+            map.removeLayer(starts)
+          };
           zoomToOsna();
           console.log('no polygon clicked yet')
         } else {
@@ -49,10 +54,18 @@ jQuery(function() {
           var feature = featureById[parseInt(response.active_polygon.id)];
 
           var startPoints = feature.feature.properties.start_points;
-          if ( starts ) { map.removeLayer(starts) };
+          if (starts) {
+            map.removeLayer(starts)
+          };
           starts = L.featureGroup();
           jQuery.each(startPoints, function(index, elem) {
-            start = L.circle([elem[1], elem[0]], 3, {color: color, fill: true, fillOpacity: 1, fillColor: color})
+            start = L.circle([elem[1], elem[0]], 30, {
+              color: color,
+              fill: true,
+              fillOpacity: 0.6,
+              weight: 0,
+              fillColor: color
+            })
             start.addTo(starts);
           });
           starts.addTo(map);
@@ -76,10 +89,17 @@ jQuery(function() {
       resizeMap();
       jQuery(window).resize(function() {
         // delay for browser minimizing/maximizing
-        setTimeout(function() { resizeMap(); map.invalidateSize(); }, 100);
+        setTimeout(function() {
+          resizeMap();
+          map.invalidateSize();
+        }, 100);
       });
-      jQuery('.navbar-collapse').on('shown.bs.collapse', function() { resizeMap(); });
-      jQuery('.navbar-collapse').on('hidden.bs.collapse', function() { resizeMap(); });
+      jQuery('.navbar-collapse').on('shown.bs.collapse', function() {
+        resizeMap();
+      });
+      jQuery('.navbar-collapse').on('hidden.bs.collapse', function() {
+        resizeMap();
+      });
 
       L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
 
@@ -93,7 +113,11 @@ jQuery(function() {
       map.doubleClickZoom.disable();
 
       var district = L.geoJson(data.district_geometry);
-      district.setStyle({ fillOpacity: 0, stroke: true, color: 'red' });
+      district.setStyle({
+        fillOpacity: 0,
+        stroke: true,
+        color: 'red'
+      });
       district.addTo(map);
       map.fitBounds(district.getBounds());
 
@@ -109,15 +133,26 @@ jQuery(function() {
       };
 
       var setInitialStyle = function() {
-        odLayer.setStyle({fillOpacity: 0, color: 'black', opacity: 1, weight: 0.2});
+        odLayer.setStyle({
+          fillOpacity: 0,
+          color: 'black',
+          opacity: 1,
+          weight: 0.2
+        });
       };
 
-      var onEachFeature = function (feature, layer) {
+      var onEachFeature = function(feature, layer) {
         function click(e) {
-          if (lines) { map.removeLayer(lines) };
+          if (lines) {
+            map.removeLayer(lines)
+          };
           selectedLayer = layer;
           setInitialStyle();
-          layer.setStyle({weight: 3, color: 'red', opacity: 1});
+          layer.setStyle({
+            weight: 3,
+            color: 'red',
+            opacity: 1
+          });
           highlightDestinations(feature, layer);
 
           jQuery.ajax({
@@ -137,7 +172,10 @@ jQuery(function() {
 
       var findOdFeatureById = function(id) {
         jQuery.each(odLayer._layers, function(index, elem) {
-          if (elem.feature.id == id) { target = elem; return false; }
+          if (elem.feature.id == id) {
+            target = elem;
+            return false;
+          }
         });
         return target;
       };
@@ -152,17 +190,23 @@ jQuery(function() {
         var counter = 0;
         jQuery.each(feature.properties.destinations, function(index, destination) {
           counter += 1;
-          for (var id in destination){
+          for (var id in destination) {
             var count = destination[id];
             var opacity = (count / featureMaxCount);
-            var style = { fillColor: modeColor, fillOpacity: opacity };
+            var style = {
+              fillColor: modeColor,
+              fillOpacity: opacity
+            };
             var destinationLayer = findOdFeatureById(id);
             if (destinationLayer) {
               destinationLayer.setStyle(style);
               if (counter < 10) {
                 var line = L.polyline(
-                  [destinationLayer.getBounds().getCenter(), selectedCentroid],
-                  { color: 'white', weight: 2, opacity: 1 }
+                  [destinationLayer.getBounds().getCenter(), selectedCentroid], {
+                    color: 'white',
+                    weight: 2,
+                    opacity: 1
+                  }
                 );
                 line.addTo(lines);
               };
@@ -179,9 +223,15 @@ jQuery(function() {
         modeColor = data.mode_colors[activeMode];
         modeMaxCount = modeData.properties.maxCount;
         totalModeCount = modeData.properties.totalCount;
-        if (lines) { map.removeLayer(lines) };
-        if (odLayer) { map.removeLayer(odLayer) };
-        odLayer = L.geoJson(modeData, {onEachFeature: onEachFeature});
+        if (lines) {
+          map.removeLayer(lines)
+        };
+        if (odLayer) {
+          map.removeLayer(odLayer)
+        };
+        odLayer = L.geoJson(modeData, {
+          onEachFeature: onEachFeature
+        });
         odLayer.addTo(map);
         setInitialStyle();
         colorLegend(modeColor);
