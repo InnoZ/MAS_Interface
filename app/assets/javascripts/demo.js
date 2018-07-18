@@ -17,18 +17,20 @@ jQuery(function() {
     zoomToOsna();
 
     var featureById = {};
-    // temporarily use the od data's car dataset for hexagon zoom
-    // better create a new clean one soon, because we do not need od data here
-    var district = L.geoJson(odRelations['car'], {
-      onEachFeature: function(feature, layer) {
-        featureById[feature.id] = layer;
-      }
-    });
-    district.setStyle({
-      fillOpacity: 0,
-      stroke: false
-    });
-    district.addTo(map);
+    var loadGrid = function(mode) {
+      // temporarily use the od data's car dataset for hexagon zoom
+      // better create a new clean one soon, because we do not need od data here
+      var district = L.geoJson(odRelations[mode], {
+        onEachFeature: function(feature, layer) {
+          featureById[feature.id] = layer;
+        }
+      });
+      district.setStyle({
+        fillOpacity: 0,
+        stroke: false
+      });
+      district.addTo(map);
+    };
 
     // ActionCable Websocket
     var starts = null;
@@ -42,6 +44,9 @@ jQuery(function() {
         jQuery('#mode-name').html(modeName).css('color', color);
 
         if (response.active_polygon == '') {
+          // no active polygon means that mode is switched
+          // thus, change grid to get correct od data
+          loadGrid(response.active_mode);
           jQuery('#feature-starts').hide();
           if (starts) {
             map.removeLayer(starts)
@@ -62,7 +67,7 @@ jQuery(function() {
             start = L.circle([elem[1], elem[0]], 30, {
               color: color,
               fill: true,
-              fillOpacity: 0.6,
+              fillOpacity: 0.5,
               weight: 0,
               fillColor: color
             })

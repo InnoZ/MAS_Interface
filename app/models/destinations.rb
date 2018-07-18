@@ -8,7 +8,7 @@ class Destinations
     @mode = mode
   end
 
-  START_POINT_LIMIT = 100
+  START_POINT_LIMIT = 1000
 
   # rubocop:disable Eval
   def mapped_features
@@ -23,7 +23,7 @@ class Destinations
   end
 
   def mode_geojson
-    mode_destinations.map do |r|
+    DB.fetch(mode_destinations_query).all.map do |r|
       {
         id:           r[:start_grid],
         geometry:     r[:geometry],
@@ -31,10 +31,6 @@ class Destinations
         destinations: r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
       }
     end
-  end
-
-  def mode_destinations
-    @mode_destinations ||= DB.fetch(mode_destinations_query).all
   end
 
   def mode_selector
