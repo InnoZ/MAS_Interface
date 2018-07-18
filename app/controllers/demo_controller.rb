@@ -11,17 +11,12 @@ class DemoController < ApplicationController
     File.open("public/data_demo_scenario.json","w") do |f|
       f.write(@scenario_a.json_all.to_json)
     end
-    File.open("public/od_relations_demo_scenario.json","w") do |f|
-      f.write(@scenario_a.od_relations)
-    end
 
     @data_demo_scenario = JSON.parse(File.read('public/data_demo_scenario.json'))
-    @od_relations_demo_scenario = JSON.parse(File.read('public/od_relations_demo_scenario.json'))
   end
 
   def monitor
     @data_demo_scenario = JSON.parse(File.read('public/data_demo_scenario.json'))
-    @od_relations_demo_scenario = JSON.parse(File.read('public/od_relations_demo_scenario.json'))
   end
 
   def activate_polygon

@@ -20,7 +20,7 @@ jQuery(function() {
     var loadGrid = function(mode) {
       // temporarily use the od data's car dataset for hexagon zoom
       // better create a new clean one soon, because we do not need od data here
-      var district = L.geoJson(odRelations[mode], {
+      var district = L.geoJson(window.data.od_relations[mode], {
         onEachFeature: function(feature, layer) {
           featureById[feature.id] = layer;
         }
@@ -43,10 +43,11 @@ jQuery(function() {
         var modeName = response.active_mode_name;
         jQuery('#mode-name').html(modeName).css('color', color);
 
+        // no active polygon means that mode is switched,
+        // thus change grid to get correct od data
+        loadGrid(response.active_mode);
+
         if (response.active_polygon == '') {
-          // no active polygon means that mode is switched
-          // thus, change grid to get correct od data
-          loadGrid(response.active_mode);
           jQuery('#feature-starts').hide();
           if (starts) {
             map.removeLayer(starts)
@@ -64,7 +65,7 @@ jQuery(function() {
           };
           starts = L.featureGroup();
           jQuery.each(startPoints, function(index, elem) {
-            start = L.circle([elem[1], elem[0]], 30, {
+            start = L.circle([elem[1], elem[0]], 12, {
               color: color,
               fill: true,
               fillOpacity: 0.5,
@@ -74,7 +75,7 @@ jQuery(function() {
             start.addTo(starts);
           });
           starts.addTo(map);
-          map.fitBounds(feature.getBounds());
+          map.setView(feature.getBounds().getCenter(), 16);
         };
       }
     });
@@ -256,6 +257,6 @@ jQuery(function() {
       jQuery('.od-mode-selector').last().click();
     };
 
-    makeODMap('od-map', window.odRelations, window.data);
+    makeODMap('od-map', window.data.od_relations, window.data);
   });
 });
