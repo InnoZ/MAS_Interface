@@ -60,4 +60,16 @@
     width: calc((100vw - 100vh) / 2);
     height: 100vh;
   }
+
+  .leaflet-tooltip-pane .text {
+    color: white;
+    opacity: 0.5;
+    font-weight: bold;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    text-transform: capitalize;
+    font-size: 14px;
+    padding: 7px;
+  }
 }

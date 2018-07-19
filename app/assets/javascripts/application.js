@@ -24,7 +24,6 @@
 //= require jquery.easytabs.min
 //= require viewport-units-buggyfill
 //= require template_scripts
-//= require mapbox
 //= require awesomplete
 //= require d3.v3
 //= require nv.d3

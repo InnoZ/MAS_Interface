@@ -1,8 +1,8 @@
+//= require leaflet
+
 jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
-    //= require leaflet
-
     window.map = L.map('demo-monitor-map', {
       zoomControl: false,
       scrollWheelZoom: false,
@@ -36,6 +36,7 @@ jQuery(function() {
 
     // ActionCable Websocket
     var starts = null;
+    var labels = null;
     App.demoState = App.cable.subscriptions.create('DemoChannel', {
       connected: function() {
         console.log('Websocket connected');
@@ -52,9 +53,8 @@ jQuery(function() {
         console.log(response)
         if (response.active_polygon == '') {
           jQuery('#feature-starts').hide();
-          if (starts) {
-            map.removeLayer(starts)
-          };
+          if (starts) { map.removeLayer(starts) };
+          if (labels) { map.removeLayer(labels) };
           zoomToOsna();
           console.log('no polygon clicked yet')
         } else {
@@ -62,23 +62,31 @@ jQuery(function() {
           var featureStarts = feature.feature.properties.featureStarts;
           jQuery('#feature-starts').show().html('Fahrten von hier: ' + featureStarts).css('color', color);
           var startPoints = feature.feature.properties.start_points;
-          if (starts) {
-            map.removeLayer(starts)
-          };
-          starts = L.featureGroup();
+          if (starts) { map.removeLayer(starts) };
+          if (labels) { map.removeLayer(labels) };
 
+          starts = L.featureGroup();
+          labels = L.featureGroup();
           jQuery.each(startPoints, function(index, elem) {
             var point = [elem[0][1], elem[0][0]];
             var activity = elem[1];
-            start = L.circle(point, 12, {
+            var start = L.circle(point, 33, {
               fill: true,
               fillOpacity: 0.5,
               weight: 0,
               fillColor: color,
-            })
+            });
             start.addTo(starts);
+            starts.addTo(map);
+
+            var label = L.tooltip({
+                permanent: true,
+                direction: 'center',
+                className: 'text'
+            }).setContent(activity[0]).setLatLng(point);
+            label.addTo(labels);
+            labels.addTo(map);
           });
-          starts.addTo(map);
           map.setView(feature.getBounds().getCenter(), 15);
         };
       }
@@ -149,7 +157,6 @@ jQuery(function() {
 
       var onEachFeature = function(feature, layer) {
         layer.on('click', function(e) {
-          console.log('click')
           if (lines) {
             map.removeLayer(lines)
           };
