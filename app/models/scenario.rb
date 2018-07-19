@@ -147,14 +147,14 @@ class Scenario < ApplicationRecord
 
   def mode_colors
     {
-      'all' => '#858585',
+      'all' => '#E1E1E1',
       'car' => '#f2b50c',
       'ride' => '#f4c85b',
       'carsharing' => '#db8012',
       'pt' => '#c94380',
       'bike' => '#50a0b5',
       'walk' => '#3db783',
-      'other' => '#B8CEB1',
+      'other' => '#bdb8b3',
     }
   end
 

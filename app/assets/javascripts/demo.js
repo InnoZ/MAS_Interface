@@ -43,8 +43,8 @@ jQuery(function() {
         var modeName = response.active_mode_name;
         jQuery('#mode-name').html(modeName).css('color', color);
 
-        // no active polygon means that mode is switched,
-        // thus change grid to get correct od data
+        // no active polygon means that mode is switched
+        // thus, change grid to get correct od data
         loadGrid(response.active_mode);
 
         if (response.active_polygon == '') {
@@ -75,7 +75,7 @@ jQuery(function() {
             start.addTo(starts);
           });
           starts.addTo(map);
-          map.setView(feature.getBounds().getCenter(), 16);
+          map.setView(feature.getBounds().getCenter(), 15);
         };
       }
     });
