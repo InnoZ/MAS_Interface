@@ -20,6 +20,7 @@ jQuery(function() {
     var loadGrid = function(mode) {
       // temporarily use the od data's car dataset for hexagon zoom
       // better create a new clean one soon, because we do not need od data here
+      console.log(window.data.od_relations[mode])
       var district = L.geoJson(window.data.od_relations[mode], {
         onEachFeature: function(feature, layer) {
           featureById[feature.id] = layer;
