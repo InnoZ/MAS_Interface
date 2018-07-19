@@ -1,6 +1,8 @@
 jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
+    //= require leaflet
+
     window.map = L.map('demo-monitor-map', {
       zoomControl: false,
       scrollWheelZoom: false,
@@ -68,7 +70,6 @@ jQuery(function() {
           jQuery.each(startPoints, function(index, elem) {
             var point = [elem[0][1], elem[0][0]];
             var activity = elem[1];
-            console.log(activity)
             start = L.circle(point, 12, {
               fill: true,
               fillOpacity: 0.5,
@@ -110,8 +111,6 @@ jQuery(function() {
         resizeMap();
       });
 
-      L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
-
       map = L.map(div, {
         tap: true,
         tapTolerance: 80
@@ -144,14 +143,13 @@ jQuery(function() {
       var setInitialStyle = function() {
         odLayer.setStyle({
           fillOpacity: 0,
-          color: 'black',
-          opacity: 1,
-          weight: 0.2
+          weight: 0
         });
       };
 
       var onEachFeature = function(feature, layer) {
-        function click(e) {
+        layer.on('click', function(e) {
+          console.log('click')
           if (lines) {
             map.removeLayer(lines)
           };
@@ -175,8 +173,7 @@ jQuery(function() {
           })
 
           featureSelected = true;
-        };
-        layer.on('click', click);
+        });
       };
 
       var findOdFeatureById = function(id) {
