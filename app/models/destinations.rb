@@ -23,13 +23,16 @@ class Destinations
     end
   end
 
+  def merge_start_points_and_activities(points, activities)
+    repair_coordinates(points)[0..START_POINT_LIMIT].zip(activities[0..START_POINT_LIMIT])
+  end
+
   def mode_geojson
     DB.fetch(mode_destinations_query).all.map do |r|
       {
         id:               r[:start_grid],
         geometry:         r[:geometry],
-        activities_after: r[:activities_after],
-        start_points:     repair_coordinates(r[:start_points])[0..START_POINT_LIMIT],
+        start_points:     merge_start_points_and_activities(r[:start_points], r[:activities_start]),
         destinations:     r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
       }
     end
@@ -49,7 +52,7 @@ class Destinations
      SELECT
       location_start AS start_point,
       location_end AS end_point,
-      to_activity_type
+      from_activity_type
       FROM (
         SELECT * FROM plans WHERE scenario_id = '#{district_id}_#{year}' #{mode_selector} #{plans_limit}
       )t1
@@ -65,7 +68,7 @@ class Destinations
         grid_end.id AS end_grid,
         grid_start.cell AS geometry,
         ARRAY[ST_X(ways.start_point::geometry), ST_Y(ways.start_point::geometry)] AS start_point,
-        to_activity_type
+        from_activity_type
       FROM
         ways
       JOIN
@@ -82,7 +85,7 @@ class Destinations
       SELECT
         ST_AsGeoJSON(geometry) AS geometry,
         array_agg(start_point) as start_points,
-        array_agg(to_activity_type) as activities_after,
+        array_agg(from_activity_type) as activities_start,
         start_grid, end_grid, count(*)
       FROM matrix
       GROUP BY
@@ -95,7 +98,7 @@ class Destinations
       /* since in psql aggregating of differently dimensioned arrays is not allowed.
          Provides an array like ['1','2','3','4'] to be repaired later */
       string_to_array(string_agg(array_to_string(start_points, ','), ','), ',') AS start_points,
-      string_to_array(string_agg(array_to_string(activities_after, ','), ','), ',') AS activities_after,
+      string_to_array(string_agg(array_to_string(activities_start, ','), ','), ',') AS activities_start,
       array_agg(array[end_grid, count]) AS destinations
       FROM grouped
       GROUP BY

@@ -20,7 +20,6 @@ jQuery(function() {
     var loadGrid = function(mode) {
       // temporarily use the od data's car dataset for hexagon zoom
       // better create a new clean one soon, because we do not need od data here
-      console.log(window.data.od_relations[mode])
       var district = L.geoJson(window.data.od_relations[mode], {
         onEachFeature: function(feature, layer) {
           featureById[feature.id] = layer;
@@ -48,6 +47,7 @@ jQuery(function() {
         // thus, change grid to get correct od data
         loadGrid(response.active_mode);
 
+        console.log(response)
         if (response.active_polygon == '') {
           jQuery('#feature-starts').hide();
           if (starts) {
@@ -56,22 +56,24 @@ jQuery(function() {
           zoomToOsna();
           console.log('no polygon clicked yet')
         } else {
-          var featureStarts = response.active_polygon.properties.featureStarts;
+          var feature = featureById[parseInt(response.active_polygon)];
+          var featureStarts = feature.feature.properties.featureStarts;
           jQuery('#feature-starts').show().html('Fahrten von hier: ' + featureStarts).css('color', color);
-          var feature = featureById[parseInt(response.active_polygon.id)];
-
           var startPoints = feature.feature.properties.start_points;
           if (starts) {
             map.removeLayer(starts)
           };
           starts = L.featureGroup();
+
           jQuery.each(startPoints, function(index, elem) {
-            start = L.circle([elem[1], elem[0]], 12, {
-              color: color,
+            var point = [elem[0][1], elem[0][0]];
+            var activity = elem[1];
+            console.log(activity)
+            start = L.circle(point, 12, {
               fill: true,
               fillOpacity: 0.5,
               weight: 0,
-              fillColor: color
+              fillColor: color,
             })
             start.addTo(starts);
           });
@@ -168,7 +170,7 @@ jQuery(function() {
             data: {
               active_mode: activeMode,
               active_mode_name: activeModeName,
-              active_polygon: feature
+              active_polygon: feature.id
             },
           })
 
