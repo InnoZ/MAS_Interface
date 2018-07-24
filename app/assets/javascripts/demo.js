@@ -2,13 +2,13 @@ jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
     window.map = L.map('demo-monitor-map', {
-      // tap: true,
-      // tapTolerance: 80,
-      // zoomControl: false,
-      // touchZoom: false,
-      // scrollWheelZoom: false,
-      // doubleClickZoom: false,
-      // dragging: false,
+      tap: true,
+      tapTolerance: 80,
+      zoomControl: false,
+      touchZoom: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      dragging: false,
       zoomSnap: 0.25
     });
     baselayer = L.tileLayer(
