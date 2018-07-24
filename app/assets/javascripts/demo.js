@@ -37,6 +37,15 @@ jQuery(function() {
       district.addTo(map);
     };
 
+    var activityIcons = {
+      'home': 'icon-home',
+      'education': 'icon-graduation-cap',
+      'shopping': 'icon-basket',
+      'work': 'icon-briefcase-1',
+      'leisure': 'icon-s-dribbble',
+      'other': 'icon-dot-3',
+    };
+
     // ActionCable Websocket
     var starts = null;
     var labels = null;
@@ -93,7 +102,7 @@ jQuery(function() {
             var label = L.tooltip({
               permanent: true,
               direction: 'center',
-              className: 'activity-icon ' + activityIcon(activity)
+              className: 'activity-icon ' + activityIcons[activity]
             }).setLatLng(point);
             label.addTo(labels);
             labels.addTo(map);
@@ -103,18 +112,6 @@ jQuery(function() {
       }
     });
   });
-
-  var activityIcon = function(activity) {
-    var icons = {
-      'home': 'icon-home',
-      'education': 'icon-graduation-cap',
-      'shopping': 'icon-basket',
-      'work': 'icon-briefcase-1',
-      'leisure': 'icon-s-dribbble',
-      'other': 'icon-dot-3',
-    };
-    return icons[activity]
-  };
 
   //------------------ TOUCH -------------------------//
   jQuery('#demo-touch').each(function() {

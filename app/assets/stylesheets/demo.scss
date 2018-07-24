@@ -11,18 +11,18 @@
     width: 100%;
     z-index: 500;
     text-align: center;
-    font-size: 14px;
     * { display: inline-block; }
     .current-count-bar-container {
+      height: 30px;
       .current-count-bar {
         width: 30vw;
-        margin-top: 2px;
-        height: 22px;
+        height: 100%;
       }
       .legend-label {
+        height: 100%;
         margin-left: 15px;
         margin-right: 15px;
-        font-size: 14px;
+        font-size: 16px;
       }
     }
   }
