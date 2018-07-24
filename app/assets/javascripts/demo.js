@@ -117,7 +117,7 @@ jQuery(function() {
   //------------------ TOUCH -------------------------//
   jQuery('#demo-touch').each(function() {
     var makeODMap = function(div, odRelations, data) {
-      var map, modeMaxCount, activeMode, activeModeName, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
+      var map, modeMaxCount, activeMode, activeModeName, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer, activePolygonId;
       var legend = jQuery('.legend');
 
       map = L.map(div, {
@@ -158,7 +158,7 @@ jQuery(function() {
       };
 
       var onEachFeature = function(feature, layer) {
-        layer.on('click', function(e) {
+        feature.clickEvent = function(e) {
           if (lines) {
             map.removeLayer(lines)
           };
@@ -170,19 +170,21 @@ jQuery(function() {
             opacity: 1
           });
           highlightDestinations(feature, layer);
-
+          activePolygonId = feature.id;
           jQuery.ajax({
             type: "POST",
             url: "/activate_polygon",
             data: {
               active_mode: activeMode,
               active_mode_name: activeModeName,
-              active_polygon: feature.id
+              active_polygon: activePolygonId
             },
           })
 
           featureSelected = true;
-        });
+        };
+
+        layer.on('click', feature.clickEvent);
       };
 
       var findOdFeatureById = function(id) {
@@ -256,12 +258,16 @@ jQuery(function() {
           data: {
             active_mode: activeMode,
             active_mode_name: activeModeName,
-            active_polygon: null,
+            active_polygon: activePolygonId,
           },
         })
+        if (activePolygonId) {
+          var activePolygon = findOdFeatureById(activePolygonId)
+          activePolygon.feature.clickEvent();
+        }
       });
 
-      jQuery('.od-mode-selector').last().click();
+      jQuery('.od-mode-selector').first().click();
     };
 
     makeODMap('od-map', window.data.od_relations, window.data);
