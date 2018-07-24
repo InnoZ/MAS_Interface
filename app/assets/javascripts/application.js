@@ -24,6 +24,7 @@
 //= require jquery.easytabs.min
 //= require viewport-units-buggyfill
 //= require template_scripts
+//= require mapbox
 //= require awesomplete
 //= require d3.v3
 //= require nv.d3
@@ -44,7 +45,7 @@ jQuery(function() {
     var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>" + I18n.innoz + "</a>");
   });
 
-  staticDistrictMap = function(divId, json, zoomIn, districtStyle)  {
+  staticDistrictMap = function(divId, json, zoomIn, districtStyle) {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
 
     map = L.mapbox.map(divId, 'innoz-developer.mj43ge61', {

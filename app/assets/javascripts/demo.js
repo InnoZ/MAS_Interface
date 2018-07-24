@@ -1,5 +1,3 @@
-//= require leaflet
-
 jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
@@ -53,8 +51,12 @@ jQuery(function() {
         console.log(response)
         if (response.active_polygon == '') {
           jQuery('#feature-starts').hide();
-          if (starts) { map.removeLayer(starts) };
-          if (labels) { map.removeLayer(labels) };
+          if (starts) {
+            map.removeLayer(starts)
+          };
+          if (labels) {
+            map.removeLayer(labels)
+          };
           zoomToOsna();
           console.log('no polygon clicked yet')
         } else {
@@ -62,8 +64,12 @@ jQuery(function() {
           var featureStarts = feature.feature.properties.featureStarts;
           jQuery('#feature-starts').show().html('Fahrten von hier: ' + featureStarts).css('color', color);
           var startPoints = feature.feature.properties.start_points;
-          if (starts) { map.removeLayer(starts) };
-          if (labels) { map.removeLayer(labels) };
+          if (starts) {
+            map.removeLayer(starts)
+          };
+          if (labels) {
+            map.removeLayer(labels)
+          };
 
           starts = L.featureGroup();
           labels = L.featureGroup();
@@ -80,9 +86,9 @@ jQuery(function() {
             starts.addTo(map);
 
             var label = L.tooltip({
-                permanent: true,
-                direction: 'center',
-                className: 'text'
+              permanent: true,
+              direction: 'center',
+              className: 'text'
             }).setContent(activity[0]).setLatLng(point);
             label.addTo(labels);
             labels.addTo(map);
