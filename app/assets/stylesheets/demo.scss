@@ -8,22 +8,22 @@
   .legend {
     position: absolute;
     bottom: 0;
+    height: 30px;
     width: 100%;
     z-index: 500;
     text-align: center;
     * { display: inline-block; }
-    .current-count-bar-container {
-      height: 30px;
-      .current-count-bar {
-        width: 30vw;
-        height: 100%;
-      }
-      .legend-label {
-        height: 100%;
-        margin-left: 15px;
-        margin-right: 15px;
-        font-size: 16px;
-      }
+    .current-count-bar {
+      width: 30vw;
+      height: 100%;
+      vertical-align: bottom;
+    }
+    .legend-label {
+      height: 100%;
+      vertical-align: bottom;
+      color: white;
+      margin-left: 7px;
+      margin-right: 7px;
     }
   }
 

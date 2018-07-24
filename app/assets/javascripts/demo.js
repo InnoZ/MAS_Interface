@@ -139,7 +139,7 @@ jQuery(function() {
       map.fitBounds(district.getBounds());
 
       var colorLegend = function(color) {
-        var gradient = 'white 0%, ' + color + ' 100%';
+        var gradient = 'black 0%, ' + color + ' 100%';
         legend.find('.current-count-bar')
           .css({
             'background': 'linear-gradient(to right, ' + gradient + ')',
@@ -197,7 +197,6 @@ jQuery(function() {
       var highlightDestinations = function(feature, layer) {
         var featureMaxCount = feature.properties.featureMaxCount;
         colorLegend(modeColor);
-        legend.find('.total-count').html(I18n.total + ": " + feature.properties.featureStarts)
         legend.find('.current-count').html(featureMaxCount);
         lines = L.featureGroup();
         var selectedCentroid = layer.getBounds().getCenter();
@@ -249,7 +248,6 @@ jQuery(function() {
         odLayer.addTo(map);
         setInitialStyle();
         colorLegend(modeColor);
-        legend.find('.total-count').html(I18n.total + ": " + totalModeCount);
         legend.find('.current-count').html(modeMaxCount);
         jQuery.ajax({
           type: "POST",
