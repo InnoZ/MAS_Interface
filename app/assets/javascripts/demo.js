@@ -76,9 +76,9 @@ jQuery(function() {
           jQuery.each(startPoints, function(index, elem) {
             var point = [elem[0][1], elem[0][0]];
             var activity = elem[1];
-            var start = L.circle(point, 33, {
+            var start = L.circle(point, 40, {
               fill: true,
-              fillOpacity: 0.5,
+              fillOpacity: 0.7,
               weight: 0,
               fillColor: color,
             });
@@ -88,8 +88,8 @@ jQuery(function() {
             var label = L.tooltip({
               permanent: true,
               direction: 'center',
-              className: 'text'
-            }).setContent(activity[0]).setLatLng(point);
+              className: 'activity-icon ' + activityIcon(activity)
+            }).setLatLng(point);
             label.addTo(labels);
             labels.addTo(map);
           });
@@ -98,6 +98,18 @@ jQuery(function() {
       }
     });
   });
+
+  var activityIcon = function(activity) {
+    var icons = {
+      'home': 'icon-home',
+      'education': 'icon-graduation-cap',
+      'shopping': 'icon-basket',
+      'work': 'icon-briefcase-1',
+      'leisure': 'icon-s-dribbble',
+      'other': 'icon-dot-3',
+    };
+    return icons[activity]
+  };
 
   //------------------ TOUCH -------------------------//
   jQuery('#demo-touch').each(function() {
