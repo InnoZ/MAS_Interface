@@ -1,14 +1,19 @@
 #demo-touch
   .row
-    .col-sm-12.mode-selector-container
-      .demo-button-container
-
-        - Scenario.first.mode_colors.each do |mode, mode_color|
-          .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
+    .mode-button-container
+      - Scenario.first.mode_colors.each do |mode, mode_color|
+        .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
 
   .row
     #log
     #od-map
+
+    .legend
+      .current-count-bar-container
+        .legend-label= t 'count' + ':'
+        .legend-label.legend-zero 0
+        .current-count-bar
+        .legend-label.current-count
 
 // do not include via asset pipeline since conflicting mapbox lib is required for all other maps instead
 = javascript_include_tag 'leaflet'

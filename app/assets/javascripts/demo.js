@@ -2,8 +2,13 @@ jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
     window.map = L.map('demo-monitor-map', {
+      tap: true,
+      tapTolerance: 80,
       zoomControl: false,
+      touchZoom: false,
       scrollWheelZoom: false,
+      doubleClickZoom: false,
+      dragging: false,
     });
     baselayer = L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -115,36 +120,17 @@ jQuery(function() {
   jQuery('#demo-touch').each(function() {
     var makeODMap = function(div, odRelations, data) {
       var map, modeMaxCount, activeMode, activeModeName, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer;
-
-      var legend = jQuery('#' + div).prev('.legend');
-
-      var resizeMap = function() {
-        var mapHeight = jQuery(window).height() - jQuery('header').height() - 100;
-        jQuery('#' + div).height(mapHeight);
-      };
-      resizeMap();
-      jQuery(window).resize(function() {
-        // delay for browser minimizing/maximizing
-        setTimeout(function() {
-          resizeMap();
-          map.invalidateSize();
-        }, 100);
-      });
-      jQuery('.navbar-collapse').on('shown.bs.collapse', function() {
-        resizeMap();
-      });
-      jQuery('.navbar-collapse').on('hidden.bs.collapse', function() {
-        resizeMap();
-      });
+      var legend = jQuery('.legend');
 
       map = L.map(div, {
         tap: true,
-        tapTolerance: 80
+        tapTolerance: 80,
+        zoomControl: false,
+        touchZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        dragging: false,
       });
-
-      map.dragging.disable();
-      map.touchZoom.disable();
-      map.doubleClickZoom.disable();
 
       var district = L.geoJson(data.district_geometry);
       district.setStyle({

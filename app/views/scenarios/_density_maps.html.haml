@@ -5,7 +5,7 @@
       = t '.where_is_action'
     %hr
 .row
-  .col-sm-12.mode-selector-container
+  .col-sm-12.mode-button-container
     - @scenario_a.available_modes.each do |mode|
       - mode_color = @scenario_a.mode_color(mode)
       .color-button.density-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase

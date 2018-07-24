@@ -1,9 +1,39 @@
 #demo-touch {
   background: black;
-  .leaflet-control-zoom { display: none; }
-  .demo-button-container {
-    width: 1000px;
-    margin: 0 auto;
+
+  #od-map {
+    height: 100vh;
+  }
+
+  .legend {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 500;
+    text-align: center;
+    font-size: 14px;
+    * { display: inline-block; }
+    .current-count-bar-container {
+      .current-count-bar {
+        width: 30vw;
+        margin-top: 2px;
+        height: 22px;
+      }
+      .legend-label {
+        margin-left: 15px;
+        margin-right: 15px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .mode-button-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 500;
+    text-align: center;
+    * { display: inline-block; }
   }
 }
 
@@ -45,7 +75,7 @@
   .demo-overlay-container {
     position: absolute;
     opacity: 0.7;
-    z-index: 99;
+    z-index: 500;
   }
 
   .demo-hexagon-overlay {
