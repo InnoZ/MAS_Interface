@@ -8,8 +8,8 @@ class Destinations
     @mode = mode
   end
 
-  START_POINT_LIMIT = 1000
-  PLANS_LIMIT = 3000
+  START_POINT_LIMIT = 500
+  PLANS_LIMIT = nil
 
   # rubocop:disable Eval
   def mapped_features
@@ -34,6 +34,7 @@ class Destinations
         geometry:         r[:geometry],
         start_points:     merge_start_points_and_activities(r[:start_points], r[:activities_start]),
         destinations:     r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
+        count:            r[:count]
       }
     end
   end
@@ -99,7 +100,8 @@ class Destinations
          Provides an array like ['1','2','3','4'] to be repaired later */
       string_to_array(string_agg(array_to_string(start_points, ','), ','), ',') AS start_points,
       string_to_array(string_agg(array_to_string(activities_start, ','), ','), ',') AS activities_start,
-      array_agg(array[end_grid, count]) AS destinations
+      array_agg(array[end_grid, count]) AS destinations,
+      sum(count) as count
       FROM grouped
       GROUP BY
         geometry, start_grid
@@ -120,7 +122,6 @@ class Destinations
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
       properties: {
-        totalCount: feature_starts.sum,
         maxCount: feature_starts.max,
       },
     }

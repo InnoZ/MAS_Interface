@@ -159,6 +159,7 @@ jQuery(function() {
 
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
+          console.log(feature)
           if (lines) {
             map.removeLayer(lines)
           };
