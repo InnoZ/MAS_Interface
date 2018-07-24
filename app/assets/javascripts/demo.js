@@ -2,13 +2,14 @@ jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
     window.map = L.map('demo-monitor-map', {
-      tap: true,
-      tapTolerance: 80,
-      zoomControl: false,
-      touchZoom: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      dragging: false,
+      // tap: true,
+      // tapTolerance: 80,
+      // zoomControl: false,
+      // touchZoom: false,
+      // scrollWheelZoom: false,
+      // doubleClickZoom: false,
+      // dragging: false,
+      zoomSnap: 0.25
     });
     baselayer = L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -90,7 +91,7 @@ jQuery(function() {
           jQuery.each(startPoints, function(index, elem) {
             var point = [elem[0][1], elem[0][0]];
             var activity = elem[1];
-            var start = L.circle(point, 40, {
+            var start = L.circle(point, 35, {
               fill: true,
               fillOpacity: 0.7,
               weight: 0,
@@ -107,7 +108,7 @@ jQuery(function() {
             label.addTo(labels);
             labels.addTo(map);
           });
-          map.setView(feature.getBounds().getCenter(), 15);
+          map.fitBounds(feature.getBounds());
         };
       }
     });
