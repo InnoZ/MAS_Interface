@@ -7,10 +7,10 @@ class DemoController < ApplicationController
     # # on production postgresql runs as old version 9.3, thus the creation does not work
     # # create data on a machine with postgresql 9.5 or higher!
 
-    @scenario_a = Scenario.find_by(district_id: '03404')
-    File.open("public/data_demo_scenario.json","w") do |f|
-      f.write(@scenario_a.json_all.to_json)
-    end
+    # @scenario_a = Scenario.find_by(district_id: '03404')
+    # File.open("public/data_demo_scenario.json","w") do |f|
+    #   f.write(@scenario_a.json_all.to_json)
+    # end
 
     @data_demo_scenario = JSON.parse(File.read('public/data_demo_scenario.json'))
   end
