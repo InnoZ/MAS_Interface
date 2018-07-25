@@ -8,8 +8,22 @@ class Destinations
     @mode = mode
   end
 
-  START_POINT_LIMIT = 500
-  PLANS_LIMIT = nil
+  START_POINT_LIMIT = 100
+  PLANS_LIMIT = 10000
+
+  def feature_collection
+    feature_starts = mapped_features.map { |f| f[:properties][:featureStarts] }.compact
+    {
+      type: 'FeatureCollection',
+      crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
+      features: mapped_features,
+      properties: {
+        maxCount: feature_starts.max,
+      },
+    }
+  end
+
+  private
 
   # rubocop:disable Eval
   def mapped_features
@@ -24,7 +38,7 @@ class Destinations
   end
 
   def merge_start_points_and_activities(points, activities)
-    repair_coordinates(points)[0..START_POINT_LIMIT].zip(activities[0..START_POINT_LIMIT])
+    (repair_coordinates(points).zip(activities)).shuffle
   end
 
   def mode_geojson
@@ -32,11 +46,32 @@ class Destinations
       {
         id:               r[:start_grid],
         geometry:         r[:geometry],
-        start_points:     merge_start_points_and_activities(r[:start_points], r[:activities_start]),
+        start_points:     merge_start_points_and_activities(r[:start_points], r[:activities_start])[0..START_POINT_LIMIT],
         destinations:     r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
         count:            r[:count]
       }
     end
+  end
+
+  def repair_coordinates(array)
+    # converts ['12','52','13','53'] to [[12,52], [13, 53]]
+    even = array.each_with_index.map { |v, i| v.to_f if (i+1).even? }.compact
+    odd = array.each_with_index.map { |v, i| v.to_f if (i+1).odd? }.compact
+    odd.zip(even)
+  end
+
+  def properties(feature)
+    json = {}
+    feature.each do |key, value|
+      next if %w[geometry id].include?(key.to_s)
+      json.merge!(key => value)
+    end
+    values = feature[:destinations].map { |f| f.first[1] }
+    feature_max = values.max
+    feature_sum = values.compact.sum
+    json
+      .merge(featureMaxCount: feature_max)
+      .merge(featureStarts: feature_sum)
   end
 
   def mode_selector
@@ -106,38 +141,5 @@ class Destinations
       GROUP BY
         geometry, start_grid
     SQL
-  end
-
-  def repair_coordinates(array)
-    # converts ['12','52','13','53'] to [[12,52], [13, 53]]
-    even = array.each_with_index.map { |v, i| v.to_f if (i+1).even? }.compact
-    odd = array.each_with_index.map { |v, i| v.to_f if (i+1).odd? }.compact
-    odd.zip(even)
-  end
-
-  def feature_collection
-    feature_starts = mapped_features.map { |f| f[:properties][:featureStarts] }.compact
-    {
-      type: 'FeatureCollection',
-      crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
-      features: mapped_features,
-      properties: {
-        maxCount: feature_starts.max,
-      },
-    }
-  end
-
-  def properties(feature)
-    json = {}
-    feature.each do |key, value|
-      next if %w[geometry id].include?(key.to_s)
-      json.merge!(key => value)
-    end
-    values = feature[:destinations].map { |f| f.first[1] }
-    feature_max = values.max
-    feature_sum = values.compact.sum
-    json
-      .merge(featureMaxCount: feature_max)
-      .merge(featureStarts: feature_sum)
   end
 end
