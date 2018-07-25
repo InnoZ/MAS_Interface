@@ -44,9 +44,15 @@ jQuery(function() {
       'shopping': 'icon-basket',
       'work': 'icon-briefcase-1',
       'leisure': 'icon-s-dribbble',
-      'other': 'icon-record',
       'kindergarten': 'icon-s-github',
+      'other': 'icon-record',
     };
+
+    jQuery.each(activityIcons, function(mode, icon) {
+      jQuery('#activity-legend').append(
+        "<icon class='" + icon + "'></icon>" + mode
+      );
+    });
 
     // ActionCable Websocket
     var starts = null;
@@ -92,6 +98,7 @@ jQuery(function() {
             starts.addTo(map);
           });
           jQuery('.activity-icon').css('color', data.mode_colors[response.active_mode]);
+          jQuery('#activity-legend').css('color', data.mode_colors[response.active_mode]);
           map.fitBounds(feature.getBounds());
         };
       }

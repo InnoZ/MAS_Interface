@@ -72,6 +72,19 @@
     font-size: 20px;
   }
 
+  #activity-legend {
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    * { display: inline-block; }
+    icon {
+      margin-left: 12px;
+      margin-right: 5px;
+    }
+  }
 
   .mapbox-info-toggle {
     display: none;
