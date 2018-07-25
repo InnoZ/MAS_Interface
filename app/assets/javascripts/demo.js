@@ -49,7 +49,6 @@ jQuery(function() {
 
     // ActionCable Websocket
     var starts = null;
-    var labels = null;
     App.demoState = App.cable.subscriptions.create('DemoChannel', {
       connected: function() {
         console.log('Websocket connected');
@@ -63,14 +62,10 @@ jQuery(function() {
         // thus, change grid to get correct od data
         loadGrid(response.active_mode);
 
-        console.log(response)
         if (response.active_polygon == '') {
           jQuery('#feature-starts').hide();
           if (starts) {
             map.removeLayer(starts)
-          };
-          if (labels) {
-            map.removeLayer(labels)
           };
           zoomToOsna();
           console.log('no polygon clicked yet')
@@ -82,31 +77,25 @@ jQuery(function() {
           if (starts) {
             map.removeLayer(starts)
           };
-          if (labels) {
-            map.removeLayer(labels)
-          };
 
           starts = L.featureGroup();
-          labels = L.featureGroup();
           jQuery.each(startPoints, function(index, elem) {
             var point = [elem[0][1], elem[0][0]];
             var activity = elem[1];
             var start = L.circle(point, 35, {
               fill: true,
-              fillOpacity: 0.7,
+              fillOpacity: 1,
               weight: 0,
               fillColor: color,
             });
-            start.addTo(starts);
-            starts.addTo(map);
-
             var label = L.tooltip({
               permanent: true,
               direction: 'center',
               className: 'activity-icon ' + activityIcons[activity]
             }).setLatLng(point);
-            label.addTo(labels);
-            labels.addTo(map);
+            start.addTo(starts);
+            label.addTo(starts);
+            starts.addTo(map);
           });
           map.fitBounds(feature.getBounds());
         };
