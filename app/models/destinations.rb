@@ -30,6 +30,7 @@ class Destinations
         geometry: eval(r[:geometry]), # eval for cleaning string from escape quotes
         properties: {
           start_points: merge_start_points_and_activities(r[:start_points], r[:activities_start])[0..START_POINT_LIMIT],
+          heatmap_points: repair_coordinates(r[:start_points]),
           destinations: r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
           featureStarts: r[:count],
           featureMaxCount: r[:max_count],
@@ -49,7 +50,7 @@ class Destinations
     # converts ['12','52','13','53'] to [[12,52], [13, 53]]
     even = array.each_with_index.map { |v, i| v.to_f if (i+1).even? }.compact
     odd = array.each_with_index.map { |v, i| v.to_f if (i+1).odd? }.compact
-    odd.zip(even)
+    odd.zip(even).map{ |coord| [coord[1], coord[0]] }
   end
 
   def mode_selector
@@ -117,8 +118,8 @@ class Destinations
       string_to_array(string_agg(array_to_string(start_points, ','), ','), ',') AS start_points,
       string_to_array(string_agg(array_to_string(activities_start, ','), ','), ',') AS activities_start,
       array_agg(array[end_grid, count]) AS destinations,
-      sum(count) as count,
-      max(count) as max_count
+      sum(count)::integer as count,
+      max(count)::integer as max_count
       FROM grouped
       GROUP BY
         geometry, start_grid

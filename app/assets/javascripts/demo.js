@@ -56,6 +56,7 @@ jQuery(function() {
 
     // ActionCable Websocket
     var starts = null;
+    var heat = null;
     App.demoState = App.cable.subscriptions.create('DemoChannel', {
       connected: function() {
         console.log('Websocket connected');
@@ -74,35 +75,71 @@ jQuery(function() {
           if (starts) {
             map.removeLayer(starts)
           };
+          if (heat) {
+            map.removeLayer(starts)
+          };
           zoomToOsna();
           console.log('no polygon clicked yet')
         } else {
           var feature = featureById[parseInt(response.active_polygon)];
           var featureStarts = feature.feature.properties.featureStarts;
-          jQuery('#feature-starts').show().html(parseInt(featureStarts) + ' ways').css('color', color);
-          var startPoints = feature.feature.properties.start_points;
+          jQuery('#feature-starts').show().html(featureStarts + ' ways').css('color', color);
+
           if (starts) {
             map.removeLayer(starts)
           };
+          if (heat) {
+            map.removeLayer(heat)
+          };
 
-          starts = L.featureGroup();
-          jQuery.each(startPoints, function(index, elem) {
-            var point = [elem[0][1], elem[0][0]];
-            var activity = elem[1];
-            var start = L.tooltip({
-              permanent: true,
-              direction: 'center',
-              className: 'activity-icon ' + activityIcons[activity]
-            }).setLatLng(point);
-            start.addTo(starts);
-            starts.addTo(map);
-          });
+          drawHeatmapPoints(feature.feature.properties.heatmap_points);
+          drawStartPoints(feature.feature.properties.start_points);
+          controlLayerVisibility();
+
           jQuery('.activity-icon').css('color', data.mode_colors[response.active_mode]);
           jQuery('#activity-legend').css('color', data.mode_colors[response.active_mode]);
           map.fitBounds(feature.getBounds());
         };
       }
     });
+
+    var controlLayerVisibility = function() {
+      if (jQuery('#heatmap-button').hasClass('active')) {
+        jQuery('.leaflet-heatmap-layer').show();
+        jQuery('.activity-icon').hide();
+      } else {
+        jQuery('.leaflet-heatmap-layer').hide();
+        jQuery('.activity-icon').show();
+      }
+    };
+
+    jQuery('#heatmap-button').click(function() {
+      jQuery(this).toggleClass('active');
+      controlLayerVisibility();
+    });
+
+    var drawHeatmapPoints = function(heatmapPoints) {
+      heat = L.heatLayer(heatmapPoints, {
+        radius: 20,
+        blur: 38,
+      });
+      heat.addTo(map);
+    };
+
+    var drawStartPoints = function(startPoints) {
+      starts = L.featureGroup();
+      jQuery.each(startPoints, function(index, elem) {
+        var point = elem[0];
+        var activity = elem[1];
+        var start = L.tooltip({
+          permanent: true,
+          direction: 'center',
+          className: 'activity-icon ' + activityIcons[activity]
+        }).setLatLng(point);
+        start.addTo(starts);
+      });
+      starts.addTo(map);
+    };
   });
 
   //------------------ TOUCH -------------------------//
