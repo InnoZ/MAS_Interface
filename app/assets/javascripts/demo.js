@@ -44,7 +44,8 @@ jQuery(function() {
       'shopping': 'icon-basket',
       'work': 'icon-briefcase-1',
       'leisure': 'icon-s-dribbble',
-      'other': 'icon-dot-3',
+      'other': 'icon-record',
+      'kindergarten': 'icon-s-github',
     };
 
     // ActionCable Websocket
@@ -82,19 +83,13 @@ jQuery(function() {
           jQuery.each(startPoints, function(index, elem) {
             var point = [elem[0][1], elem[0][0]];
             var activity = elem[1];
-            var start = L.circle(point, 35, {
-              fill: true,
-              fillOpacity: 1,
-              weight: 0,
-              fillColor: color,
-            });
-            var label = L.tooltip({
+            var start = L.tooltip({
               permanent: true,
               direction: 'center',
               className: 'activity-icon ' + activityIcons[activity]
             }).setLatLng(point);
+            jQuery('.activity-icon').css('color', data.mode_colors[response.active_mode]);
             start.addTo(starts);
-            label.addTo(starts);
             starts.addTo(map);
           });
           map.fitBounds(feature.getBounds());
@@ -148,7 +143,6 @@ jQuery(function() {
 
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
-          console.log(feature)
           if (lines) {
             map.removeLayer(lines)
           };

@@ -9,48 +9,40 @@ class Destinations
   end
 
   START_POINT_LIMIT = 100
-  PLANS_LIMIT = 10000
+  PLANS_LIMIT = nil # only for rapid testing purposes
 
   def feature_collection
-    feature_starts = mapped_features.map { |f| f[:properties][:featureStarts] }.compact
     {
       type: 'FeatureCollection',
       crs: { type: 'name', 'properties': { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: mapped_features,
       properties: {
-        maxCount: feature_starts.max,
+        maxCount: mapped_features.map { |f| f[:properties][:featureStarts] }.compact.max,
       },
     }
+  end
+
+  def mapped_features
+    DB.fetch(mode_destinations_query).all.map do |r|
+      {
+        type: 'Feature',
+        id: r[:start_grid],
+        geometry: eval(r[:geometry]), # eval for cleaning string from escape quotes
+        properties: {
+          start_points: merge_start_points_and_activities(r[:start_points], r[:activities_start])[0..START_POINT_LIMIT],
+          destinations: r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
+          featureStarts: r[:count],
+          featureMaxCount: r[:max_count],
+        }
+      }
+    end
   end
 
   private
 
   # rubocop:disable Eval
-  def mapped_features
-    mode_geojson.map do |f|
-      {
-        type: 'Feature',
-        id: f[:id],
-        geometry: eval(f[:geometry]), # eval for cleaning string from escape quotes
-        properties: properties(f),
-      }
-    end
-  end
-
   def merge_start_points_and_activities(points, activities)
     (repair_coordinates(points).zip(activities)).shuffle
-  end
-
-  def mode_geojson
-    DB.fetch(mode_destinations_query).all.map do |r|
-      {
-        id:               r[:start_grid],
-        geometry:         r[:geometry],
-        start_points:     merge_start_points_and_activities(r[:start_points], r[:activities_start])[0..START_POINT_LIMIT],
-        destinations:     r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
-        count:            r[:count]
-      }
-    end
   end
 
   def repair_coordinates(array)
@@ -58,20 +50,6 @@ class Destinations
     even = array.each_with_index.map { |v, i| v.to_f if (i+1).even? }.compact
     odd = array.each_with_index.map { |v, i| v.to_f if (i+1).odd? }.compact
     odd.zip(even)
-  end
-
-  def properties(feature)
-    json = {}
-    feature.each do |key, value|
-      next if %w[geometry id].include?(key.to_s)
-      json.merge!(key => value)
-    end
-    values = feature[:destinations].map { |f| f.first[1] }
-    feature_max = values.max
-    feature_sum = values.compact.sum
-    json
-      .merge(featureMaxCount: feature_max)
-      .merge(featureStarts: feature_sum)
   end
 
   def mode_selector
@@ -90,7 +68,10 @@ class Destinations
       location_end AS end_point,
       from_activity_type
       FROM (
-        SELECT * FROM plans WHERE scenario_id = '#{district_id}_#{year}' #{mode_selector} #{plans_limit}
+        SELECT * FROM plans WHERE scenario_id = '#{district_id}_#{year}'
+        #{mode_selector}
+        ORDER BY RANDOM()
+        #{plans_limit}
       )t1
     ),
 
@@ -136,7 +117,8 @@ class Destinations
       string_to_array(string_agg(array_to_string(start_points, ','), ','), ',') AS start_points,
       string_to_array(string_agg(array_to_string(activities_start, ','), ','), ',') AS activities_start,
       array_agg(array[end_grid, count]) AS destinations,
-      sum(count) as count
+      sum(count) as count,
+      max(count) as max_count
       FROM grouped
       GROUP BY
         geometry, start_grid
