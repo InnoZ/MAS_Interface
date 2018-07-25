@@ -73,7 +73,7 @@ jQuery(function() {
         } else {
           var feature = featureById[parseInt(response.active_polygon)];
           var featureStarts = feature.feature.properties.featureStarts;
-          jQuery('#feature-starts').show().html('Fahrten von hier: ' + featureStarts).css('color', color);
+          jQuery('#feature-starts').show().html(parseInt(featureStarts) + ' ways').css('color', color);
           var startPoints = feature.feature.properties.start_points;
           if (starts) {
             map.removeLayer(starts)
@@ -88,10 +88,10 @@ jQuery(function() {
               direction: 'center',
               className: 'activity-icon ' + activityIcons[activity]
             }).setLatLng(point);
-            jQuery('.activity-icon').css('color', data.mode_colors[response.active_mode]);
             start.addTo(starts);
             starts.addTo(map);
           });
+          jQuery('.activity-icon').css('color', data.mode_colors[response.active_mode]);
           map.fitBounds(feature.getBounds());
         };
       }
@@ -164,8 +164,8 @@ jQuery(function() {
               active_polygon: activePolygonId
             },
           })
-
           featureSelected = true;
+          polygonModalSplit(activePolygonId);
         };
 
         layer.on('click', feature.clickEvent);
@@ -257,22 +257,24 @@ jQuery(function() {
     makeODMap('od-map', window.data.od_relations, window.data);
 
     var polygonModalSplit = function(polygonId) {
-      var data = {};
       var modalSplit = jQuery.map(window.data.od_relations, function(modeData, mode) {
-        data[mode] = '0';
+        var _data = [];
         jQuery.each(modeData.features, function(id, feature) {
-          if (polygonId == feature.id) {
-            data[mode] = feature.properties.featureStarts;
-            return data;
+          if (mode !== 'all' && polygonId == feature.id) {
+            _data.push({
+              mode: mode,
+              share: feature.properties.featureStarts,
+              color: data.mode_colors[mode],
+            });
+            return _data;
           } else {
             return true;
           }
         })
-        return data;
+        return _data;
       });
-      return data;
-    };
-    polygonModalSplit(15);
 
+      makePieChart('#polygon-modal-split', modalSplit, 'share')
+    };
   });
 });

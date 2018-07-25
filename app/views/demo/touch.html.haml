@@ -14,6 +14,8 @@
       .current-count-bar
       .legend-label.current-count
 
+  %svg#polygon-modal-split{style: 'height: 300px; width: 300px; position: absolute; top: 50px; right: 0; z-index: 500;'}
+
 // do not include via asset pipeline since conflicting mapbox lib is required for all other maps instead
 = javascript_include_tag 'leaflet'
 

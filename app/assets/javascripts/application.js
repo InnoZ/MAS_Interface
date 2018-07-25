@@ -104,3 +104,113 @@ jQuery(function() {
     });
   });
 });
+
+function drawTooltip(color, key, value) {
+  content = '<h3 style="color: white; background-color: ';
+  content += color + '">';
+  content += key + '</h3>' + '<p>' + value + '</p>';
+  return content;
+};
+
+function makePieChart(div, data, attribute) {
+  console.log(data)
+  var chart = nv.models.pieChart()
+    .x(function(d) {
+      return d.mode
+    })
+    .y(function(d) {
+      return d[attribute]
+    })
+    .showLabels(true)
+    .labelType("percent")
+    .showLegend(false)
+    .donut(true)
+    .donutRatio(0.35)
+
+  chart.tooltip.contentGenerator(function(obj) {
+    return drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
+  });
+
+  chart.tooltip.enabled(true);
+
+  nv.addGraph(function() {
+    d3.select(div)
+      .datum(data)
+      .transition().duration(350)
+      .call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};
+
+function makeBarChart(div, data, attribute) {
+  var filteredData = jQuery.grep(data, function(obj, i) {
+    return (obj[attribute] > 0);
+  });
+
+  var formattedData = [{
+    key: 'carbon emissions',
+    values: filteredData
+  }];
+
+  nv.addGraph(function() {
+    var chart = nv.models.discreteBarChart()
+      .x(function(d) {
+        return d.mode
+      })
+      .y(function(d) {
+        return d[attribute]
+      })
+      .showXAxis(false);
+
+    chart.tooltip.contentGenerator(function(obj) {
+      return drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
+    });
+
+    d3.select(div)
+      .datum(formattedData)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};
+
+function makeDiurnalCurve(div, data) {
+  nv.addGraph(function() {
+    var chart = nv.models.lineChart()
+      .x(function(d) {
+        return d[0];
+      })
+      .y(function(d) {
+        return d[1];
+      })
+      .showLegend(false);
+
+    chart.yAxis.axisLabel(I18n.count);
+    chart.xAxis.axisLabel('hour');
+
+    chart.xAxis.tickValues([0, '', '', 3, '', '', 6, '', '', 9, '', '', 12, '', '', 15, '', '', 18, '', '', 21, '', '']);
+    // deactivate guidelines since tooltip is on wrong position - seemingly this is connected with positioning inside of a bootstrap panel
+    chart.useInteractiveGuideline(false);
+
+    chart.tooltip.contentGenerator(function(obj) {
+      var o = obj.series[0];
+      return drawTooltip(o.color, I18n.mode_names[o.key], o.value);
+    });
+
+    d3.select(div)
+      .datum(data)
+      .call(chart)
+      .selectAll(".nv-axisMaxMin-x").remove()
+    nv.utils.windowResize(chart.update);
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};

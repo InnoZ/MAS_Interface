@@ -35,6 +35,17 @@
     text-align: center;
     * { display: inline-block; }
   }
+
+  .nv-pie {
+    path {
+      stroke-opacity: 0;
+      color: white;
+    }
+    text {
+      fill: white !important;
+      font-size: 12px;
+    }
+  }
 }
 
 #demo-monitor {
@@ -48,7 +59,7 @@
     position: absolute;
     z-index: 999;
     top: 60px;
-    left: 50px;
+    right: 50px;
     font-size: 50px;
     text-transform: uppercase;
   }
@@ -56,9 +67,9 @@
   #feature-starts {
     position: absolute;
     z-index: 999;
-    top: 80px;
+    top: 90px;
     right: 50px;
-    font-size: 30px;
+    font-size: 20px;
   }
 
 
@@ -74,7 +85,7 @@
 
   .demo-overlay-container {
     position: absolute;
-    opacity: 0.7;
+    opacity: 1;
     z-index: 500;
   }
 
@@ -92,14 +103,11 @@
   }
 
   .leaflet-tooltip-pane .activity-icon {
-    color: white;
     opacity: 0.7;
     font-weight: bold;
     background: transparent;
     border: 0;
     box-shadow: none;
-    text-transform: capitalize;
     font-size: 150%;
-    padding: 7px;
   }
 }
