@@ -255,5 +255,24 @@ jQuery(function() {
     };
 
     makeODMap('od-map', window.data.od_relations, window.data);
+
+    var polygonModalSplit = function(polygonId) {
+      var data = {};
+      var modalSplit = jQuery.map(window.data.od_relations, function(modeData, mode) {
+        data[mode] = '0';
+        jQuery.each(modeData.features, function(id, feature) {
+          if (polygonId == feature.id) {
+            data[mode] = feature.properties.featureStarts;
+            return data;
+          } else {
+            return true;
+          }
+        })
+        return data;
+      });
+      return data;
+    };
+    polygonModalSplit(15);
+
   });
 });
