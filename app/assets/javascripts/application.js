@@ -201,7 +201,10 @@ function makeHorizontalBarChart(div, data, attribute) {
       .showLegend(false)
       .showControls(false)
       .showXAxis(true)
-      .showYAxis(false);
+      .showYAxis(false)
+      .margin({
+        "left": 80,
+      });
 
     chart.tooltip.contentGenerator(function(obj) {
       return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);

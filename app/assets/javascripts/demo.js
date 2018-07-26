@@ -95,13 +95,13 @@ jQuery(function() {
 
           drawHeatmapPoints(props.heatmap_points);
           drawStartPoints(props.start_points);
-          activitySplit(props.activity_split);
+          activitySplit(props.activity_split, color);
           controlLayerVisibility();
 
-          jQuery('.activity-icon').css('color', data.mode_colors[response.active_mode]);
-          jQuery('#activity-legend').css('color', data.mode_colors[response.active_mode]);
           map.fitBounds(feature.getBounds());
         };
+        jQuery('.activity-icon').css('color', color);
+        jQuery('#activity-legend').css('color', color);
       }
     });
 
@@ -143,18 +143,20 @@ jQuery(function() {
       starts.addTo(map);
     };
 
-    var activitySplit = function(activitySplit) {
-      var colors = ['#DDDDDD', '#C1C1C1', '#AFAFAF', '#8F8F8F', '#676767', '#A3A3A3'];
+    var activitySplit = function(activitySplit, color) {
       i = 0;
       var preparedData = jQuery.map(activitySplit, function(count, activity) {
         i += 1;
         return {
           mode: I18n.activity_names[activity],
           share: count,
-          color: colors[i - 1]
         }
       });
       makeHorizontalBarChart('#activity-split', preparedData, 'share')
+      setTimeout(function() {
+        // timeout hack to assure that chart elements are rendered when applying this
+        jQuery('#activity-split rect').css('fill', color);
+      }, 100)
     };
   });
 
