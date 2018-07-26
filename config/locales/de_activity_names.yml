@@ -1,0 +1,9 @@
+de:
+  activity_names:
+    home: 'Zu Hause'
+    education: 'Bildung'
+    shopping: 'Einkaufen'
+    work: 'Arbeit'
+    leisure: 'Freizeit'
+    kindergarten: 'Kindergarten'
+    other: 'Anderes'

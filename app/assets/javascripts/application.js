@@ -113,7 +113,6 @@ function drawTooltip(color, key, value) {
 };
 
 function makePieChart(div, data, attribute) {
-  console.log(data)
   var chart = nv.models.pieChart()
     .x(function(d) {
       return d.mode
@@ -128,7 +127,7 @@ function makePieChart(div, data, attribute) {
     .donutRatio(0.35)
 
   chart.tooltip.contentGenerator(function(obj) {
-    return drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
+    return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
   });
 
   chart.tooltip.enabled(true);
@@ -166,7 +165,46 @@ function makeBarChart(div, data, attribute) {
       .showXAxis(false);
 
     chart.tooltip.contentGenerator(function(obj) {
-      return drawTooltip(obj.color, I18n.mode_names[obj.data.mode], obj.data[attribute]);
+      return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
+    });
+
+    d3.select(div)
+      .datum(formattedData)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};
+
+function makeHorizontalBarChart(div, data, attribute) {
+  var filteredData = jQuery.grep(data, function(obj, i) {
+    return (obj[attribute] > 0);
+  });
+
+  var formattedData = [{
+    key: 'carbon emissions',
+    values: filteredData
+  }];
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarHorizontalChart()
+      .x(function(d) {
+        return d.mode
+      })
+      .y(function(d) {
+        return d[attribute]
+      })
+      .showLegend(false)
+      .showControls(false)
+      .showXAxis(true)
+      .showYAxis(false);
+
+    chart.tooltip.contentGenerator(function(obj) {
+      return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
     });
 
     d3.select(div)

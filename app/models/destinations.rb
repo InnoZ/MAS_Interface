@@ -31,6 +31,7 @@ class Destinations
         properties: {
           start_points: merge_start_points_and_activities(r[:start_points], r[:activities_start])[0..START_POINT_LIMIT],
           heatmap_points: repair_coordinates(r[:start_points]),
+          activity_split: r[:activities_start].group_by(&:itself).map { |k,v| [k, v.count] }.to_h,
           destinations: r[:destinations].sort_by { |v| v[1] }.reverse.map { |v| Hash[v[0], v[1]] },
           featureStarts: r[:count],
           featureMaxCount: r[:max_count],

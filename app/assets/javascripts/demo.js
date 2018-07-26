@@ -48,9 +48,9 @@ jQuery(function() {
       'other': 'icon-record',
     };
 
-    jQuery.each(activityIcons, function(mode, icon) {
+    jQuery.each(activityIcons, function(activity, icon) {
       jQuery('#activity-legend').append(
-        "<icon class='" + icon + "'></icon>" + mode
+        "<icon class='" + icon + "'></icon>" + I18n.activity_names[activity]
       );
     });
 
@@ -82,7 +82,8 @@ jQuery(function() {
           console.log('no polygon clicked yet')
         } else {
           var feature = featureById[parseInt(response.active_polygon)];
-          var featureStarts = feature.feature.properties.featureStarts;
+          var props = feature.feature.properties;
+          var featureStarts = props.featureStarts;
           jQuery('#feature-starts').show().html(featureStarts + ' ways').css('color', color);
 
           if (starts) {
@@ -92,8 +93,9 @@ jQuery(function() {
             map.removeLayer(heat)
           };
 
-          drawHeatmapPoints(feature.feature.properties.heatmap_points);
-          drawStartPoints(feature.feature.properties.start_points);
+          drawHeatmapPoints(props.heatmap_points);
+          drawStartPoints(props.start_points);
+          activitySplit(props.activity_split);
           controlLayerVisibility();
 
           jQuery('.activity-icon').css('color', data.mode_colors[response.active_mode]);
@@ -140,9 +142,27 @@ jQuery(function() {
       });
       starts.addTo(map);
     };
+
+    var activitySplit = function(activitySplit) {
+      var colors = ['#DDDDDD', '#C1C1C1', '#AFAFAF', '#8F8F8F', '#676767', '#A3A3A3'];
+      i = 0;
+      var preparedData = jQuery.map(activitySplit, function(count, activity) {
+        i += 1;
+        return {
+          mode: I18n.activity_names[activity],
+          share: count,
+          color: colors[i - 1]
+        }
+      });
+      makeHorizontalBarChart('#activity-split', preparedData, 'share')
+    };
   });
 
+
+  //--------------------------------------------------//
   //------------------ TOUCH -------------------------//
+  //--------------------------------------------------//
+
   jQuery('#demo-touch').each(function() {
     var makeODMap = function(div, odRelations, data) {
       var map, modeMaxCount, activeMode, activeModeName, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer, activePolygonId;
@@ -156,6 +176,7 @@ jQuery(function() {
         scrollWheelZoom: false,
         doubleClickZoom: false,
         dragging: false,
+        zoomSnap: 0.25
       });
 
       var district = L.geoJson(data.district_geometry);
@@ -165,17 +186,16 @@ jQuery(function() {
         color: 'red'
       });
       district.addTo(map);
-      map.fitBounds(district.getBounds());
 
       var colorLegend = function(color) {
         var gradient = 'black 0%, ' + color + ' 100%';
         legend.find('.current-count-bar')
           .css({
-            'background': 'linear-gradient(to right, ' + gradient + ')',
-            'background': '-webkit-linear-gradient(left, ' + gradient + ')',
+            'background': 'linear-gradient(to bottom, ' + gradient + ')',
+            'background': '-webkit-linear-gradient(bottom, ' + gradient + ')',
             'border-color': color
           });
-        legend.css('color', color);
+        legend.find('.legend-label').css('color', color);
       };
 
       var setInitialStyle = function() {
@@ -277,6 +297,7 @@ jQuery(function() {
           onEachFeature: onEachFeature
         });
         odLayer.addTo(map);
+        map.fitBounds(odLayer.getBounds());
         setInitialStyle();
         colorLegend(modeColor);
         legend.find('.current-count').html(modeMaxCount);
