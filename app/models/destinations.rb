@@ -9,7 +9,7 @@ class Destinations
   end
 
   START_POINT_LIMIT = 100
-  PLANS_LIMIT = nil # only for rapid testing purposes
+  PLANS_LIMIT = 100_000 # only for rapid testing purposes
 
   def feature_collection
     {

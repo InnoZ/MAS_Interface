@@ -57,53 +57,62 @@ jQuery(function() {
     // ActionCable Websocket
     var starts = null;
     var heat = null;
+    var waitingTimer;
     App.demoState = App.cable.subscriptions.create('DemoChannel', {
       connected: function() {
         console.log('Websocket connected');
       },
       received: function(response) {
-        var color = data.mode_colors[response.active_mode];
-        var modeName = response.active_mode_name;
-        jQuery('#mode-name').html(modeName).css('color', color);
-
-        // no active polygon means that mode is switched
-        // thus, change grid to get correct od data
-        loadGrid(response.active_mode);
-
-        if (response.active_polygon == '') {
-          jQuery('#feature-starts').hide();
-          if (starts) {
-            map.removeLayer(starts)
-          };
-          if (heat) {
-            map.removeLayer(starts)
-          };
-          zoomToOsna();
-          console.log('no polygon clicked yet')
-        } else {
-          var feature = featureById[parseInt(response.active_polygon)];
-          var props = feature.feature.properties;
-          var featureStarts = props.featureStarts;
-          jQuery('#feature-starts').show().html(featureStarts + ' ways').css('color', color);
-
-          if (starts) {
-            map.removeLayer(starts)
-          };
-          if (heat) {
-            map.removeLayer(heat)
-          };
-
-          drawHeatmapPoints(props.heatmap_points);
-          drawStartPoints(props.start_points);
-          activitySplit(props.activity_split, color);
-          controlLayerVisibility();
-
-          map.fitBounds(feature.getBounds());
-        };
-        jQuery('.activity-icon').css('color', color);
-        jQuery('#activity-legend').css('color', color);
+        clearTimeout(waitingTimer);
+        waitingTimer = setTimeout(function() {
+          reactOnActivatedPolygon(response);
+        }, 500);
       }
     });
+
+    var reactOnActivatedPolygon = function(response) {
+      console.log('start')
+      var color = data.mode_colors[response.active_mode];
+      var modeName = response.active_mode_name;
+      jQuery('#mode-name').html(modeName).css('color', color);
+
+      // no active polygon means that mode is switched
+      // thus, change grid to get correct od data
+      loadGrid(response.active_mode);
+
+      if (response.active_polygon == '') {
+        jQuery('#feature-starts').hide();
+        if (starts) {
+          map.removeLayer(starts)
+        };
+        if (heat) {
+          map.removeLayer(starts)
+        };
+        zoomToOsna();
+        console.log('no polygon clicked yet')
+      } else {
+        var feature = featureById[parseInt(response.active_polygon)];
+        var props = feature.feature.properties;
+        var featureStarts = props.featureStarts;
+        jQuery('#feature-starts').show().html(featureStarts + ' ways').css('color', color);
+
+        if (starts) {
+          map.removeLayer(starts)
+        };
+        if (heat) {
+          map.removeLayer(heat)
+        };
+
+        drawHeatmapPoints(props.heatmap_points);
+        drawStartPoints(props.start_points);
+        activitySplit(props.activity_split, color);
+        controlLayerVisibility();
+
+        map.fitBounds(feature.getBounds());
+      };
+      jQuery('.activity-icon').css('color', color);
+      jQuery('#activity-legend').css('color', color);
+    };
 
     var controlLayerVisibility = function() {
       if (jQuery('#heatmap-button').hasClass('active')) {
@@ -144,19 +153,18 @@ jQuery(function() {
     };
 
     var activitySplit = function(activitySplit, color) {
-      i = 0;
-      var preparedData = jQuery.map(activitySplit, function(count, activity) {
-        i += 1;
+      var preparedData = jQuery.map(activityIcons, function(_icon, activity) {
         return {
           mode: I18n.activity_names[activity],
-          share: count,
+          share: activitySplit[activity] ? activitySplit[activity] * 1000 : 1,
         }
       });
-      makeHorizontalBarChart('#activity-split', preparedData, 'share')
+      console.log(preparedData)
+      makeHorizontalBarChart('#activity-split', preparedData, 'share');
       setTimeout(function() {
         // timeout hack to assure that chart elements are rendered when applying this
         jQuery('#activity-split rect').css('fill', color);
-      }, 100)
+      }, 1)
     };
   });
 
