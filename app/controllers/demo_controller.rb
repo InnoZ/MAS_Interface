@@ -8,7 +8,6 @@ class DemoController < ApplicationController
     # # create data on a machine with postgresql 9.5 or higher!
 
     save_data_in_file
-    @data_demo_scenario = JSON.parse(File.read('public/data_demo_scenario.json'))
   end
 
   def save_data_in_file
@@ -22,7 +21,6 @@ class DemoController < ApplicationController
   end
 
   def monitor
-    @data_demo_scenario = JSON.parse(File.read('public/data_demo_scenario.json'))
   end
 
   def activate_polygon

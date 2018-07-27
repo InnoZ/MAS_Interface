@@ -11,9 +11,8 @@
 
   %svg#activity-split
 
+  #data-loading loading...
+
 // do not include via asset pipeline since mapbox is required for all other maps instead
 = javascript_include_tag 'leaflet'
 = javascript_include_tag 'leaflet-heat'
-
-:javascript
-  window.data = #{@data_demo_scenario.to_json}
