@@ -180,7 +180,7 @@ jQuery(function() {
 
     $.get("data_demo_scenario.json", function(data) {
       demoData = data;
-      jQuery('#data-loading').hide();
+      // jQuery('#data-loading').hide();
 
       makeODMap('od-map', demoData.od_relations, demoData);
     });

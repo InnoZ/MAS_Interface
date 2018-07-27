@@ -182,17 +182,26 @@
   position: absolute;
   z-index: 9999;
   top: 0;
-  color: white;
+  color: #B8CEB1;
   font-size: 30px;
   width: 100%;
   height: 100%;
   background: black;
   text-align: center;
   padding-top: 45vh;
-  animation: blink 500ms infinite alternate;
+  animation: blink 7000ms infinite alternate;
 }
 
 @keyframes blink {
-  from { color: black; }
-  to { color: white; }
+  0% { color: #f2b50c; }
+  10% { color: black; }
+  20% { color: #db8012; }
+  30% { color: black; }
+  40% { color: #3db783; }
+  50% { color: black; }
+  60% { color: #50a0b5; }
+  70% { color: black; }
+  80% { color: #c94380; }
+  90% { color: black; }
+  100% { color: #B8CEB1; }
 }
