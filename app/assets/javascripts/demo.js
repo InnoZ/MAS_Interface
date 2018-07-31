@@ -61,16 +61,12 @@ jQuery(function() {
       // ActionCable Websocket
       var starts = null;
       var heat = null;
-      var waitingTimer;
       App.demoState = App.cable.subscriptions.create('DemoChannel', {
         connected: function() {
           console.log('Websocket connected');
         },
         received: function(response) {
-          clearTimeout(waitingTimer);
-          waitingTimer = setTimeout(function() {
-            reactOnActivatedPolygon(response);
-          }, 500);
+          reactOnActivatedPolygon(response);
         }
       });
 
@@ -226,31 +222,41 @@ jQuery(function() {
         });
       };
 
+      var actionBlocked = false;
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
-          if (lines) {
-            map.removeLayer(lines)
+          if (actionBlocked == false) {
+            actionBlocked = true;
+            setTimeout(function() {
+              actionBlocked = false;
+            }, 800);
+
+            if (lines) {
+              map.removeLayer(lines)
+            };
+            selectedLayer = layer;
+            setInitialStyle();
+            layer.setStyle({
+              weight: 3,
+              color: 'red',
+              opacity: 1
+            });
+            highlightDestinations(feature, layer);
+            activePolygonId = feature.id;
+            jQuery.ajax({
+              type: "POST",
+              url: "/activate_polygon",
+              data: {
+                active_mode: activeMode,
+                active_mode_name: activeModeName,
+                active_polygon: activePolygonId
+              },
+            })
+            featureSelected = true;
+            polygonModalSplit(data, activePolygonId);
+          } else {
+            jQuery('#calm-down').show().fadeOut(2000);
           };
-          selectedLayer = layer;
-          setInitialStyle();
-          layer.setStyle({
-            weight: 3,
-            color: 'red',
-            opacity: 1
-          });
-          highlightDestinations(feature, layer);
-          activePolygonId = feature.id;
-          jQuery.ajax({
-            type: "POST",
-            url: "/activate_polygon",
-            data: {
-              active_mode: activeMode,
-              active_mode_name: activeModeName,
-              active_polygon: activePolygonId
-            },
-          })
-          featureSelected = true;
-          polygonModalSplit(data, activePolygonId);
         };
 
         layer.on('click', feature.clickEvent);

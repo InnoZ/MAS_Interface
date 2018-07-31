@@ -5,6 +5,16 @@
     height: 100vh;
   }
 
+  #calm-down {
+    display: none;
+    position: absolute;
+    width: 100vw;
+    color: white;
+    text-align: center;
+    top: 20vh;
+    z-index: 500;
+  }
+
   .legend {
     position: absolute;
     left: 20px;
