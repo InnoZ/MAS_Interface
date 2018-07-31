@@ -23,6 +23,7 @@ jQuery(function() {
     zoomToOsna();
 
     $.get("data_demo_scenario.json", function(data) {
+      var startOrEnd = 'start';
       demoData = data;
       jQuery('#data-loading').hide();
 
@@ -59,7 +60,7 @@ jQuery(function() {
       });
 
       // ActionCable Websocket
-      var starts = null;
+      var markers = null;
       var heat = null;
       App.demoState = App.cable.subscriptions.create('DemoChannel', {
         connected: function() {
@@ -67,6 +68,7 @@ jQuery(function() {
         },
         received: function(response) {
           console.log(response);
+          startOrEnd = response.start_or_end;
           reactOnActivatedPolygon(response);
         }
       });
@@ -81,30 +83,22 @@ jQuery(function() {
         loadGrid(response.active_mode);
 
         if (response.active_polygon == '') {
-          jQuery('#feature-starts').hide();
-          if (starts) {
-            map.removeLayer(starts)
-          };
-          if (heat) {
-            map.removeLayer(starts)
-          };
-          zoomToOsna();
-          console.log('no polygon clicked yet')
+          // do anything? is this possible?
         } else {
           var feature = featureById[parseInt(response.active_polygon)];
-          var props = feature.feature.properties;
-          var featureStarts = props.featureStarts;
-          jQuery('#feature-starts').show().html(featureStarts + ' ways').css('color', color);
+          var props = feature.feature.properties[startOrEnd];
+          var featureCount = props.featureCount;
+          jQuery('#feature-starts').show().html(featureCount + ' ways').css('color', color);
 
-          if (starts) {
-            map.removeLayer(starts)
+          if (markers) {
+            map.removeLayer(markers)
           };
           if (heat) {
             map.removeLayer(heat)
           };
 
           drawHeatmapPoints(props.heatmap_points);
-          drawStartPoints(props.start_points);
+          drawActivityPoints(props.activity_points);
           activitySplit(props.activity_split, color);
           controlLayerVisibility();
 
@@ -137,19 +131,19 @@ jQuery(function() {
         heat.addTo(map);
       };
 
-      var drawStartPoints = function(startPoints) {
-        starts = L.featureGroup();
-        jQuery.each(startPoints, function(index, elem) {
+      var drawActivityPoints = function(activityPoints) {
+        markers = L.featureGroup();
+        jQuery.each(activityPoints, function(index, elem) {
           var point = elem[0];
           var activity = elem[1];
-          var start = L.tooltip({
+          var marker = L.tooltip({
             permanent: true,
             direction: 'center',
             className: 'activity-icon ' + activityIcons[activity]
           }).setLatLng(point);
-          start.addTo(starts);
+          marker.addTo(markers);
         });
-        starts.addTo(map);
+        markers.addTo(map);
       };
 
       var activitySplit = function(activitySplit, color) {
@@ -173,7 +167,9 @@ jQuery(function() {
   //--------------------------------------------------//
 
   jQuery('#demo-touch').each(function() {
-    var demoData;
+    var startOrEnd = 'start';
+    var actionBlocked = false;
+    var map, activeMode, activeModeName, modeData, modeColor, selectedLayer, lines, demoData, activePolygonId, odLayer;
 
     $.get("data_demo_scenario.json", function(data) {
       demoData = data;
@@ -182,8 +178,17 @@ jQuery(function() {
       makeODMap('od-map', demoData.od_relations, demoData);
     });
 
+    var findOdFeatureById = function(id) {
+      jQuery.each(odLayer._layers, function(index, elem) {
+        if (elem.feature.id == id) {
+          target = elem;
+          return false;
+        }
+      });
+      return target;
+    };
+
     var makeODMap = function(div, odRelations, data) {
-      var map, modeMaxCount, activeMode, activeModeName, modeData, modeColor, totalModeCount, selectedLayer, lines, odLayer, activePolygonId;
       var legend = jQuery('.legend');
 
       map = L.map(div, {
@@ -223,7 +228,6 @@ jQuery(function() {
         });
       };
 
-      var actionBlocked = false;
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
           if (actionBlocked == false) {
@@ -250,7 +254,8 @@ jQuery(function() {
               data: {
                 active_mode: activeMode,
                 active_mode_name: activeModeName,
-                active_polygon: activePolygonId
+                active_polygon: activePolygonId,
+                start_or_end: startOrEnd,
               },
             })
             featureSelected = true;
@@ -263,28 +268,18 @@ jQuery(function() {
         layer.on('click', feature.clickEvent);
       };
 
-      var findOdFeatureById = function(id) {
-        jQuery.each(odLayer._layers, function(index, elem) {
-          if (elem.feature.id == id) {
-            target = elem;
-            return false;
-          }
-        });
-        return target;
-      };
-
       var highlightDestinations = function(feature, layer) {
-        var featureMaxCount = feature.properties.featureMaxCount;
+        var featureMaxDestinationCount = feature.properties[startOrEnd].featureMaxDestinationCount;
         colorLegend(modeColor);
-        legend.find('.current-count').html(featureMaxCount);
+        legend.find('.current-count').html(featureMaxDestinationCount);
         lines = L.featureGroup();
         var selectedCentroid = layer.getBounds().getCenter();
         var counter = 0;
-        jQuery.each(feature.properties.destinations, function(index, destination) {
+        jQuery.each(feature.properties[startOrEnd].destinations, function(index, destination) {
           counter += 1;
           for (var id in destination) {
             var count = destination[id];
-            var opacity = (count / featureMaxCount);
+            var opacity = (count / featureMaxDestinationCount);
             var style = {
               fillColor: modeColor,
               fillOpacity: opacity
@@ -313,8 +308,6 @@ jQuery(function() {
         activeModeName = jQuery(this).text();
         modeData = odRelations[activeMode];
         modeColor = data.mode_colors[activeMode];
-        modeMaxCount = modeData.properties.maxCount;
-        totalModeCount = modeData.properties.totalCount;
         if (lines) {
           map.removeLayer(lines)
         };
@@ -328,7 +321,6 @@ jQuery(function() {
         map.fitBounds(odLayer.getBounds());
         setInitialStyle();
         colorLegend(modeColor);
-        legend.find('.current-count').html(modeMaxCount);
         jQuery.ajax({
           type: "POST",
           url: "/activate_polygon",
@@ -336,6 +328,7 @@ jQuery(function() {
             active_mode: activeMode,
             active_mode_name: activeModeName,
             active_polygon: activePolygonId,
+            start_or_end: startOrEnd,
           },
         })
         if (activePolygonId) {
@@ -354,7 +347,7 @@ jQuery(function() {
           if (mode !== 'all' && polygonId == feature.id) {
             _data.push({
               mode: mode,
-              share: feature.properties.featureStarts,
+              share: feature.properties[startOrEnd].featureCount,
               color: data.mode_colors[mode],
             });
             return _data;
@@ -364,7 +357,21 @@ jQuery(function() {
         })
         return _data;
       });
+      console.log(modalSplit)
       makePieChart('#polygon-modal-split', modalSplit, 'share')
     };
+
+    jQuery('.switch-button').click(function() {
+      if (actionBlocked == false) {
+        jQuery('.switch-button').toggleClass('active');
+        startOrEnd = jQuery('.switch-button.active').attr('start_or_end');
+        if (activePolygonId) {
+          findOdFeatureById(activePolygonId).feature.clickEvent();
+        }
+      } else {
+        // click polygon to trigger calm down message
+        findOdFeatureById(activePolygonId).feature.clickEvent();
+      }
+    });
   });
 });

@@ -29,6 +29,7 @@ class DemoController < ApplicationController
         active_polygon: params[:active_polygon],
         active_mode: params[:active_mode],
         active_mode_name: params[:active_mode_name],
+        start_or_end: params[:start_or_end],
       }
     )
   end

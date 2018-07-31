@@ -3,7 +3,6 @@
     .mode-button-container
       - Scenario.first.mode_colors.each do |mode, mode_color|
         .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
-
   .row
     #log
     #od-map
@@ -18,6 +17,10 @@
   #data-loading loading...
 
   #calm-down= t 'calm_down'
+
+  .switch-button-container
+    .switch-button.active{start_or_end: 'start'} START
+    .switch-button{start_or_end: 'end'} END
 
 // do not include via asset pipeline since conflicting mapbox lib is required for all other maps instead
 = javascript_include_tag 'leaflet'

@@ -11,7 +11,8 @@
     width: 100vw;
     color: white;
     text-align: center;
-    top: 5vh;
+    top: 7vh;
+    font-size: 23px;
     z-index: 500;
   }
 
@@ -153,8 +154,6 @@
     bottom: 80px;
     right: 80px;
     z-index: 999;
-
-    // gets color via javscript
     font-weight: bold;
     padding: 4px 10px;
     margin: 4px;
@@ -214,4 +213,28 @@
   80% { color: #c94380; }
   90% { color: black; }
   100% { color: #B8CEB1; }
+}
+
+.switch-button-container {
+  position: absolute;
+  bottom: 120px;
+  right: 80px;
+  z-index: 999;
+  .switch-button {
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 16px;
+    background: none;
+    font-size: 18px;
+    border-width: 2px;
+    border-style: solid;
+    cursor: pointer;
+
+    &.active {
+      background: white;
+      color: black;
+    }
+  }
 }
