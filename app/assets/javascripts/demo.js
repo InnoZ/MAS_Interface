@@ -66,6 +66,7 @@ jQuery(function() {
           console.log('Websocket connected');
         },
         received: function(response) {
+          console.log(response);
           reactOnActivatedPolygon(response);
         }
       });
@@ -229,7 +230,7 @@ jQuery(function() {
             actionBlocked = true;
             setTimeout(function() {
               actionBlocked = false;
-            }, 800);
+            }, 1000);
 
             if (lines) {
               map.removeLayer(lines)
