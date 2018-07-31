@@ -234,7 +234,7 @@ jQuery(function() {
             actionBlocked = true;
             setTimeout(function() {
               actionBlocked = false;
-            }, 1000);
+            }, 500);
 
             if (lines) {
               map.removeLayer(lines)
