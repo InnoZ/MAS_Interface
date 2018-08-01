@@ -41,7 +41,10 @@
     width: 380px;
     z-index: 500;
     .color-button {
-      width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 150px;
       font-size: 15px;
       display: inline-block;
       border-radius: 5px;
