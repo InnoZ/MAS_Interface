@@ -102,7 +102,7 @@ jQuery(function() {
       };
 
       var controlLayerVisibility = function() {
-        if (jQuery('#heatmap-button').hasClass('active')) {
+        if (jQuery('#heatmap-button-heatmap').hasClass('active')) {
           jQuery('.leaflet-heatmap-layer').show();
           jQuery('.activity-icon').hide();
         } else {
@@ -111,8 +111,8 @@ jQuery(function() {
         }
       };
 
-      jQuery('#heatmap-button').click(function() {
-        jQuery(this).toggleClass('active');
+      jQuery('.heatmap-button').click(function() {
+        jQuery('.heatmap-button').toggleClass('active');
         controlLayerVisibility();
       });
 
@@ -372,7 +372,6 @@ jQuery(function() {
         })
         return _data;
       });
-      console.log(modalSplit)
       makePieChart('#polygon-modal-split', modalSplit, 'share')
     };
 

@@ -6,6 +6,9 @@
   .row
     #log
     #od-map
+      .switch-button-container
+        .switch-button.active{start_or_end: 'start'}= t('demo.start')
+        .switch-button{start_or_end: 'end'}= t('demo.end')
 
     .legend
       .legend-label.current-count
@@ -16,11 +19,7 @@
 
   #data-loading loading...
 
-  #calm-down= t 'calm_down'
-
-  .switch-button-container
-    .switch-button.active{start_or_end: 'start'} START
-    .switch-button{start_or_end: 'end'} END
+  #calm-down= t('demo.calm_down')
 
 // do not include via asset pipeline since conflicting mapbox lib is required for all other maps instead
 = javascript_include_tag 'leaflet'
