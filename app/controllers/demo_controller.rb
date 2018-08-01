@@ -33,4 +33,14 @@ class DemoController < ApplicationController
       }
     )
   end
+
+  def demo_ready
+    p params[:demo_ready]
+    p 'TEEEEEEEEEEEEEEEEEEEEEEEEST'
+    ActionCable.server.broadcast(
+      'demo_ready_channel', {
+        demo_ready: params[:demo_ready],
+      }
+    )
+  end
 end

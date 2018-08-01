@@ -1,3 +1,13 @@
+var demoReady = function(boolean) {
+  jQuery.ajax({
+    type: "POST",
+    url: "/demo_ready",
+    data: {
+      demo_ready: boolean
+    },
+  })
+};
+
 jQuery(function() {
   //------------------ MONITOR -------------------------//
   jQuery('#demo-monitor').each(function() {
@@ -56,9 +66,9 @@ jQuery(function() {
       // ActionCable Websocket
       var markers = null;
       var heat = null;
-      App.demoState = App.cable.subscriptions.create('DemoChannel', {
+      App.cable.subscriptions.create('DemoChannel', {
         connected: function() {
-          console.log('Websocket connected');
+          console.log('Demo Websocket connected');
         },
         received: function(response) {
           console.log(response);
@@ -160,6 +170,8 @@ jQuery(function() {
               left: positionInBarChart.left - 25,
             });
           });
+
+          demoReady(true);
         }, 1)
       };
     });
@@ -179,6 +191,20 @@ jQuery(function() {
       jQuery('#data-loading').hide();
 
       makeODMap('od-map', demoData.od_relations, demoData);
+    });
+
+    App.cable.subscriptions.create('DemoReadyChannel', {
+      connected: function() {
+        console.log('Demo Ready Websocket connected');
+      },
+      received: function(response) {
+        console.log(response);
+        if (response.demo_ready == 'true') {
+          jQuery('.action-blocker').hide();
+        } else {
+          jQuery('.action-blocker').show();
+        }
+      }
     });
 
     var findOdFeatureById = function(id) {
@@ -233,39 +259,32 @@ jQuery(function() {
 
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
-          if (actionBlocked == false) {
-            actionBlocked = true;
-            setTimeout(function() {
-              actionBlocked = false;
-            }, 500);
+          demoReady(false);
 
-            if (lines) {
-              map.removeLayer(lines)
-            };
-            selectedLayer = layer;
-            setInitialStyle();
-            layer.setStyle({
-              weight: 3,
-              color: 'red',
-              opacity: 1
-            });
-            highlightDestinations(feature, layer);
-            activePolygonId = feature.id;
-            jQuery.ajax({
-              type: "POST",
-              url: "/activate_polygon",
-              data: {
-                active_mode: activeMode,
-                active_mode_name: activeModeName,
-                active_polygon: activePolygonId,
-                start_or_end: startOrEnd,
-              },
-            })
-            featureSelected = true;
-            polygonModalSplit(data, activePolygonId);
-          } else {
-            jQuery('#calm-down').show().fadeOut(2000);
+          if (lines) {
+            map.removeLayer(lines)
           };
+          selectedLayer = layer;
+          setInitialStyle();
+          layer.setStyle({
+            weight: 3,
+            color: 'red',
+            opacity: 1
+          });
+          highlightDestinations(feature, layer);
+          activePolygonId = feature.id;
+          jQuery.ajax({
+            type: "POST",
+            url: "/activate_polygon",
+            data: {
+              active_mode: activeMode,
+              active_mode_name: activeModeName,
+              active_polygon: activePolygonId,
+              start_or_end: startOrEnd,
+            },
+          })
+          featureSelected = true;
+          polygonModalSplit(data, activePolygonId);
         };
 
         layer.on('click', feature.clickEvent);
@@ -378,14 +397,9 @@ jQuery(function() {
     };
 
     jQuery('.switch-button').click(function() {
-      if (actionBlocked == false) {
-        jQuery('.switch-button').toggleClass('active');
-        startOrEnd = jQuery('.switch-button.active').attr('start_or_end');
-        if (activePolygonId) {
-          findOdFeatureById(activePolygonId).feature.clickEvent();
-        }
-      } else {
-        // click polygon to trigger calm down message
+      jQuery('.switch-button').toggleClass('active');
+      startOrEnd = jQuery('.switch-button.active').attr('start_or_end');
+      if (activePolygonId) {
         findOdFeatureById(activePolygonId).feature.clickEvent();
       }
     });

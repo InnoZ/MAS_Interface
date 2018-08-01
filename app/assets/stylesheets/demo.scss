@@ -1,6 +1,16 @@
 #demo-touch {
   background: black;
 
+  .action-blocker {
+    position: absolute;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0.5;
+    display: none;
+  }
+
   #od-map {
     height: 100vh;
     width: 80vw;

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     get 'demo_touch', to: 'demo#touch', as: :demo_touch
     get 'demo_monitor', to: 'demo#monitor', as: :demo_monitor
     post 'activate_polygon', to: 'demo#activate_polygon'
+    post 'demo_ready', to: 'demo#demo_ready'
 
     mount ActionCable.server => '/cable'
   end
