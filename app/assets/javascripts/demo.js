@@ -206,7 +206,8 @@ jQuery(function() {
       district.setStyle({
         fillOpacity: 0,
         stroke: true,
-        color: 'red'
+        weight: 2.3,
+        color: 'white'
       });
       district.addTo(map);
 
@@ -288,14 +289,28 @@ jQuery(function() {
             if (destinationLayer) {
               destinationLayer.setStyle(style);
               if (counter < 10) {
+                var fromTo = startOrEnd == 'end' ? [destinationLayer.getBounds().getCenter(), selectedCentroid] : [selectedCentroid, destinationLayer.getBounds().getCenter()];
                 var line = L.polyline(
-                  [destinationLayer.getBounds().getCenter(), selectedCentroid], {
+                  fromTo, {
                     color: 'white',
-                    weight: 2,
+                    weight: 1.5,
                     opacity: 1
                   }
-                );
-                line.addTo(lines);
+                ).addTo(lines);
+                var arrowHead = L.polylineDecorator(line, {
+                  patterns: [{
+                    offset: '50%',
+                    symbol: L.Symbol.arrowHead({
+                      pixelSize: 7,
+                      polygon: true,
+                      pathOptions: {
+                        stroke: false,
+                        fillOpacity: 1,
+                        color: 'white'
+                      }
+                    })
+                  }]
+                }).addTo(lines);
               };
             };
           };
