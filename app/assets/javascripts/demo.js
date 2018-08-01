@@ -53,12 +53,6 @@ jQuery(function() {
         'other': 'icon-record',
       };
 
-      jQuery.each(activityIcons, function(activity, icon) {
-        jQuery('#activity-legend').append(
-          "<icon class='" + icon + "'></icon>" + I18n.activity_names[activity]
-        );
-      });
-
       // ActionCable Websocket
       var markers = null;
       var heat = null;
@@ -105,7 +99,6 @@ jQuery(function() {
           map.fitBounds(feature.getBounds());
         };
         jQuery('.activity-icon').css('color', color);
-        jQuery('#activity-legend').css('color', color);
       };
 
       var controlLayerVisibility = function() {
@@ -157,6 +150,14 @@ jQuery(function() {
         setTimeout(function() {
           // timeout hack to assure that chart elements are rendered when applying this
           jQuery('#activity-split rect').css('fill', color);
+          jQuery.each(activityIcons, function(activity, icon) {
+            var iconElement = jQuery("<icon class='activity-legend-icon " + icon + "'></icon>");
+            var positionInBarChart = jQuery('text:contains(' + I18n.activity_names[activity] + ')').position();
+            iconElement.appendTo(jQuery('#demo-monitor')).css({
+              top: positionInBarChart.top - 5,
+              left: positionInBarChart.left - 25,
+            });
+          });
         }, 1)
       };
     });

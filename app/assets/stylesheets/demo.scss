@@ -75,7 +75,7 @@
   .nv-multiBarHorizontalChart {
     text {
       fill: white !important;
-      font-size: 12px;
+      font-size: 15px;
     }
   }
 
@@ -96,18 +96,11 @@
     font-size: 20px;
   }
 
-  #activity-legend {
+  .activity-legend-icon {
+    color: white;
     position: absolute;
     z-index: 999;
-    bottom: 0;
     font-size: 20px;
-    width: 100%;
-    text-align: center;
-    * { display: inline-block; }
-    icon {
-      margin-left: 12px;
-      margin-right: 5px;
-    }
   }
 
   .mapbox-info-toggle {
@@ -132,10 +125,17 @@
     height: 100vh;
   }
 
-  .demo-square-overlay {
+  .demo-square-overlay-left {
     float: left;
     background-color: black;
-    width: calc((100vw - 100vh) / 2);
+    width: calc((120vw - 100vh) / 2);
+    height: 100vh;
+  }
+
+  .demo-square-overlay-right {
+    float: left;
+    background-color: black;
+    width: calc((80vw - 100vh) / 2);
     height: 100vh;
   }
 
@@ -175,11 +175,12 @@
   }
 
   #activity-split {
-    height: 300px;
-    width: 300px;
+    height: 45vh;
+    // width adapted on left-square-overlay
+    width: calc((120vw - 100vh) / 2 - 50px);
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: 40px;
     z-index: 500;
     line {
       stroke-opacity: 0;

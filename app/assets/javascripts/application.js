@@ -203,7 +203,7 @@ function makeHorizontalBarChart(div, data, attribute) {
       .showXAxis(true)
       .showYAxis(false)
       .margin({
-        "left": 80,
+        "left": 100,
       });
 
     chart.tooltip.contentGenerator(function(obj) {
