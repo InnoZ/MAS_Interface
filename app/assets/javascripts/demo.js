@@ -82,7 +82,7 @@ jQuery(function() {
           var feature = featureById[parseInt(response.active_polygon)];
           var props = feature.feature.properties[startOrEnd];
           var featureCount = props.featureCount;
-          jQuery('#feature-starts').show().html(featureCount + ' ways').css('color', color);
+          jQuery('#feature-starts').show().html(featureCount + ' ways overall');
 
           if (markers) {
             map.removeLayer(markers)
@@ -220,7 +220,6 @@ jQuery(function() {
             'background': '-webkit-linear-gradient(bottom, ' + gradient + ')',
             'border-color': color
           });
-        legend.find('.legend-label').css('color', color);
       };
 
       var setInitialStyle = function() {

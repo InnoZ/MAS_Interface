@@ -40,6 +40,9 @@
     z-index: 500;
     text-align: center;
     * { display: inline-block; }
+    .color-button {
+      border-radius: 7px;
+    }
   }
 
   .nv-pie {
@@ -82,17 +85,18 @@
   #mode-name {
     position: absolute;
     z-index: 999;
-    top: 60px;
-    right: 50px;
+    bottom: 90px;
+    left: 50px;
     font-size: 50px;
     text-transform: uppercase;
   }
 
   #feature-starts {
+    color: white;
     position: absolute;
     z-index: 999;
-    top: 90px;
-    right: 50px;
+    bottom: 50px;
+    left: 50px;
     font-size: 20px;
   }
 
@@ -149,24 +153,24 @@
   }
 
   #heatmap-button {
-    color: white;
+    color: black;
     position: absolute;
-    bottom: 80px;
+    bottom: 50px;
     right: 80px;
     z-index: 999;
     font-weight: bold;
     padding: 4px 10px;
     margin: 4px;
-    border-radius: 16px;
-    background: none;
+    border-radius: 7px;
+    background: white;
     font-size: 18px;
     border-width: 2px;
     border-style: solid;
     cursor: pointer;
 
     &.active {
-      background: white;
-      color: black;
+      background: black;
+      color: white;
     }
   }
 
@@ -223,19 +227,19 @@
   z-index: 999;
   .switch-button {
     display: inline-block;
-    color: white;
+    color: black;
     font-weight: bold;
     padding: 4px 10px;
-    border-radius: 16px;
-    background: none;
+    border-radius: 7px;
+    background: white;
     font-size: 18px;
     border-width: 2px;
     border-style: solid;
     cursor: pointer;
 
     &.active {
-      background: white;
-      color: black;
+      background: black;
+      color: white;
     }
   }
 }
