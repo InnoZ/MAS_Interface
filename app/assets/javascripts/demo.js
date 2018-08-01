@@ -150,6 +150,8 @@ jQuery(function() {
         setTimeout(function() {
           // timeout hack to assure that chart elements are rendered when applying this
           jQuery('#activity-split rect').css('fill', color);
+          // remove existing icons
+          jQuery('.activity-legend-icon').remove();
           jQuery.each(activityIcons, function(activity, icon) {
             var iconElement = jQuery("<icon class='activity-legend-icon " + icon + "'></icon>");
             var positionInBarChart = jQuery('text:contains(' + I18n.activity_names[activity] + ')').position();
