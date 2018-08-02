@@ -269,12 +269,14 @@ jQuery(function() {
       var featureJustClicked = false;
       map.on('click', function(e) {
         if (featureJustClicked == false) {
-          jQuery("<div class='empty-click'>No data here!</div>").appendTo(jQuery('#demo-touch')).css({
-            left: mousePositionX,
-            top: mousePositionY
-          }).fadeOut(2000, function() {
-            jQuery(this).remove();
-          });
+          setTimeout(function() {
+            jQuery("<div class='empty-click'>No data here!</div>").appendTo(jQuery('#demo-touch')).css({
+              left: mousePositionX,
+              top: mousePositionY
+            }).fadeOut(2000, function() {
+              jQuery(this).remove();
+            });
+          }, 100); // wait for mousePosition
         }
       });
 
