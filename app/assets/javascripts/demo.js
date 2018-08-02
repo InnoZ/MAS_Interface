@@ -211,6 +211,7 @@ jQuery(function() {
     });
 
     var findOdFeatureById = function(id) {
+      var target = null;
       jQuery.each(odLayer._layers, function(index, elem) {
         if (elem.feature.id == id) {
           target = elem;
@@ -266,7 +267,7 @@ jQuery(function() {
         if (featureJustClicked == false) {
           mousePositionX = e.clientX;
           mousePositionY = e.clientY;
-          jQuery("<div class='empty-click'>No data here!</div>").appendTo(jQuery('#demo-touch')).css({
+          jQuery("<div class='empty-click'>No trips here!</div>").appendTo(jQuery('#demo-touch')).css({
             left: mousePositionX,
             top: mousePositionY
           }).fadeOut(2000, function() {
@@ -391,8 +392,10 @@ jQuery(function() {
           },
         })
         if (activePolygonId) {
-          var activePolygon = findOdFeatureById(activePolygonId)
-          activePolygon.feature.clickEvent();
+          var activePolygon = findOdFeatureById(activePolygonId);
+          if (activePolygon) {
+            activePolygon.feature.clickEvent();
+          }
         }
       });
 
