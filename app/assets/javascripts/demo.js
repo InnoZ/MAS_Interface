@@ -68,6 +68,7 @@ jQuery(function() {
       var heat = null;
       App.cable.subscriptions.create('DemoChannel', {
         connected: function() {
+          demoReady(true);
           console.log('Demo Websocket connected');
         },
         received: function(response) {
