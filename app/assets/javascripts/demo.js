@@ -72,6 +72,7 @@ jQuery(function() {
           console.log('Demo Websocket connected');
         },
         received: function(response) {
+          jQuery('#loading-bar').show();
           console.log(response);
           startOrEnd = response.start_or_end;
           reactOnActivatedPolygon(response);
@@ -172,6 +173,7 @@ jQuery(function() {
             });
           });
 
+          jQuery('#loading-bar').hide();
           demoReady(true);
         }, 1)
       };
@@ -258,9 +260,32 @@ jQuery(function() {
         });
       };
 
+      var mousePositionX, mousePositionY;
+      jQuery('body').mousemove(function(e) {
+        mousePositionX = e.clientX;
+        mousePositionY = e.clientY;
+      });
+
+      var featureJustClicked = false;
+      map.on('click', function(e) {
+        if (featureJustClicked == false) {
+          jQuery("<div class='empty-click'>No data here!</div>").appendTo(jQuery('#demo-touch')).css({
+            left: mousePositionX,
+            top: mousePositionY
+          }).fadeOut(2000, function() {
+            jQuery(this).remove();
+          });
+        }
+      });
+
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
           demoReady(false);
+
+          featureJustClicked = true;
+          featureClickTimer = setTimeout(function() {
+            featureJustClicked = false;
+          }, 500)
 
           if (lines) {
             map.removeLayer(lines)

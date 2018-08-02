@@ -1,5 +1,31 @@
+@keyframes blink {
+  0% { color: #f2b50c; }
+  10% { color: black; }
+  20% { color: #db8012; }
+  30% { color: black; }
+  40% { color: #3db783; }
+  50% { color: black; }
+  60% { color: #50a0b5; }
+  70% { color: black; }
+  80% { color: #c94380; }
+  90% { color: black; }
+  100% { color: #B8CEB1; }
+}
+
+@keyframes blink-background {
+  0% { background: black; width: 0vw; }
+  50% { background: white; }
+  100% { background: black; width: 100vw; }
+}
+
 #demo-touch {
   background: black;
+
+  .empty-click {
+    position: absolute;
+    z-index: 500;
+    color: white;
+  }
 
   .action-blocker {
     position: absolute;
@@ -31,7 +57,7 @@
     position: absolute;
     left: 20px;
     bottom: 20vh;
-    z-index: 500;
+    z-index: 1000;
     .current-count-bar {
       width: 40px;
       height: 50vh;
@@ -80,7 +106,7 @@
     absolute;
     top: 30px;
     right: 30px;
-    z-index: 500;
+    z-index: 1000;
   }
 }
 
@@ -176,6 +202,7 @@
     z-index: 999;
     text-align: center;
     .heatmap-button {
+      font-size: 18px;
       display: inline-block;
       color: white;
       text-transform: uppercase;
@@ -210,6 +237,16 @@
       stroke-opacity: 0;
     }
   }
+
+  #loading-bar {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    height: 3px;
+    background: white;
+    animation: blink-background 2000ms infinite;
+  }
 }
 
 #data-loading {
@@ -226,20 +263,6 @@
   animation: blink 7000ms infinite alternate;
 }
 
-@keyframes blink {
-  0% { color: #f2b50c; }
-  10% { color: black; }
-  20% { color: #db8012; }
-  30% { color: black; }
-  40% { color: #3db783; }
-  50% { color: black; }
-  60% { color: #50a0b5; }
-  70% { color: black; }
-  80% { color: #c94380; }
-  90% { color: black; }
-  100% { color: #B8CEB1; }
-}
-
 .switch-button-container {
   position: absolute;
   bottom: 10px;
@@ -247,6 +270,7 @@
   z-index: 500;
   text-align: center;
   .switch-button {
+    font-size: 18px;
     display: inline-block;
     color: white;
     text-transform: uppercase;
