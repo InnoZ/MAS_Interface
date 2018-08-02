@@ -260,23 +260,18 @@ jQuery(function() {
         });
       };
 
-      var mousePositionX, mousePositionY;
-      jQuery('body').mousemove(function(e) {
-        mousePositionX = e.clientX;
-        mousePositionY = e.clientY;
-      });
-
       var featureJustClicked = false;
-      map.on('click', function(e) {
+      var mousePositionX, mousePositionY;
+      jQuery('#od-map').click(function(e) {
         if (featureJustClicked == false) {
-          setTimeout(function() {
-            jQuery("<div class='empty-click'>No data here!</div>").appendTo(jQuery('#demo-touch')).css({
-              left: mousePositionX,
-              top: mousePositionY
-            }).fadeOut(2000, function() {
-              jQuery(this).remove();
-            });
-          }, 100); // wait for mousePosition
+          mousePositionX = e.clientX;
+          mousePositionY = e.clientY;
+          jQuery("<div class='empty-click'>No data here!</div>").appendTo(jQuery('#demo-touch')).css({
+            left: mousePositionX,
+            top: mousePositionY
+          }).fadeOut(2000, function() {
+            jQuery(this).remove();
+          });
         }
       });
 
