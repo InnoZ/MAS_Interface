@@ -3,3 +3,5 @@ de:
     calm_down: 'Gib mir etwas Zeit zum Berechnen...'
     start: 'Abfahrten'
     end: 'Ankünfte'
+    no_trips_here: 'Keine Fahrten!'
+    ways_overall: 'Wege insgesamt'

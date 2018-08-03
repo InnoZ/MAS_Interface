@@ -84,7 +84,7 @@ jQuery(function() {
           var feature = featureById[parseInt(response.active_polygon)];
           var props = feature.feature.properties[startOrEnd];
           var featureCount = props.featureCount;
-          jQuery('#feature-starts').show().html(featureCount + ' ways overall');
+          jQuery('#feature-starts').show().html(featureCount + ' ' + I18n.demo.ways_overall);
 
           if (markers) { map.removeLayer(markers) };
           if (heat) { map.removeLayer(heat) };
@@ -251,10 +251,10 @@ jQuery(function() {
         if (featureJustClicked == false) {
           mousePositionX = e.clientX;
           mousePositionY = e.clientY;
-          jQuery("<div class='empty-click'>No trips here!</div>").appendTo(jQuery(
+          jQuery("<div class='empty-click'>" + I18n.demo.no_trips_here + "</div>").appendTo(jQuery(
             '#demo-touch')).css({
             left: mousePositionX,
-            top: mousePositionY
+            top: mousePositionY - 40
           }).fadeOut(2000, function() {
             jQuery(this).remove();
           });

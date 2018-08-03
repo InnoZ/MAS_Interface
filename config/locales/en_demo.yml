@@ -3,3 +3,5 @@ en:
     calm_down: 'Give me some time to process...'
     start: 'Starts'
     end: 'Arrivals'
+    no_trips_here: 'No trips!'
+    ways_overall: 'ways overall'
