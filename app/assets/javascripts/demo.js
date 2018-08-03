@@ -27,7 +27,7 @@ jQuery(function() {
     var zoomToOsna = function() { map.setView([52.27, 8.05], 12) };
     zoomToOsna();
 
-    $.get("data_demo_scenario.json", function(data) {
+    $.get("/data_demo_scenario.json", function(data) {
       var startOrEnd = 'start';
       demoData = data;
       jQuery('#data-loading').hide();
@@ -173,7 +173,7 @@ jQuery(function() {
     var map, activeMode, activeModeName, modeData, modeColor, selectedLayer, lines,
       demoData, activePolygonId, odLayer;
 
-    $.get("data_demo_scenario.json", function(data) {
+    $.get("/data_demo_scenario.json", function(data) {
       demoData = data;
       jQuery('#data-loading').hide();
 

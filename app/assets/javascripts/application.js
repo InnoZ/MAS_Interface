@@ -130,7 +130,7 @@ function makePieChart(div, data, attribute) {
     return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
   });
 
-  chart.tooltip.enabled(true);
+  chart.tooltip.enabled(false);
 
   nv.addGraph(function() {
     d3.select(div)
@@ -209,6 +209,8 @@ function makeHorizontalBarChart(div, data, attribute) {
     chart.tooltip.contentGenerator(function(obj) {
       return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
     });
+
+    chart.tooltip.enabled(false);
 
     d3.select(div)
       .datum(formattedData)
