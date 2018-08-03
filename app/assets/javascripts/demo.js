@@ -2,9 +2,7 @@ var demoReady = function(boolean) {
   jQuery.ajax({
     type: "POST",
     url: "/demo_ready",
-    data: {
-      demo_ready: boolean
-    },
+    data: { demo_ready: boolean },
   })
 };
 
@@ -22,14 +20,11 @@ jQuery(function() {
       zoomSnap: 0.25
     });
     baselayer = L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-      });
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+    );
     map.addLayer(baselayer);
 
-    var zoomToOsna = function() {
-      map.setView([52.27, 8.05], 12);
-    };
+    var zoomToOsna = function() { map.setView([52.27, 8.05], 12) };
     zoomToOsna();
 
     $.get("data_demo_scenario.json", function(data) {
@@ -42,14 +37,9 @@ jQuery(function() {
         // temporarily use the od data's car dataset for hexagon zoom
         // better create a new clean one soon, because we do not need od data here
         var district = L.geoJson(demoData.od_relations[mode], {
-          onEachFeature: function(feature, layer) {
-            featureById[feature.id] = layer;
-          }
+          onEachFeature: function(feature, layer) { featureById[feature.id] = layer; }
         });
-        district.setStyle({
-          fillOpacity: 0,
-          stroke: false
-        });
+        district.setStyle({ fillOpacity: 0, stroke: false });
         district.addTo(map);
       };
 
@@ -96,12 +86,8 @@ jQuery(function() {
           var featureCount = props.featureCount;
           jQuery('#feature-starts').show().html(featureCount + ' ways overall');
 
-          if (markers) {
-            map.removeLayer(markers)
-          };
-          if (heat) {
-            map.removeLayer(heat)
-          };
+          if (markers) { map.removeLayer(markers) };
+          if (heat) { map.removeLayer(heat) };
 
           drawHeatmapPoints(props.heatmap_points);
           drawActivityPoints(props.activity_points);
@@ -129,10 +115,7 @@ jQuery(function() {
       });
 
       var drawHeatmapPoints = function(heatmapPoints) {
-        heat = L.heatLayer(heatmapPoints, {
-          radius: 20,
-          blur: 38,
-        });
+        heat = L.heatLayer(heatmapPoints, { radius: 20, blur: 38 });
         heat.addTo(map);
       };
 
@@ -187,7 +170,8 @@ jQuery(function() {
   jQuery('#demo-touch').each(function() {
     var startOrEnd = 'start';
     var actionBlocked = false;
-    var map, activeMode, activeModeName, modeData, modeColor, selectedLayer, lines, demoData, activePolygonId, odLayer;
+    var map, activeMode, activeModeName, modeData, modeColor, selectedLayer, lines,
+      demoData, activePolygonId, odLayer;
 
     $.get("data_demo_scenario.json", function(data) {
       demoData = data;
@@ -267,7 +251,8 @@ jQuery(function() {
         if (featureJustClicked == false) {
           mousePositionX = e.clientX;
           mousePositionY = e.clientY;
-          jQuery("<div class='empty-click'>No trips here!</div>").appendTo(jQuery('#demo-touch')).css({
+          jQuery("<div class='empty-click'>No trips here!</div>").appendTo(jQuery(
+            '#demo-touch')).css({
             left: mousePositionX,
             top: mousePositionY
           }).fadeOut(2000, function() {
@@ -321,26 +306,20 @@ jQuery(function() {
         lines = L.featureGroup();
         var selectedCentroid = layer.getBounds().getCenter();
         var counter = 0;
-        jQuery.each(feature.properties[startOrEnd].destinations, function(index, destination) {
+        jQuery.each(feature.properties[startOrEnd].destinations, function(index,
+          destination) {
           counter += 1;
           for (var id in destination) {
             var count = destination[id];
             var opacity = (count / featureMaxDestinationCount);
-            var style = {
-              fillColor: modeColor,
-              fillOpacity: opacity
-            };
+            var style = { fillColor: modeColor, fillOpacity: opacity };
             var destinationLayer = findOdFeatureById(id);
             if (destinationLayer) {
               destinationLayer.setStyle(style);
               if (counter < 10) {
                 var fromTo = startOrEnd == 'end' ? [destinationLayer.getBounds().getCenter(), selectedCentroid] : [selectedCentroid, destinationLayer.getBounds().getCenter()];
                 var line = L.polyline(
-                  fromTo, {
-                    color: 'white',
-                    weight: 1.5,
-                    opacity: 1
-                  }
+                  fromTo, { color: 'white', weight: 1.5, opacity: 1 }
                 ).addTo(lines);
                 var arrowHead = L.polylineDecorator(line, {
                   patterns: [{
@@ -348,11 +327,7 @@ jQuery(function() {
                     symbol: L.Symbol.arrowHead({
                       pixelSize: 7,
                       polygon: true,
-                      pathOptions: {
-                        stroke: false,
-                        fillOpacity: 1,
-                        color: 'white'
-                      }
+                      pathOptions: { stroke: false, fillOpacity: 1, color: 'white' }
                     })
                   }]
                 }).addTo(lines);
@@ -363,24 +338,23 @@ jQuery(function() {
         lines.addTo(map);
       };
 
+      var odBounds = null;
       jQuery('.od-mode-selector').click(function() {
         activeMode = jQuery(this).attr('od_mode');
         activeModeName = jQuery(this).text();
         modeData = odRelations[activeMode];
         modeColor = data.mode_colors[activeMode];
-        if (lines) {
-          map.removeLayer(lines)
-        };
-        if (odLayer) {
-          map.removeLayer(odLayer)
-        };
-        odLayer = L.geoJson(modeData, {
-          onEachFeature: onEachFeature
-        });
+        if (lines) { map.removeLayer(lines) };
+        if (odLayer) { map.removeLayer(odLayer) };
+        odLayer = L.geoJson(modeData, { onEachFeature: onEachFeature });
         odLayer.addTo(map);
-        map.fitBounds(odLayer.getBounds());
         setInitialStyle();
         colorLegend(modeColor);
+        if (!odBounds) {
+          // zoom to bounds only once at startup
+          odBounds = odLayer.getBounds();
+          map.fitBounds(odBounds);
+        }
         jQuery.ajax({
           type: "POST",
           url: "/activate_polygon",
@@ -393,9 +367,7 @@ jQuery(function() {
         })
         if (activePolygonId) {
           var activePolygon = findOdFeatureById(activePolygonId);
-          if (activePolygon) {
-            activePolygon.feature.clickEvent();
-          }
+          if (activePolygon) { activePolygon.feature.clickEvent(); }
         }
       });
 
@@ -413,9 +385,7 @@ jQuery(function() {
               color: data.mode_colors[mode],
             });
             return _data;
-          } else {
-            return true;
-          }
+          } else { return true; }
         })
         return _data;
       });
