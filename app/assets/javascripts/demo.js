@@ -69,22 +69,30 @@ jQuery(function() {
           jQuery('#loading-bar').show();
           console.log(response);
           startOrEnd = response.start_or_end;
-          if (startOrEnd == 'activity') { console.log('actvity Mode'); return; }
-          reactOnActivatedPolygon(response);
+          if (startOrEnd == 'activity') {
+            reactOnActivityMode(response);
+          } else {
+            reactOnActivatedPolygon(response);
+          }
         }
       });
 
+      var reactOnActivityMode = function(response) {
+        jQuery('body').hide();
+      };
+
       var reactOnActivatedPolygon = function(response) {
+        jQuery('body').show();
+
         var color = demoData.mode_colors[response.active_mode];
         var modeName = response.active_mode_name;
         jQuery('#mode-name').html(modeName).css('color', color);
 
-        // no active polygon means that mode is switched
-        // thus, change grid to get correct od data
+        // change grid to get correct od data
         loadGrid(response.active_mode);
 
         if (response.active_polygon == '') {
-          // do anything? is this possible?
+          // do anything?
         } else {
           var feature = featureById[parseInt(response.active_polygon)];
           var props = feature.feature.properties[startOrEnd];
@@ -281,24 +289,18 @@ jQuery(function() {
 
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
-          if (startOrEnd == 'activity') { return }
+          if (startOrEnd == 'activity') { return } // do not react on click while in activity mode
           demoReady(false);
 
           featureJustClicked = true;
-          featureClickTimer = setTimeout(function() {
-            featureJustClicked = false;
-          }, 500)
+          featureClickTimer = setTimeout(function() { featureJustClicked = false; }, 500)
 
           if (lines) {
             map.removeLayer(lines)
           };
           selectedLayer = layer;
           setInitialStyle();
-          layer.setStyle({
-            weight: 3,
-            color: 'red',
-            opacity: 1
-          });
+          layer.setStyle({ weight: 3, color: 'red', opacity: 1 });
           highlightDestinations(feature, layer);
           activePolygonId = feature.id;
           submitChanges();
@@ -312,7 +314,7 @@ jQuery(function() {
       var highlightDestinations = function(feature, layer) {
         var featureMaxDestinationCount = feature.properties[startOrEnd].featureMaxDestinationCount;
         colorLegend(modeColor);
-        legend.find('.current-count').html(featureMaxDestinationCount);
+        legend.show().find('.current-count').html(featureMaxDestinationCount);
         lines = L.featureGroup();
         var selectedCentroid = layer.getBounds().getCenter();
         var counter = 0;
@@ -350,6 +352,7 @@ jQuery(function() {
       var highlightActivity = function() {
         if (lines) { map.removeLayer(lines) };
         var max = Math.max.apply(Math, modeData.features.map(function(f) { return f.properties.start.featureCount; }));
+        legend.show().find('.current-count').html(max);
         jQuery.each(modeData.features, function(index, feature) {
           var style = { weight: 0, fillColor: modeColor, fillOpacity: feature.properties.start.featureCount / max };
           var polygon = findOdFeatureById(feature.id);
@@ -379,6 +382,7 @@ jQuery(function() {
         if (startOrEnd == 'activity') {
           highlightActivity();
         } else {
+          legend.hide();
           if (activePolygonId) {
             var activePolygon = findOdFeatureById(activePolygonId);
             if (activePolygon) { activePolygon.feature.clickEvent(); }
@@ -411,7 +415,12 @@ jQuery(function() {
         jQuery(this).addClass('active');
         var startOrEndAttr = jQuery('.switch-button.active').attr('start_or_end');
         startOrEnd = startOrEndAttr;
-        if (startOrEnd == 'activity') { highlightActivity(); }
+        if (startOrEnd == 'activity') {
+          activePolygonId = null;
+          highlightActivity();
+        } else {
+          setInitialStyle();
+        }
         if (activePolygonId) {
           findOdFeatureById(activePolygonId).feature.clickEvent();
         };
