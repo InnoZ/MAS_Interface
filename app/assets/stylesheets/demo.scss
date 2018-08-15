@@ -43,17 +43,6 @@
     width: 80vw;
   }
 
-  #calm-down {
-    display: none;
-    position: absolute;
-    width: 100vw;
-    color: white;
-    text-align: center;
-    top: 7vh;
-    font-size: 23px;
-    z-index: 500;
-  }
-
   .legend {
     position: absolute;
     left: 20px;
@@ -112,6 +101,7 @@
 }
 
 #demo-monitor {
+  background: black;
   height: 100vh;
 
   .leaflet-container {
@@ -154,36 +144,21 @@
     display: none;
   }
 
+  #map-container {
+    padding-right: 15vw;
+  }
+
   #demo-monitor-map {
-    height: 100vh;
-    width: 100vw;
-    margin: 0 auto;
-  }
-
-  .demo-overlay-container {
-    position: absolute;
-    opacity: 1;
-    z-index: 500;
-  }
-
-  .demo-hexagon-overlay {
-    float: left;
+    float: right;
     width: 100vh;
     height: 100vh;
   }
 
-  .demo-square-overlay-left {
-    float: left;
-    background-color: black;
-    width: calc((120vw - 100vh) / 2);
-    height: 100vh;
-  }
-
-  .demo-square-overlay-right {
-    float: left;
-    background-color: black;
-    width: calc((80vw - 100vh) / 2);
-    height: 100vh;
+  .demo-hexagon-overlay {
+    position: absolute;
+    z-index: 500;
+    width: 100%;
+    height: 100%;
   }
 
   .leaflet-tooltip-pane .activity-icon {
