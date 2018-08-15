@@ -7,7 +7,11 @@ var demoReady = function(boolean) {
 };
 
 jQuery(function() {
-  //------------------ MONITOR -------------------------//
+
+  //--------------------------------------------------//
+  //----------------- MONITOR ------------------------//
+  //--------------------------------------------------//
+
   jQuery('#demo-monitor').each(function() {
     window.map = L.map('demo-monitor-map', {
       tap: true,
@@ -65,6 +69,7 @@ jQuery(function() {
           jQuery('#loading-bar').show();
           console.log(response);
           startOrEnd = response.start_or_end;
+          if (startOrEnd == 'activity') { console.log('actvity Mode'); return; }
           reactOnActivatedPolygon(response);
         }
       });
@@ -170,10 +175,23 @@ jQuery(function() {
   jQuery('#demo-touch').each(function() {
     var startOrEnd = 'start';
     var actionBlocked = false;
-    var map, activeMode, activeModeName, modeData, modeColor, selectedLayer, lines,
-      demoData, activePolygonId, odLayer;
+    var map, activeMode, activeModeName, modeData, modeColor, selectedLayer, lines, demoData, activePolygonId, odLayer;
+
+    var submitChanges = function() {
+      jQuery.ajax({
+        type: "POST",
+        url: "/activate_polygon",
+        data: {
+          active_mode: activeMode,
+          active_mode_name: activeModeName,
+          active_polygon: activePolygonId,
+          start_or_end: startOrEnd,
+        },
+      })
+    };
 
     $.get("/data_demo_scenario.json", function(data) {
+      console.log(data);
       demoData = data;
       jQuery('#data-loading').hide();
 
@@ -248,11 +266,11 @@ jQuery(function() {
       var featureJustClicked = false;
       var mousePositionX, mousePositionY;
       jQuery('#od-map').click(function(e) {
+        if (startOrEnd == 'activity') { return }
         if (featureJustClicked == false) {
           mousePositionX = e.clientX;
           mousePositionY = e.clientY;
-          jQuery("<div class='empty-click'>" + I18n.demo.no_trips_here + "</div>").appendTo(jQuery(
-            '#demo-touch')).css({
+          jQuery("<div class='empty-click'>" + I18n.demo.no_trips_here + "</div>").appendTo(jQuery('#demo-touch')).css({
             left: mousePositionX,
             top: mousePositionY - 40
           }).fadeOut(2000, function() {
@@ -263,6 +281,7 @@ jQuery(function() {
 
       var onEachFeature = function(feature, layer) {
         feature.clickEvent = function(e) {
+          if (startOrEnd == 'activity') { return }
           demoReady(false);
 
           featureJustClicked = true;
@@ -282,16 +301,7 @@ jQuery(function() {
           });
           highlightDestinations(feature, layer);
           activePolygonId = feature.id;
-          jQuery.ajax({
-            type: "POST",
-            url: "/activate_polygon",
-            data: {
-              active_mode: activeMode,
-              active_mode_name: activeModeName,
-              active_polygon: activePolygonId,
-              start_or_end: startOrEnd,
-            },
-          })
+          submitChanges();
           featureSelected = true;
           polygonModalSplit(data, activePolygonId);
         };
@@ -306,8 +316,7 @@ jQuery(function() {
         lines = L.featureGroup();
         var selectedCentroid = layer.getBounds().getCenter();
         var counter = 0;
-        jQuery.each(feature.properties[startOrEnd].destinations, function(index,
-          destination) {
+        jQuery.each(feature.properties[startOrEnd].destinations, function(index, destination) {
           counter += 1;
           for (var id in destination) {
             var count = destination[id];
@@ -338,6 +347,17 @@ jQuery(function() {
         lines.addTo(map);
       };
 
+      var highlightActivity = function() {
+        if (lines) { map.removeLayer(lines) };
+        var max = Math.max.apply(Math, modeData.features.map(function(f) { return f.properties.start.featureCount; }));
+        jQuery.each(modeData.features, function(index, feature) {
+          var style = { weight: 0, fillColor: modeColor, fillOpacity: feature.properties.start.featureCount / max };
+          var polygon = findOdFeatureById(feature.id);
+          if (polygon) { polygon.setStyle(style); }
+        });
+        submitChanges();
+      };
+
       var odBounds = null;
       jQuery('.od-mode-selector').click(function() {
         activeMode = jQuery(this).attr('od_mode');
@@ -355,49 +375,47 @@ jQuery(function() {
           odBounds = odLayer.getBounds();
           map.fitBounds(odBounds);
         }
-        jQuery.ajax({
-          type: "POST",
-          url: "/activate_polygon",
-          data: {
-            active_mode: activeMode,
-            active_mode_name: activeModeName,
-            active_polygon: activePolygonId,
-            start_or_end: startOrEnd,
-          },
-        })
-        if (activePolygonId) {
-          var activePolygon = findOdFeatureById(activePolygonId);
-          if (activePolygon) { activePolygon.feature.clickEvent(); }
+        submitChanges();
+        if (startOrEnd == 'activity') {
+          highlightActivity();
+        } else {
+          if (activePolygonId) {
+            var activePolygon = findOdFeatureById(activePolygonId);
+            if (activePolygon) { activePolygon.feature.clickEvent(); }
+          }
         }
       });
 
       jQuery('.od-mode-selector').first().click();
-    };
 
-    var polygonModalSplit = function(data, polygonId) {
-      var modalSplit = jQuery.map(data.od_relations, function(modeData, mode) {
-        var _data = [];
-        jQuery.each(modeData.features, function(id, feature) {
-          if (mode !== 'all' && polygonId == feature.id) {
-            _data.push({
-              mode: mode,
-              share: feature.properties[startOrEnd].featureCount,
-              color: data.mode_colors[mode],
-            });
-            return _data;
-          } else { return true; }
-        })
-        return _data;
+      var polygonModalSplit = function(data, polygonId) {
+        var modalSplit = jQuery.map(data.od_relations, function(modeData, mode) {
+          var _data = [];
+          jQuery.each(modeData.features, function(id, feature) {
+            if (mode !== 'all' && polygonId == feature.id) {
+              _data.push({
+                mode: mode,
+                share: feature.properties[startOrEnd].featureCount,
+                color: data.mode_colors[mode],
+              });
+              return _data;
+            } else { return true; }
+          })
+          return _data;
+        });
+        makePieChart('#polygon-modal-split', modalSplit, 'share')
+      };
+
+      jQuery('.switch-button').click(function() {
+        jQuery('.switch-button').removeClass('active');
+        jQuery(this).addClass('active');
+        var startOrEndAttr = jQuery('.switch-button.active').attr('start_or_end');
+        startOrEnd = startOrEndAttr;
+        if (startOrEnd == 'activity') { highlightActivity(); }
+        if (activePolygonId) {
+          findOdFeatureById(activePolygonId).feature.clickEvent();
+        };
       });
-      makePieChart('#polygon-modal-split', modalSplit, 'share')
     };
-
-    jQuery('.switch-button').click(function() {
-      jQuery('.switch-button').toggleClass('active');
-      startOrEnd = jQuery('.switch-button.active').attr('start_or_end');
-      if (activePolygonId) {
-        findOdFeatureById(activePolygonId).feature.clickEvent();
-      }
-    });
   });
 });
