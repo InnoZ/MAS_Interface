@@ -78,11 +78,15 @@ jQuery(function() {
       });
 
       var reactOnActivityMode = function(response) {
-        jQuery('body').hide();
+        jQuery('.od-mode-elements').hide();
+        jQuery('.activity-mode-elements').show();
+        jQuery('#loading-bar').hide();
       };
+      reactOnActivityMode();
 
       var reactOnActivatedPolygon = function(response) {
-        jQuery('body').show();
+        jQuery('.od-mode-elements').show();
+        jQuery('.activity-mode-elements').hide();
 
         var color = demoData.mode_colors[response.active_mode];
         var modeName = response.active_mode_name;
@@ -127,6 +131,14 @@ jQuery(function() {
         controlLayerVisibility();
       });
 
+      jQuery('.explanation-button').click(function() {
+        jQuery('.explanation-button').toggleClass('active');
+        var targetId = jQuery('.explanation-button.active').attr('target');
+        jQuery('.explanation').hide();
+        jQuery(targetId).show();
+      });
+      jQuery('.explanation-button').click();
+
       var drawHeatmapPoints = function(heatmapPoints) {
         heat = L.heatLayer(heatmapPoints, { radius: 20, blur: 38 });
         heat.addTo(map);
@@ -161,7 +173,7 @@ jQuery(function() {
           // remove existing icons
           jQuery('.activity-legend-icon').remove();
           jQuery.each(activityIcons, function(activity, icon) {
-            var iconElement = jQuery("<icon class='activity-legend-icon " + icon + "'></icon>");
+            var iconElement = jQuery("<icon class='activity-legend-icon od-mode-elements " + icon + "'></icon>");
             var positionInBarChart = jQuery('text:contains(' + I18n.activity_names[activity] + ')').position();
             iconElement.appendTo(jQuery('#demo-monitor')).css({
               top: positionInBarChart.top - 5,

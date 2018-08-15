@@ -104,6 +104,13 @@
   background: black;
   height: 100vh;
 
+  #explanation-a, #explanation-b {
+    position: absolute;
+    z-index: 500;
+    top: 20vh;
+    left: 20vw;
+  }
+
   .leaflet-container {
     background: lightgray;
   }
@@ -170,14 +177,14 @@
     font-size: 150%;
   }
 
-  #heatmap-button-container {
+  .monitor-button-container {
     position: absolute;
     bottom: 50px;
     right: 50px;
     float: right;
     z-index: 999;
     text-align: center;
-    .heatmap-button {
+    .monitor-button {
       font-size: 18px;
       display: inline-block;
       color: white;

@@ -1,16 +1,26 @@
 #demo-monitor
-  #heatmap-button-container
-    #heatmap-button-heatmap.heatmap-button{start_or_end: 'start'} HEATMAP
-    #heatmap-button-activities.heatmap-button.active{start_or_end: 'end'}= t('demo.activities')
+  .od-mode-elements
+    .monitor-button-container
+      #heatmap-button-heatmap.heatmap-button.monitor-button HEATMAP
+      #heatmap-button-activities.heatmap-button.monitor-button.active= t('demo.activities')
 
-  #mode-name
-  #feature-starts
-  #activity-legend
-  #map-container
-    #demo-monitor-map
-      = image_tag 'hexagon', class: 'demo-hexagon-overlay'
+    #mode-name
+    #feature-starts
+    #activity-legend
+    #map-container
+      #demo-monitor-map
+        = image_tag 'hexagon', class: 'demo-hexagon-overlay'
 
-  %svg#activity-split
+    %svg#activity-split
+
+  .activity-mode-elements
+    #explanation-a.explanation
+      osdhfusdfidshfdsuhus AAAA
+    #explanation-b.explanation
+      ajsjiojsdfhsdfuufsdhu BBB
+    .monitor-button-container
+      .explanation-button.monitor-button.active{target: '#explanation-a'} Seite 1
+      .explanation-button.monitor-button{target: '#explanation-b'} Seite 2
 
   #data-loading loading...
   #loading-bar
