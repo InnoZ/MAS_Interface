@@ -361,6 +361,7 @@ jQuery(function() {
       };
 
       var highlightActivity = function() {
+        console.log('highlightActivity')
         if (lines) { map.removeLayer(lines) };
         var max = Math.max.apply(Math, modeData.features.map(function(f) { return f.properties.start.featureCount; }));
         legend.show().find('.current-count').html(max);
@@ -390,7 +391,6 @@ jQuery(function() {
           odBounds = odLayer.getBounds();
           map.fitBounds(odBounds);
         }
-        submitChanges();
         if (startOrEnd == 'activity') {
           highlightActivity();
         } else {
@@ -399,6 +399,8 @@ jQuery(function() {
           if (activePolygonId) {
             var activePolygon = findOdFeatureById(activePolygonId);
             if (activePolygon) { activePolygon.feature.clickEvent(); }
+          } else {
+            submitChanges();
           }
         }
       }
