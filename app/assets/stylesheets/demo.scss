@@ -25,7 +25,7 @@
     position: absolute;
     font-size: 20px;
     z-index: 500;
-    color: white;
+    color: grey;
   }
 
   .action-blocker {
@@ -41,6 +41,15 @@
   #od-map {
     height: 100vh;
     width: 80vw;
+    #select-location {
+      display: none;
+      color: white;
+      position: absolute;
+      z-index: 500;
+      width: 100%;
+      text-align: center;
+      top: 50%;
+    }
   }
 
   .legend {
@@ -105,10 +114,13 @@
   height: 100vh;
 
   #explanation-a, #explanation-b {
+    h1  { color: #858585; }
+    color: white;
     position: absolute;
     z-index: 500;
     top: 20vh;
     left: 20vw;
+    width: 60vw;
   }
 
   .leaflet-container {

@@ -307,9 +307,7 @@ jQuery(function() {
           featureJustClicked = true;
           featureClickTimer = setTimeout(function() { featureJustClicked = false; }, 500)
 
-          if (lines) {
-            map.removeLayer(lines)
-          };
+          if (lines) { map.removeLayer(lines); }
           selectedLayer = layer;
           setInitialStyle();
           layer.setStyle({ weight: 3, color: 'red', opacity: 1 });
@@ -324,6 +322,7 @@ jQuery(function() {
       };
 
       var highlightDestinations = function(feature, layer) {
+        jQuery('#select-location').hide();
         var featureMaxDestinationCount = feature.properties[startOrEnd].featureMaxDestinationCount;
         colorLegend(modeColor);
         legend.show().find('.current-count').html(featureMaxDestinationCount);
@@ -394,6 +393,7 @@ jQuery(function() {
         if (startOrEnd == 'activity') {
           highlightActivity();
         } else {
+          jQuery('#select-location').show();
           legend.hide();
           if (activePolygonId) {
             var activePolygon = findOdFeatureById(activePolygonId);
@@ -401,7 +401,6 @@ jQuery(function() {
           }
         }
       });
-
       jQuery('.od-mode-selector').first().click();
 
       var polygonModalSplit = function(data, polygonId) {
@@ -428,15 +427,18 @@ jQuery(function() {
         var startOrEndAttr = jQuery('.switch-button.active').attr('start_or_end');
         startOrEnd = startOrEndAttr;
         if (startOrEnd == 'activity') {
+          jQuery('#select-location').hide();
           activePolygonId = null;
           highlightActivity();
         } else {
+          jQuery('#select-location').show();
           setInitialStyle();
         }
         if (activePolygonId) {
           findOdFeatureById(activePolygonId).feature.clickEvent();
         };
       });
+      jQuery('.switch-button.active').click();
     };
   });
 });

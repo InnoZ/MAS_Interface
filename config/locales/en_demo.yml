@@ -3,6 +3,7 @@ en:
     calm_down: 'Give me some time to process...'
     start: 'Starts'
     end: 'Arrivals'
-    no_trips_here: 'No trips!'
+    no_trips_here: 'No trips here'
     ways_overall: 'ways overall'
     activities: 'Aktivities'
+    select_location: 'Choose a location'

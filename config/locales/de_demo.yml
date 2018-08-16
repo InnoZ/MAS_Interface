@@ -3,6 +3,7 @@ de:
     calm_down: 'Gib mir etwas Zeit zum Berechnen...'
     start: 'Abfahrten'
     end: 'Ankünfte'
-    no_trips_here: 'Keine Fahrten!'
+    no_trips_here: 'Keine Fahrten hier'
     ways_overall: 'Wege insgesamt'
     activities: 'Aktivitäten'
+    select_location: 'Wählen Sie einen Ort'
