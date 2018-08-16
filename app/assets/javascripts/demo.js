@@ -373,9 +373,10 @@ jQuery(function() {
       };
 
       var odBounds = null;
-      jQuery('.od-mode-selector').click(function() {
-        activeMode = jQuery(this).attr('od_mode');
-        activeModeName = jQuery(this).text();
+      var selectMode = function(button) {
+        colorButtonClickHandler(button);
+        activeMode = jQuery(button).attr('od_mode');
+        activeModeName = jQuery(button).text();
         modeData = odRelations[activeMode];
         modeColor = data.mode_colors[activeMode];
         if (lines) { map.removeLayer(lines) };
@@ -400,8 +401,7 @@ jQuery(function() {
             if (activePolygon) { activePolygon.feature.clickEvent(); }
           }
         }
-      });
-      jQuery('.od-mode-selector').first().click();
+      }
 
       var polygonModalSplit = function(data, polygonId) {
         var modalSplit = jQuery.map(data.od_relations, function(modeData, mode) {
@@ -421,9 +421,9 @@ jQuery(function() {
         makePieChart('#polygon-modal-split', modalSplit, 'share')
       };
 
-      jQuery('.switch-button').click(function() {
+      var switchButtonClickHandler = function(button) {
         jQuery('.switch-button').removeClass('active');
-        jQuery(this).addClass('active');
+        jQuery(button).addClass('active');
         var startOrEndAttr = jQuery('.switch-button.active').attr('start_or_end');
         startOrEnd = startOrEndAttr;
         if (startOrEnd == 'activity') {
@@ -437,8 +437,35 @@ jQuery(function() {
         if (activePolygonId) {
           findOdFeatureById(activePolygonId).feature.clickEvent();
         };
+      }
+
+      jQuery('.switch-button').click(function() {
+        switchButtonClickHandler(this);
       });
-      jQuery('.switch-button.active').click();
+
+      jQuery('.od-mode-selector').click(function() {
+        selectMode(this);
+      });
+
+      var initialState = function() {
+        jQuery('.switch-button, .mode-button-container').addClass('highlight-buttons');
+        selectMode(jQuery('.od-mode-selector').first());
+        switchButtonClickHandler(jQuery('.switch-button.initial'));
+      }
+      initialState();
+
+      jQuery('.switch-button, .mode-button-container').click(function() {
+        jQuery('.highlight-buttons').removeClass('highlight-buttons');
+      });
+
+      var activityTimer;
+      jQuery(this).click(function() {
+        clearTimeout(activityTimer);
+        activityTimer = setTimeout(function() {
+          console.log('initial state')
+          initialState();
+        }, 15000)
+      })
     };
   });
 });

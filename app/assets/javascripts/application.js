@@ -79,31 +79,36 @@ jQuery(function() {
 
   //color-buttons
   jQuery('.color-button').click(function() {
+    colorButtonClickHandler(jQuery(this));
+  });
+});
+
+//color-buttons
+function colorButtonClickHandler(button) {
+  var colorAttr = jQuery(button).attr('color');
+  if (colorAttr) {
+    var color = colorAttr;
+  } else {
+    var color = jQuery(button).css('color');
+  };
+  jQuery(button).css({
+    'color': 'white',
+    'background': color,
+    'border-color': color,
+  });
+  jQuery(button).siblings().each(function() {
     var colorAttr = jQuery(this).attr('color');
     if (colorAttr) {
       var color = colorAttr;
     } else {
-      var color = jQuery(this).css('color');
+      var color = jQuery(this).css('border-color');
     };
     jQuery(this).css({
-      'color': 'white',
-      'background': color,
-      'border-color': color,
-    });
-    jQuery(this).siblings().each(function() {
-      var colorAttr = jQuery(this).attr('color');
-      if (colorAttr) {
-        var color = colorAttr;
-      } else {
-        var color = jQuery(this).css('border-color');
-      };
-      jQuery(this).css({
-        'color': color,
-        'background': 'none',
-      });
+      'color': color,
+      'background': 'none',
     });
   });
-});
+}
 
 function drawTooltip(color, key, value) {
   content = '<h3 style="color: white; background-color: ';
