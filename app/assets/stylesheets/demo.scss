@@ -60,11 +60,11 @@
     #select-location {
       display: none;
       position: absolute;
-      left: 40%;
-      top: 45%;
+      left: calc(50% - 60px);
+      top: calc(50% - 30px);
       img {
         opacity: 0.7;
-        width: 150px;
+        width: 100px;
       }
     }
   }
