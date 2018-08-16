@@ -5,5 +5,7 @@ en:
     end: 'Arrivals'
     no_trips_here: 'No trips here'
     ways_overall: 'ways overall'
-    activities: 'Aktivities'
+    activities: 'Activities'
     select_location: 'Choose a location'
+    welcome: 'Welcome'
+    background: 'Background'
