@@ -191,7 +191,7 @@ function makeHorizontalBarChart(div, data, attribute) {
   });
 
   var formattedData = [{
-    key: 'carbon emissions',
+    key: '',
     values: filteredData
   }];
 

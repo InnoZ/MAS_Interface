@@ -10,10 +10,11 @@
     #od-map
       #select-location
         = image_tag 'finger.png'
-      .switch-button-container
-        .switch-button{start_or_end: 'start'}= t('demo.start')
-        .switch-button{start_or_end: 'end'}= t('demo.end')
-        .switch-button.initial{start_or_end: 'activity'}= t('demo.activity')
+
+    .switch-button-container
+      .switch-button{start_or_end: 'start'}= t('demo.start')
+      .switch-button{start_or_end: 'end'}= t('demo.end')
+      .switch-button.initial{start_or_end: 'activity'}= t('demo.activity')
 
     .legend
       .legend-label.current-count
