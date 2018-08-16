@@ -18,6 +18,16 @@
   100% { background: black; width: 100vw; }
 }
 
+@keyframes change-color {
+  0% { color: #f2b50c; }
+  20% { color: #db8012; }
+  40% { color: #3db783; }
+  60% { color: #50a0b5; }
+  80% { color: #c94380; }
+  100% { color: #B8CEB1; }
+}
+
+
 #demo-touch {
   background: black;
 
@@ -115,7 +125,10 @@
   height: 100vh;
 
   #explanation-a, #explanation-b {
-    h1  { color: #858585; }
+    h1  {
+      color: #858585;
+      animation: change-color 10000ms infinite;
+    }
     color: white;
     position: absolute;
     z-index: 500;
