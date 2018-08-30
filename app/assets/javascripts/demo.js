@@ -74,7 +74,7 @@ jQuery(function() {
           startOrEnd = response.start_or_end;
           if (startOrEnd == 'activity') {
             reactOnActivityMode(response);
-          } else {
+          } else if (response.active_polygon !== '') {
             reactOnActivatedPolygon(response);
           }
         }
