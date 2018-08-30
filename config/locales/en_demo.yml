@@ -9,3 +9,10 @@ en:
     select_location: 'Choose a location'
     welcome: 'Welcome'
     background: 'Background'
+
+    welcome_to_3connect: 'Welcome to 3connect!'
+    discover_osnabrueck: 'Discover mobility in Osnabrück'
+    text1: 'On the left side you can see the spatial distribution of the average traffic volume. Single modes of transport can be selected with the colored buttons. Push the arrival or start button to gain insight into traffic flows in Osnabrück.'
+    the_project_osnabrueck: 'The project 3connect'
+    mobility_in_osnabrueck: 'Mobility in the hub Osnabrück'
+    text2: 'Im Rahmen von 3connect werden an drei Standorten (Hubs) vernetzte, interoperable und übergreifende IKT-basierte Elektromobilitätsanwendungen im Bereich der gewerblichen Mobilität entwickelt und getestet. Projektziel ist es, dem elektromobilen Anwender zu ermöglichen, beliebige Hard- und Software plug&play zu kombinieren, sodass möglichst alle Anwendungsfälle und Wünsche des Kunden abgedeckt werden. Das InnoZ fokussiert sich dabei auf dei Begleitforschung zum Thema Smart Traffic innerhalb des Hubs Osnabrück sowie die übergeordnete, vor allem qualitativ ausgerichtete Begleitforschung über alle drei Hubs (Osnabrück, Aachen, Allgäu) inkl. Transfer der Ergebnisse.'
