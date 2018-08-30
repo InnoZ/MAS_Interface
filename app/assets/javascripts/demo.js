@@ -57,7 +57,6 @@ jQuery(function() {
         'shopping': 'icon-basket',
         'work': 'icon-briefcase-1',
         'leisure': 'icon-s-dribbble',
-        'kindergarten': 'icon-s-github',
         'other': 'icon-record',
       };
 
@@ -111,7 +110,7 @@ jQuery(function() {
           if (heat) { map.removeLayer(heat) };
 
           drawHeatmapPoints(props.heatmap_points);
-          drawActivityPoints(props.activity_points);
+          drawActivityPoints(props.activity_points.map(function(r) { return r[1] == 'kindergarten' ? [r[0], 'other'] : r }));
           activitySplit(props.activity_split, color);
           controlLayerVisibility();
 
