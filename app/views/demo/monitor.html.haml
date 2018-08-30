@@ -33,6 +33,10 @@
   #data-loading loading...
   #loading-bar
 
+  #mode-color-container{style: 'display: none'}
+    - @demo_mode_colors.each do |mode, mode_color|
+      .color-button.od-mode-selector{od_mode: mode, color: mode_color}= t("mode_names.#{mode}").upcase
+
 // do not include via asset pipeline since mapbox is required for all other maps instead
 = javascript_include_tag 'leaflet'
 = javascript_include_tag 'leaflet-heat'

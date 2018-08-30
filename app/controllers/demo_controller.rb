@@ -3,11 +3,25 @@ class DemoController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:activate_polygon]
 
   def touch
-    # # uncomment this to initially create data
-    # # on production postgresql runs as old version 9.3, thus the creation does not work
-    # # create data on a machine with postgresql 9.5 or higher!
-
+    @demo_mode_colors = mode_colors
     save_data_in_file
+  end
+
+  def monitor
+    @demo_mode_colors = mode_colors
+  end
+
+  def mode_colors
+    {
+      'all': '#E8E8E8',
+      'car': '#F9402D',
+      'ride': '#FF9900',
+      'carsharing': '#404CB8',
+      'pt': '#00A7F7',
+      'bike': '#009788',
+      'walk': '#86C540',
+      'other': '#E8E8E8',
+    }
   end
 
   def save_data_in_file
@@ -18,9 +32,6 @@ class DemoController < ApplicationController
         f.write(@scenario_a.json_all.to_json)
       end
     end
-  end
-
-  def monitor
   end
 
   def activate_polygon

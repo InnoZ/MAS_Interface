@@ -6,6 +6,10 @@ var demoReady = function(boolean) {
   })
 };
 
+var colorFor = function(mode) {
+  return jQuery(".od-mode-selector[od_mode=" + mode + "]").attr('color');
+}
+
 jQuery(function() {
 
   //--------------------------------------------------//
@@ -88,7 +92,7 @@ jQuery(function() {
         jQuery('.od-mode-elements').show();
         jQuery('.activity-mode-elements').hide();
 
-        var color = demoData.mode_colors[response.active_mode];
+        var color = colorFor(response.active_mode);
         var modeName = response.active_mode_name;
         jQuery('#mode-name').html(modeName).css('color', color);
 
@@ -379,7 +383,7 @@ jQuery(function() {
         activeMode = jQuery(button).attr('od_mode');
         activeModeName = jQuery(button).text();
         modeData = odRelations[activeMode];
-        modeColor = data.mode_colors[activeMode];
+        modeColor = colorFor(activeMode);
         if (lines) { map.removeLayer(lines) };
         if (odLayer) { map.removeLayer(odLayer) };
         odLayer = L.geoJson(modeData, { onEachFeature: onEachFeature });
@@ -413,7 +417,7 @@ jQuery(function() {
               _data.push({
                 mode: mode,
                 share: feature.properties[startOrEnd].featureCount,
-                color: data.mode_colors[mode],
+                color: colorFor[mode],
               });
               return _data;
             } else { return true; }

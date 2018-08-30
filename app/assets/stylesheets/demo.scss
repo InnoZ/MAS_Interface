@@ -1,15 +1,15 @@
 @keyframes blink {
-  0% { color: #f2b50c; }
+  0% { color: #F9402D; }
   10% { color: black; }
-  20% { color: #db8012; }
+  20% { color: #A013B2; }
   30% { color: black; }
-  40% { color: #3db783; }
+  40% { color: #86C540; }
   50% { color: black; }
-  60% { color: #50a0b5; }
+  60% { color: #FF9900; }
   70% { color: black; }
-  80% { color: #c94380; }
+  80% { color: #00A7F7; }
   90% { color: black; }
-  100% { color: #B8CEB1; }
+  100% { color: #E8E8E8; }
 }
 
 @keyframes blink-background {
@@ -19,17 +19,17 @@
 }
 
 @keyframes change-color {
-  0% { color: #f2b50c; }
-  20% { color: #db8012; }
-  40% { color: #3db783; }
-  60% { color: #50a0b5; }
-  80% { color: #c94380; }
-  100% { color: #B8CEB1; }
+  0% { color: #F9402D; }
+  20% { color: #A013B2; }
+  40% { color: #86C540; }
+  60% { color: #FF9900; }
+  80% { color: #00A7F7; }
+  100% { color: #E8E8E8; }
 }
 
 @keyframes change-opacity {
   0% { opacity: 1; }
-  50% { opacity: 0.7; }
+  50% { opacity: 0.6; }
   100% { opacity: 1; }
 }
 
@@ -137,7 +137,7 @@
   #explanation-a, #explanation-b {
     h1  {
       color: #858585;
-      animation: change-color 10000ms infinite;
+      animation: change-color 10000ms infinite alternate;
     }
     color: white;
     position: absolute;
