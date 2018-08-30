@@ -466,7 +466,7 @@ jQuery(function() {
         activityTimer = setTimeout(function() {
           console.log('initial state')
           initialState();
-        }, 15000)
+        }, 90000)
       })
     };
   });
