@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get 'demo_monitor', to: 'demo#monitor', as: :demo_monitor
     post 'activate_polygon', to: 'demo#activate_polygon'
     post 'demo_ready', to: 'demo#demo_ready'
+    post 'language', to: 'demo#language'
 
     mount ActionCable.server => '/cable'
   end

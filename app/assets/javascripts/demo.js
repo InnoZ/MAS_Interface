@@ -7,7 +7,7 @@ var demoReady = function(boolean) {
 };
 
 var colorFor = function(mode) {
-  return jQuery(".od-mode-selector[od_mode=" + mode + "]").attr('color');
+  return jQuery('.od-mode-selector[od_mode=' + mode + ']').attr('color');
 }
 
 jQuery(function() {
@@ -66,7 +66,7 @@ jQuery(function() {
       App.cable.subscriptions.create('DemoChannel', {
         connected: function() {
           demoReady(true);
-          console.log('Demo Websocket connected');
+          console.log('Demo Data Websocket connected');
         },
         received: function(response) {
           jQuery('#loading-bar').show();
@@ -77,6 +77,16 @@ jQuery(function() {
           } else {
             reactOnActivatedPolygon(response);
           }
+        }
+      });
+
+      App.cable.subscriptions.create('DemoLanguageChannel', {
+        connected: function() {
+          console.log('Demo Language Websocket connected');
+        },
+        received: function(response) {
+          console.log(response)
+          window.location.href = '/' + response.language + '/demo_monitor';
         }
       });
 
@@ -212,6 +222,20 @@ jQuery(function() {
         },
       })
     };
+
+    jQuery('.language-button').click(function() {
+      jQuery('.language-button').unbind('click');
+      var locale = jQuery('.language-button').attr('language');
+      jQuery.ajax({
+        type: "POST",
+        url: "/language",
+        data: {
+          language: locale
+        },
+      }).done(function() {
+        window.location.href = '/' + locale + '/demo_touch';
+      });
+    });
 
     $.get("/data_demo_scenario.json", function(data) {
       console.log(data);

@@ -1,6 +1,12 @@
 #demo-touch
   .action-blocker
 
+  #language-selection
+    - if locale == :de
+      .language-button{language: 'en'} english
+    - else
+      .language-button{language: 'de'} deutsch
+
   .row
     .mode-button-container
       - @demo_mode_colors.each do |mode, mode_color|
@@ -14,7 +20,7 @@
     .switch-button-container
       .switch-button{start_or_end: 'start'}= t('demo.start')
       .switch-button{start_or_end: 'end'}= t('demo.end')
-      .switch-button.initial{start_or_end: 'activity'}= t('demo.activity')
+      .switch-button.initial{start_or_end: 'activity'}= t('demo.activities')
 
     .legend
       .legend-label.current-count

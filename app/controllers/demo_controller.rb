@@ -13,7 +13,7 @@ class DemoController < ApplicationController
 
   def mode_colors
     {
-      'all': '#E8E8E8',
+      'all': '#A0A0A0',
       'car': '#F9402D',
       'ride': '#FF9900',
       'carsharing': '#404CB8',
@@ -49,6 +49,14 @@ class DemoController < ApplicationController
     ActionCable.server.broadcast(
       'demo_ready_channel', {
         demo_ready: params[:demo_ready],
+      }
+    )
+  end
+
+  def language
+    ActionCable.server.broadcast(
+      'demo_language_channel', {
+        language: params[:language],
       }
     )
   end

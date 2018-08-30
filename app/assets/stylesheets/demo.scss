@@ -36,6 +36,14 @@
 #demo-touch {
   background: black;
 
+  #language-selection {
+    position: absolute;
+    z-index: 5000;
+    right: 10px;
+    top: 10px;
+    color: white;
+  }
+
   .empty-click {
     position: absolute;
     font-size: 20px;
