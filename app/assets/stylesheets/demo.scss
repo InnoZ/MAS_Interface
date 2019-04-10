@@ -1,63 +1,324 @@
+@keyframes blink {
+  0% { color: #F9402D; }
+  10% { color: black; }
+  20% { color: #A013B2; }
+  30% { color: black; }
+  40% { color: #86C540; }
+  50% { color: black; }
+  60% { color: #FF9900; }
+  70% { color: black; }
+  80% { color: #00A7F7; }
+  90% { color: black; }
+  100% { color: #E8E8E8; }
+}
+
+@keyframes blink-background {
+  0% { background: black; width: 0vw; }
+  50% { background: white; }
+  100% { background: black; width: 100vw; }
+}
+
+@keyframes change-color {
+  0% { color: #F9402D; }
+  20% { color: #A013B2; }
+  40% { color: #86C540; }
+  60% { color: #FF9900; }
+  80% { color: #00A7F7; }
+  100% { color: #E8E8E8; }
+}
+
+@keyframes change-opacity {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+html, body { overflow-x: hidden; }
+
 #demo-touch {
   background: black;
-  .leaflet-control-zoom { display: none; }
-  .demo-button-container {
-    width: 1000px;
-    margin: 0 auto;
+
+  #language-selection {
+    position: absolute;
+    z-index: 5000;
+    right: 10px;
+    top: 10px;
+    color: white;
+  }
+
+  .empty-click {
+    position: absolute;
+    font-size: 20px;
+    z-index: 500;
+    color: grey;
+  }
+
+  .action-blocker {
+    position: absolute;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0.5;
+    display: none;
+  }
+
+  #od-map {
+    float: right;
+    height: 100vh;
+    width: 80vw;
+    #select-location {
+      display: none;
+      position: absolute;
+      left: calc(50% - 60px);
+      top: calc(50% - 30px);
+      img {
+        opacity: 0.7;
+        width: 100px;
+      }
+    }
+  }
+
+  .legend {
+    position: absolute;
+    right: 50px;
+    bottom: 20vh;
+    z-index: 1000;
+    .current-count-bar {
+      width: 40px;
+      height: 50vh;
+      vertical-align: middle;
+    }
+    .legend-label {
+      color: white;
+      font-size: 20px;
+      margin: 5px 0;
+    }
+  }
+
+  .highlight-buttons {
+    animation: change-opacity 2000ms infinite;
+  }
+
+  .mode-button-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    width: 380px;
+    z-index: 500;
+    .color-button {
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 150px;
+      font-size: 15px;
+      display: inline-block;
+      border-radius: 5px;
+    }
+  }
+
+  .nv-pie {
+    path {
+      stroke-opacity: 0;
+      fill-opacity: 1;
+      color: white;
+    }
+    text {
+      fill: white !important;
+      font-size: 12px;
+    }
+  }
+
+  #polygon-modal-split {
+    height: 300px;
+    width: 300px;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    z-index: 1000;
   }
 }
 
 #demo-monitor {
+  background: black;
   height: 100vh;
+
+  #explanation-a, #explanation-b {
+    h1  {
+      color: #858585;
+      animation: change-color 10000ms infinite alternate;
+    }
+    color: white;
+    position: absolute;
+    z-index: 500;
+    top: 20vh;
+    left: 20vw;
+    width: 60vw;
+  }
 
   .leaflet-container {
     background: lightgray;
   }
 
-  #mode-name {
-    position: absolute;
-    z-index: 999;
-    top: 60px;
-    left: 50px;
-    font-size: 50px;
-    text-transform: uppercase;
+  .nv-multiBarHorizontalChart {
+    text {
+      fill: white !important;
+      font-size: 15px;
+    }
   }
 
-  #feature-starts {
+  #mode-name-container {
     position: absolute;
     z-index: 999;
-    top: 80px;
-    right: 50px;
-    font-size: 30px;
-  }
+    bottom: 190px;
+    left: 75vw;
+    #mode-name {
+      font-weight: bold;
+      right: 50px;
+      line-height: 40px;
+      font-size: 40px;
+      text-transform: uppercase;
+    }
+    #feature-starts {
+      color: white;
+      font-size: 20px;
+    }
+   }
 
+  .activity-legend-icon {
+    color: white;
+    position: absolute;
+    z-index: 999;
+    font-size: 20px;
+  }
 
   .mapbox-info-toggle {
     display: none;
   }
 
-  #demo-monitor-map {
-    height: 100vh;
-    width: 100vw;
-    margin: 0 auto;
+  #map-container {
+    padding-left: 10vw;
   }
 
-  .demo-overlay-container {
-    position: absolute;
-    opacity: 0.7;
-    z-index: 99;
+  #demo-monitor-map {
+    float: left;
+    width: 95vh;
+    height: 95vh;
   }
 
   .demo-hexagon-overlay {
-    float: left;
-    width: 100vh;
-    height: 100vh;
+    position: absolute;
+    z-index: 500;
+    width: 100%;
+    height: 100%;
   }
 
-  .demo-square-overlay {
+  .leaflet-tooltip-pane .activity-icon {
+    opacity: 0.7;
+    font-weight: bold;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    font-size: 150%;
+  }
+
+  .monitor-button-container {
+    position: absolute;
+    bottom: 10px;
+    left: calc(10vw + 25vh);
     float: left;
-    background-color: black;
-    width: calc((100vw - 100vh) / 2);
-    height: 100vh;
+    z-index: 999;
+    text-align: center;
+    .monitor-button {
+      width: 150px;
+      text-align: center;
+      font-size: 18px;
+      display: inline-block;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 4px 10px;
+      background: none;
+      cursor: pointer;
+
+      &.active {
+        border-radius: 5px;
+        border-width: 2px;
+        border-style: solid;
+        background: white;
+        color: black;
+      }
+    }
+  }
+
+  .leaflet-heatmap-layer {
+    opacity: 0.7;
+  }
+
+  #activity-split {
+    height: 45vh;
+    // width adapted on left-square-overlay
+    width: calc((120vw - 100vh) / 2 - 50px);
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    z-index: 500;
+    line {
+      stroke-opacity: 0;
+    }
+  }
+
+  #loading-bar {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    height: 3px;
+    background: white;
+    animation: blink-background 2000ms infinite;
+  }
+}
+
+#data-loading {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  color: #B8CEB1;
+  font-size: 30px;
+  width: 100%;
+  height: 100%;
+  background: black;
+  text-align: center;
+  padding-top: 45vh;
+  animation: blink 7000ms infinite alternate;
+}
+
+.switch-button-container {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  z-index: 500;
+  padding-left: 15vw;
+  text-align: center;
+  .switch-button {
+    width: 150px;
+    text-align: center;
+    font-size: 18px;
+    display: inline-block;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 4px 10px;
+    background: none;
+    cursor: pointer;
+
+    &.active {
+      border-radius: 5px;
+      border-width: 2px;
+      border-style: solid;
+      background: white;
+      color: black;
+    }
   }
 }

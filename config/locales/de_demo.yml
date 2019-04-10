@@ -1,0 +1,18 @@
+de:
+  demo:
+    calm_down: 'Gib mir etwas Zeit zum Berechnen...'
+    start: 'Abfahrten'
+    end: 'Ankünfte'
+    no_trips_here: 'Keine Fahrten hier'
+    ways_overall: 'Wege insgesamt'
+    activities: 'Aktivitäten'
+    select_location: 'Wählen Sie einen Ort'
+    welcome: 'Willkommen'
+    background: 'Hintergrund'
+
+    welcome_to_3connect: 'Willkommen zu 3connect!'
+    discover_osnabrueck: 'Erforschen Sie die Mobilität in Osnabrück'
+    text1: 'Links können Sie die räumliche Verteilung des durchschnittlichen Verkehrsaufkommens betrachten. Einzelne Verkehrsmittel werden über die farbigen Schaltflächen ausgewählt. Um einen Einblick in die Verkehrsflüsse zu bekommen, betätigen Sie die Schaltflächen "Abfahrten" oder "Ankünfte".'
+    the_project_osnabrueck: 'Das Projekt 3connect'
+    mobility_in_osnabrueck: 'Mobilität im Hub Osnabrück'
+    text2: 'Im Rahmen von 3connect werden an drei Standorten (Hubs) vernetzte, interoperable und übergreifende IKT-basierte Elektromobilitätsanwendungen im Bereich der gewerblichen Mobilität entwickelt und getestet. Projektziel ist es, dem elektromobilen Anwender zu ermöglichen, beliebige Hard- und Software plug&play zu kombinieren, sodass möglichst alle Anwendungsfälle und Wünsche des Kunden abgedeckt werden. Das InnoZ fokussiert sich dabei auf dei Begleitforschung zum Thema Smart Traffic innerhalb des Hubs Osnabrück sowie die übergeordnete, vor allem qualitativ ausgerichtete Begleitforschung über alle drei Hubs (Osnabrück, Aachen, Allgäu) inkl. Transfer der Ergebnisse.'

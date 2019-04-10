@@ -144,7 +144,7 @@
   }
 }
 
-#od-map-section, #density-map-section, #demo-touch {
+#od-map-section, #density-map-section {
   .legend {
     background: white;
     border-top-right-radius: 3px;
@@ -172,14 +172,19 @@
       }
     }
   }
+}
+
+#od-map-section, #density-map-section {
   #od-map-a, #od-map-b {
     width: 100%;
   }
-  .mode-selector-container {
+  .mode-button-container {
+    text-align: center;
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 45px;
     .od-mode-selector, .density-mode-selector {
-      display: inline;
+      display: inline-block;
     }
   }
   #density-map-a, #density-map-b {

@@ -3,20 +3,35 @@ class DemoController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:activate_polygon]
 
   def touch
-    # # uncomment this to initially create data
-    # # on production postgresql runs as old version 9.3, thus the creation does not work
-    # # create data on a machine with postgresql 9.5 or higher!
-
-    # @scenario_a = Scenario.find_by(district_id: '03404')
-    # File.open("public/data_demo_scenario.json","w") do |f|
-    #   f.write(@scenario_a.json_all.to_json)
-    # end
-
-    @data_demo_scenario = JSON.parse(File.read('public/data_demo_scenario.json'))
+    @demo_mode_colors = mode_colors
+    save_data_in_file
   end
 
   def monitor
-    @data_demo_scenario = JSON.parse(File.read('public/data_demo_scenario.json'))
+    @demo_mode_colors = mode_colors
+  end
+
+  def mode_colors
+    {
+      'all': '#A0A0A0',
+      'car': '#F9402D',
+      'ride': '#FF9900',
+      'carsharing': '#404CB8',
+      'pt': '#00A7F7',
+      'bike': '#009788',
+      'walk': '#86C540',
+      'other': '#E8E8E8',
+    }
+  end
+
+  def save_data_in_file
+    path = 'public/data_demo_scenario.json'
+    unless File.file?(path)
+      @scenario_a = Scenario.find_by(district_id: '03404')
+      File.open(path ,'w') do |f|
+        f.write(@scenario_a.json_all.to_json)
+      end
+    end
   end
 
   def activate_polygon
@@ -25,6 +40,23 @@ class DemoController < ApplicationController
         active_polygon: params[:active_polygon],
         active_mode: params[:active_mode],
         active_mode_name: params[:active_mode_name],
+        start_or_end: params[:start_or_end],
+      }
+    )
+  end
+
+  def demo_ready
+    ActionCable.server.broadcast(
+      'demo_ready_channel', {
+        demo_ready: params[:demo_ready],
+      }
+    )
+  end
+
+  def language
+    ActionCable.server.broadcast(
+      'demo_language_channel', {
+        language: params[:language],
       }
     )
   end

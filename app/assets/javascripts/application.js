@@ -45,7 +45,7 @@ jQuery(function() {
     var marker = L.marker(innozCoordinates).addTo(map).bindPopup("<a href='http://www.innoz.de'>" + I18n.innoz + "</a>");
   });
 
-  staticDistrictMap = function(divId, json, zoomIn, districtStyle)  {
+  staticDistrictMap = function(divId, json, zoomIn, districtStyle) {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaW5ub3otZGV2ZWxvcGVyIiwiYSI6IkRJLTdMWVkifQ.-P3v2RPr4HMr3JfNMxAsgQ';
 
     map = L.mapbox.map(divId, 'innoz-developer.mj43ge61', {
@@ -79,28 +79,186 @@ jQuery(function() {
 
   //color-buttons
   jQuery('.color-button').click(function() {
+    colorButtonClickHandler(jQuery(this));
+  });
+});
+
+//color-buttons
+function colorButtonClickHandler(button) {
+  var colorAttr = jQuery(button).attr('color');
+  if (colorAttr) {
+    var color = colorAttr;
+  } else {
+    var color = jQuery(button).css('color');
+  };
+  jQuery(button).css({
+    'color': 'white',
+    'background': color,
+    'border-color': color,
+  });
+  jQuery(button).siblings().each(function() {
     var colorAttr = jQuery(this).attr('color');
     if (colorAttr) {
       var color = colorAttr;
     } else {
-      var color = jQuery(this).css('color');
+      var color = jQuery(this).css('border-color');
     };
     jQuery(this).css({
-      'color': 'white',
-      'background': color,
-      'border-color': color,
-    });
-    jQuery(this).siblings().each(function() {
-      var colorAttr = jQuery(this).attr('color');
-      if (colorAttr) {
-        var color = colorAttr;
-      } else {
-        var color = jQuery(this).css('border-color');
-      };
-      jQuery(this).css({
-        'color': color,
-        'background': 'none',
-      });
+      'color': color,
+      'background': 'none',
     });
   });
-});
+}
+
+function drawTooltip(color, key, value) {
+  content = '<h3 style="color: white; background-color: ';
+  content += color + '">';
+  content += key + '</h3>' + '<p>' + value + '</p>';
+  return content;
+};
+
+function makePieChart(div, data, attribute) {
+  var chart = nv.models.pieChart()
+    .x(function(d) {
+      return d.mode
+    })
+    .y(function(d) {
+      return d[attribute]
+    })
+    .showLabels(true)
+    .labelType("percent")
+    .showLegend(false)
+    .donut(true)
+    .donutRatio(0.35)
+
+  chart.tooltip.contentGenerator(function(obj) {
+    return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
+  });
+
+  chart.tooltip.enabled(false);
+
+  nv.addGraph(function() {
+    d3.select(div)
+      .datum(data)
+      .transition().duration(350)
+      .call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};
+
+function makeBarChart(div, data, attribute) {
+  var filteredData = jQuery.grep(data, function(obj, i) {
+    return (obj[attribute] > 0);
+  });
+
+  var formattedData = [{
+    key: 'carbon emissions',
+    values: filteredData
+  }];
+
+  nv.addGraph(function() {
+    var chart = nv.models.discreteBarChart()
+      .x(function(d) {
+        return d.mode
+      })
+      .y(function(d) {
+        return d[attribute]
+      })
+      .showXAxis(false);
+
+    chart.tooltip.contentGenerator(function(obj) {
+      return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
+    });
+
+    d3.select(div)
+      .datum(formattedData)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};
+
+function makeHorizontalBarChart(div, data, attribute) {
+  var filteredData = jQuery.grep(data, function(obj, i) {
+    return (obj[attribute] > 0);
+  });
+
+  var formattedData = [{
+    key: '',
+    values: filteredData
+  }];
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarHorizontalChart()
+      .x(function(d) {
+        return d.mode
+      })
+      .y(function(d) {
+        return d[attribute]
+      })
+      .showLegend(false)
+      .showControls(false)
+      .showXAxis(true)
+      .showYAxis(false)
+      .margin({
+        "left": 100,
+      });
+
+    chart.tooltip.contentGenerator(function(obj) {
+      return drawTooltip(obj.color, obj.data.mode, obj.data[attribute]);
+    });
+
+    chart.tooltip.enabled(false);
+
+    d3.select(div)
+      .datum(formattedData)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};
+
+function makeDiurnalCurve(div, data) {
+  nv.addGraph(function() {
+    var chart = nv.models.lineChart()
+      .x(function(d) {
+        return d[0];
+      })
+      .y(function(d) {
+        return d[1];
+      })
+      .showLegend(false);
+
+    chart.yAxis.axisLabel(I18n.count);
+    chart.xAxis.axisLabel('hour');
+
+    chart.xAxis.tickValues([0, '', '', 3, '', '', 6, '', '', 9, '', '', 12, '', '', 15, '', '', 18, '', '', 21, '', '']);
+    // deactivate guidelines since tooltip is on wrong position - seemingly this is connected with positioning inside of a bootstrap panel
+    chart.useInteractiveGuideline(false);
+
+    chart.tooltip.contentGenerator(function(obj) {
+      var o = obj.series[0];
+      return drawTooltip(o.color, I18n.mode_names[o.key], o.value);
+    });
+
+    d3.select(div)
+      .datum(data)
+      .call(chart)
+      .selectAll(".nv-axisMaxMin-x").remove()
+    nv.utils.windowResize(chart.update);
+    return chart;
+  });
+
+  jQuery(div).closest('.panel-body').find('.loading').hide();
+};
