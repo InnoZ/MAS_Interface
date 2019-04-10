@@ -440,7 +440,7 @@ jQuery(function() {
               _data.push({
                 mode: mode,
                 share: feature.properties[startOrEnd].featureCount,
-                color: colorFor[mode],
+                color: colorFor(mode),
               });
               return _data;
             } else { return true; }
